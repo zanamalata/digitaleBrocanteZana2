@@ -1,7 +1,7 @@
 export const PRODUCT_CATEGORIES = [
   {
-    label: 'Arts',
-    value: 'arts' as const,
+    label: 'Librairie',
+    value: 'librarie' as const,
     featured: [
       {
         name: 'Cartes postales',

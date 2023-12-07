@@ -135,11 +135,12 @@ export const Products: CollectionConfig = {
         condition: () => false,
       },
     },
-    { name: "name", label: "nom", type: "text", required: true },
+    // TODO translate
+    { name: "name", label: "Titre + Nom du créateur / designer / marque", type: "text", required: true },
     {
       name: "description",
       type: "textarea",
-      label: "description du produit",
+      label: "Description de l'objet (Donnez le maximum de détails, origines de l'objet, matériaux et couleures, etc.)",
     },
     {
       name: "price",
