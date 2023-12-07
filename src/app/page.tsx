@@ -3,6 +3,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { Share2, Leaf, Store, SearchCheck } from "lucide-react";
 import ProductReel from "@/components/ProductReel";
+import SearchBar from "@/components/SearchBar";
 
 const perks = [
   {
@@ -42,6 +43,7 @@ export default function Home() {
             Tous les produits sur cette plateforme sont vérifiés par nos equipes
             pour vous assurer la meilleure qualité possible
           </p>
+          <SearchBar />
           <div className="flex flex-col sm:flex-row gap-4 mt-6">
             <Link href={"/products"} className={buttonVariants()}>
               Parcourir les tendances
