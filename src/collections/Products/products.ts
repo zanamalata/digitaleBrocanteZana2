@@ -6,6 +6,8 @@ import { PRODUCT_CATEGORIES } from "../../config";
 import { Access, CollectionConfig } from "payload/types";
 import { Product, User } from "../../payload-types";
 import { stripe } from "../../lib/stripe";
+import TooltipHelper from "@/components/TooltipHelper";
+import { text } from "body-parser";
 
 const addUser: BeforeChangeHook<Product> = async ({ req, data }) => {
   const user = req.user;
@@ -67,9 +69,9 @@ const isAdminOrHasAccess =
 
     return {
       id: {
-       in: userProductIDs,
-      }
-    }
+        in: userProductIDs,
+      },
+    };
   };
 
 export const Products: CollectionConfig = {
@@ -136,11 +138,30 @@ export const Products: CollectionConfig = {
       },
     },
     // TODO translate
-    { name: "name", label: "Titre + Nom du créateur / designer / marque", type: "text", required: true },
+    {
+      name: "name",
+      label: "titre de l'article",
+      type: "text",
+      required: true,
+      unique: true,
+      validate: async (val, {unique}) => {
+        if( unique === true) return true
+        return "le nom de l'article existe déjà, veuillez le changer"
+      },
+      admin: {
+        description:
+          "donnez un titre unique à votre article, par exemple: Titre de l'article + Nom du createur / designer / marque",
+      },
+    },
     {
       name: "description",
       type: "textarea",
-      label: "Description de l'objet (Donnez le maximum de détails, origines de l'objet, matériaux et couleures, etc.)",
+      label:
+        "Description de l'article (optionnelle, mais utile pour les moteurs de recherche)",
+      admin: {
+        description:
+          "Vendeurs, stimulez votre vente en donnant le maximum d'informations à votre client. Origine du produit, époque, style, petit historique, matériaux, couleures, ect... N'oubliez pas les dimensions ou le poid de l'article",
+      },
     },
     {
       name: "price",
