@@ -38,7 +38,7 @@ const Page = () => {
       onError: (err) => {
         if (err.data?.code === 'CONFLICT') {
           toast.error(
-            'Cet e-mail est déjà utilisé. Voulez-vous vous connecter à la place ?'
+            'Cet e-mail est déjà utilisé. Voulez-vous vous connecter à la place?'
           )
 
           return

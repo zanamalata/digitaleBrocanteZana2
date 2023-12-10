@@ -6,10 +6,6 @@ import { getPayloadClient } from "../get-payload";
 import { paymentRouter } from "./payment-router";
 
 export const appRouter = router({
-  //  todo effacer cette route inutile
-  anyApiRoute: publicProcedure.query(() => {
-    return "hello";
-  }),
 
   auth: authRouter,
   payment: paymentRouter, 

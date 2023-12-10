@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Share2, Leaf, Store, SearchCheck } from "lucide-react";
 import ProductReel from "@/components/ProductReel";
 import SearchBar from "@/components/SearchBar";
+import { PRODUCT_CATEGORIES } from "@/config";
 
 const perks = [
   {
@@ -26,7 +27,20 @@ const perks = [
   },
 ];
 
+const featuredNamesByCategory = PRODUCT_CATEGORIES.map(category => {
+  return {
+    label: category.label,
+    featuredNames: category.featured.map(featuredItem => featuredItem.name)
+  };
+ });
+ 
+
+console.log('mappedCtegories::::', featuredNamesByCategory) 
+
 export default function Home() {
+
+
+
   return (
     <>
       <MaxWidthWrapper>

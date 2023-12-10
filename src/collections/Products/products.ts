@@ -8,6 +8,9 @@ import { Product, User } from "../../payload-types";
 import { stripe } from "../../lib/stripe";
 import TooltipHelper from "@/components/TooltipHelper";
 import { text } from "body-parser";
+import { features } from "process";
+
+
 
 const addUser: BeforeChangeHook<Product> = async ({ req, data }) => {
   const user = req.user;
@@ -144,10 +147,7 @@ export const Products: CollectionConfig = {
       type: "text",
       required: true,
       unique: true,
-      validate: async (val, {unique}) => {
-        if( unique === true) return true
-        return "le nom de l'article existe déjà, veuillez le changer"
-      },
+      
       admin: {
         description:
           "donnez un titre unique à votre article, par exemple: Titre de l'article + Nom du createur / designer / marque",
@@ -175,14 +175,17 @@ export const Products: CollectionConfig = {
       name: "category",
       label: "Categorie",
       type: "select",
-      options: PRODUCT_CATEGORIES.map(({ label, value }) => ({ label, value })),
+      options: PRODUCT_CATEGORIES.map(({ label, value}) => ({ 
+        label,
+        value,
+    })),
       required: true,
     },
     {
       name: "product_files",
       label: "Product file(s)",
       type: "relationship",
-      required: true,
+      required: false,
       relationTo: "product_files",
       hasMany: false,
     },
