@@ -34,9 +34,6 @@ const featuredNamesByCategory = PRODUCT_CATEGORIES.map(category => {
   };
  });
  
-
-console.log('mappedCtegories::::', featuredNamesByCategory) 
-
 export default function Home() {
 
 

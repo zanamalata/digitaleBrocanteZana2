@@ -41,28 +41,28 @@ export const Users: CollectionConfig = {
       name: "products",
       label: "Products",
       admin: {
-        condition: () => false,
+        condition: () => true,
       },
       type: "relationship",
       relationTo: "products",
       hasMany: true,
     },
-    {
-      name: "product_files",
-      label: "Product files",
-      admin: {
-        condition: () => false,
-      },
-      type: "relationship",
-      relationTo: "product_files",
-      hasMany: true,
-    },
+    // {
+    //   name: "product_files",
+    //   label: "Product files",
+    //   admin: {
+    //     condition: () => false,
+    //   },
+    //   type: "relationship",
+    //   relationTo: "product_files",
+    //   hasMany: true,
+    // },
     {
       name: "role",
       required: true,
       defaultValue: "user",
       admin: {
-        condition: () => false
+        condition: () => true
       },       
       type: "select",
       options: [
@@ -70,5 +70,15 @@ export const Users: CollectionConfig = {
         { label: "User", value: "user" },
       ],
     },
+    {
+      name: "photo",
+      type: "upload",
+      label: "ajouter une photo",
+      relationTo: "photo",
+      required: false,
+      admin: {
+        description: "vendeurs vous pouvez rajouté une photo pour illustrer votre boutique"
+      }
+    }
   ],
 };

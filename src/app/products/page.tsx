@@ -18,14 +18,19 @@ const ProductsPage = ({
   const sort = parse(searchParams.sort)
   const category = parse(searchParams.category)
 
+
+  // TODO: find the proper value
   const label = PRODUCT_CATEGORIES.find(
     ({ value }) => value === category
   )?.label
+
+
 // TODO translate
+
   return (
     <MaxWidthWrapper>
       <ProductReel
-        title={label ?? 'parcourir les produits'}
+        title={label ?? 'parcourir les produits de la collection'}
         query={{
           category,
           limit: 40,

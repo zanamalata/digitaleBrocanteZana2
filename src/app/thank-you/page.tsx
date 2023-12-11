@@ -3,7 +3,7 @@ import Image from "next/image";
 import { cookies } from "next/headers";
 import { getPayloadClient } from "@/get-payload";
 import { notFound, redirect } from "next/navigation";
-import { Product, ProductFile, User } from "@/payload-types";
+import { Product, User } from "@/payload-types";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { formatPrice } from "@/lib/utils";
 import Link from "next/link";
@@ -102,8 +102,8 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
                     ({ value }) => value === product.category
                   )?.label;
 
-                  const downloadUrl = (product.product_files as ProductFile)
-                    .url as string;
+                  // const downloadUrl = (product.product_files as ProductFile)
+                  //   .url as string;
 
                   const { image } = product.images[0];
 
@@ -127,7 +127,7 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
                           <p className="my-1">Categorie: {label}</p>
                         </div>
                         {/* TODO translate */}
-                        {order._isPaid ? (
+                        {/* {order._isPaid ? (
                           <a
                             href={downloadUrl}
                             download={product.name}
@@ -135,7 +135,7 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
                           >
                             Télécharger votre commande
                           </a>
-                        ) : null}
+                        ) : null} */}
                       </div>
 
                       <p className="flex-none font-medium text-gray-900">

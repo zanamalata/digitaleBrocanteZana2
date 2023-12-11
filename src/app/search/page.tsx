@@ -32,9 +32,6 @@ export default async function SearchPage({
 
   const [product] = products;
 
-  console.log("product:::", product);
-  console.log("searchValue:::", searchValue);
-
   const resultsText = product ? "results" : "result";
 // TODO finish style and logic and translate
   return (

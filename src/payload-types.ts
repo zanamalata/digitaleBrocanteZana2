@@ -42,8 +42,9 @@ export interface Product {
   name: string;
   description?: string | null;
   price: number;
-  category: 'librarie' | 'artsdelatable' | 'cotejardin' | 'deco' | 'luminaires' | 'textilesetbijoux' | 'enfants';
-  product_files: string | ProductFile;
+  category: 'librarie' | 'artsdelatable';
+  customSelectField?: string | null;
+  product_files: (string) | ProductFile;
   approvedForSale?: ('pending' | 'approved' | 'denied') | null;
   priceId?: string | null;
   stripeId?: string | null;
