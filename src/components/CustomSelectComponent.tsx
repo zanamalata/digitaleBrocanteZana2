@@ -24,24 +24,24 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
             type: 'select',
             options: [
                 {
-                    value: 'cartes_postales',
                     label: 'Cartes postales',
+                    value: 'cartespostales',
                 },
                 {
-                    value: 'dessins_et_affiches',
                     label: 'Dessins et affiches',
+                    value: 'dessinsetaffiches',
                 },
                 {
-                    value: 'livres_bd_et_revues',
                     label: 'Livres, BD et revues',
+                    value: 'livresbdetrevues',
                 },
                 {
-                    value: 'tableaux_et_gravures',
                     label: 'Tableaux et gravures',
+                    value: 'tableauxetgravures',
                 },
                 {
-                    value: 'vinyles_et_hifi',
                     label: 'Vinyles et hifi',
+                    value: 'vinylesethifi',
                 },
             ],
         },
@@ -52,23 +52,23 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
             options: [
                 {
                     label: 'Asiettes et plats',
-                    value: 'assiettes_et_plats',
+                    value: 'assiettesetplats',
                 },
                 {
                     label: 'Petites vaisselles',
-                    value: 'Petites vaisselle',
+                    value: 'Petitesvaisselle',
                 },
                 {
                     label: 'Tasses et mugs',
-                    value: 'Tasses et mugs',
+                    value: 'Tassesetmugs',
                 },
                 {
                     label: 'Ustensils de cuisine',
-                    value: 'Ustensils de cuisine',
+                    value: 'Ustensilsdecuisine',
                 },
                 {
                     label: 'Verres et carafes',
-                    value: 'Verres et carafes',
+                    value: 'Verresetcarafes',
                 },
             ],
         },
@@ -83,11 +83,11 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
                 },
                 {
                     label: 'Pour le jardin',
-                    value: 'Pour le jardin',
+                    value: 'Pourlejardin',
                 },
                 {
                     label: 'Pour les animaux',
-                    value: 'Pour les animaux',
+                    value: 'Pourlesanimaux',
                 },
             ],
         },
@@ -106,16 +106,16 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
                 },
                 {
                     label: 'Vases et pots',
-                    value: 'vases_et_pots',
+                    value: 'vasesetpots',
                     name: 'Vases et Pots',
                 },
                 {
                     label: 'Objets religieux',
-                    value: 'Objets religieux',
+                    value: 'Objetsreligieux',
                 },
                 {
                     label: 'Objets ethniques',
-                    value: 'Objets ethniques',
+                    value: 'Objetsethniques',
                 },
                 {
                     label: 'Objets indus',

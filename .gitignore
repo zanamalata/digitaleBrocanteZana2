@@ -39,4 +39,7 @@ yarn-error.log*
 next-env.d.ts
 
 # medias
-/src/media/*
+/src/media/**
+
+# photos
+/src/photo/**

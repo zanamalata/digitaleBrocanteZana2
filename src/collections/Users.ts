@@ -71,14 +71,38 @@ export const Users: CollectionConfig = {
       ],
     },
     {
-      name: "photo",
-      type: "upload",
-      label: "ajouter une photo",
-      relationTo: "photo",
+      name: 'Photo',
+      type: 'array',
+      label: 'Photo du profil',
+      minRows: 1,
+      maxRows: 2,
       required: false,
       admin: {
-        description: "vendeurs vous pouvez rajouté une photo pour illustrer votre boutique"
-      }
-    }
+          description: 'Chers vendeurs, afin que votre boutique soit agéable à regarder, nous vous invitons à uploader une photo ou un logo pour votre boutique',
+      },
+      labels: {
+          singular: 'Photo/Logo',
+          plural: 'Photos/Logos',
+      },
+      fields: [
+          {
+              name: 'image',
+              type: 'upload',
+              label: 'ajouter une image',
+              relationTo: 'photo',
+              required: false,
+          },
+          {
+            name: "photo",
+            type: "upload",
+            label: "ajouter une photo",
+            relationTo: "photo",
+            required: false,
+            admin: {
+              description: "vendeurs vous pouvez rajouté une photo pour illustrer votre boutique"
+            }
+          },
+      ],
+  },
   ],
 };
