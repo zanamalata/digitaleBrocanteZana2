@@ -78,7 +78,7 @@ export const Users: CollectionConfig = {
       maxRows: 2,
       required: false,
       admin: {
-          description: 'Chers vendeurs, afin que votre boutique soit agéable à regarder, nous vous invitons à uploader une photo ou un logo pour votre boutique',
+          description: 'Chers vendeurs, afin que votre boutique soit agéable à regarder, nous vous invitons à uploader un logo ou une photo pour votre boutique',
       },
       labels: {
           singular: 'Photo/Logo',
