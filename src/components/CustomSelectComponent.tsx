@@ -107,7 +107,6 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
                 {
                     label: 'Vases et pots',
                     value: 'vasesetpots',
-                    name: 'Vases et Pots',
                 },
                 {
                     label: 'Objets religieux',
@@ -166,10 +165,6 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
                 {
                     label: 'Bijoux',
                     value: 'bijoux',
-                },
-                {
-                    label: 'Vases et pots',
-                    value: 'vasesetpots',
                 },
                 {
                     label: 'Linge de maison',

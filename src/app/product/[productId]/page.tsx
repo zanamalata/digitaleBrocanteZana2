@@ -53,6 +53,7 @@ const Page = async ({ params }: PageProps) => {
       typeof image === 'string' ? image : image.url
     )
     .filter(Boolean) as string[]
+console.log('validURL::::',validUrls)
 
   return (
     <MaxWidthWrapper className='bg-white'>
