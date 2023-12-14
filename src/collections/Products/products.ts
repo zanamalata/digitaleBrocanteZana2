@@ -248,6 +248,39 @@ export const Products: CollectionConfig = {
             ],
         },
         {
+            name: 'ShipmentStatus',
+            label: "Status de l'envoie",
+            type: 'select',
+            defaultValue: 'notSent',
+            access: {
+                create: ({ req }) => req.user.role === 'admin',
+                read: ({ req }) => req.user.role === 'admin',
+                update: ({ req }) => req.user.role === 'admin',
+            },
+            options: [
+                {
+                    label: 'Pas encore envoyé',
+                    value: 'notSent',
+                },
+                {
+                    label: "Envoyé",
+                    value: 'pending',
+                },                
+                {
+                    label: 'Produit reçu',
+                    value: 'received',
+                },
+                {
+                    label: 'Produit refusé',
+                    value: 'denied',
+                },
+                {
+                    label: 'produit accepté',
+                    value: 'accepted',
+                },
+            ],
+        },
+        {
             name: 'priceId',
             access: {
                 create: () => false,

@@ -11,8 +11,8 @@ export interface Config {
     users: User;
     products: Product;
     media: Media;
-    product_files: ProductFile;
     orders: Order;
+    photo: Photo;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -21,8 +21,16 @@ export interface Config {
 export interface User {
   id: string;
   products?: (string | Product)[] | null;
-  product_files?: (string | ProductFile)[] | null;
+  name?: string | null;
+  description?: string | null;
   role?: ('admin' | 'user') | null;
+  Photo?:
+    | {
+        image?: string | Photo | null;
+        photo?: string | Photo | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -42,30 +50,16 @@ export interface Product {
   name: string;
   description?: string | null;
   price: number;
-  category: 'librarie' | 'artsdelatable';
-  customSelectField?: string | null;
-  product_files: (string) | ProductFile;
-  approvedForSale?: ('pending' | 'approved' | 'denied') | null;
-  priceId?: string | null;
-  stripeId?: string | null;
   images: {
     image: string | Media;
     id?: string | null;
   }[];
+  category: string;
+  approvedForSale?: ('pending' | 'approved' | 'denied') | null;
+  priceId?: string | null;
+  stripeId?: string | null;
   updatedAt: string;
   createdAt: string;
-}
-export interface ProductFile {
-  id: string;
-  user?: (string | null) | User;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
 }
 export interface Media {
   id: string;
@@ -96,6 +90,28 @@ export interface Media {
       filename?: string | null;
     };
     tablet?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+export interface Photo {
+  id: string;
+  user?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  sizes?: {
+    thumbnail?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;

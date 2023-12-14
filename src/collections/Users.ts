@@ -47,6 +47,26 @@ export const Users: CollectionConfig = {
       relationTo: "products",
       hasMany: true,
     },
+    {
+      name: "name",
+      label: "Nom du vendeur ou de la boutique",
+      type: "text",
+      admin:{
+        condition: () => true,
+        description: "Le nom du vendeur ou de la boutique",
+      },
+      required: false,
+    },
+    {
+      name: "description",
+      label: "Description du vendeur ou de la boutique",
+      type: "textarea",
+      admin:{
+        condition: () => true,
+        description: "Pour embellir votre boutique donner une description de votre boutique",
+      },
+      required: false,
+    },
     // {
     //   name: "product_files",
     //   label: "Product files",
