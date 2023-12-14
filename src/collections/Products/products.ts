@@ -2,11 +2,13 @@ import {
     BeforeChangeHook,
     AfterChangeHook,
 } from 'payload/dist/collections/config/types'
-import { PRODUCT_CATEGORIES } from '../../config'
-import { Access, CollectionConfig, Field } from 'payload/types'
+import { Access, CollectionConfig, Field, FieldHook } from 'payload/types'
 import { Product, User } from '../../payload-types'
 import { stripe } from '../../lib/stripe'
 import { CustomSelectComponent } from '../../components/CustomSelectComponent'
+import { useField, useFormFields, FormSubmit } from 'payload/components/forms'
+import Prices from '../../components/PriceAfterCommision'
+import { CollectionAfterChangeHook} from 'payload/types'
 
 const addUser: BeforeChangeHook<Product> = async ({ req, data }) => {
     const user = req.user
@@ -72,6 +74,24 @@ const isAdminOrHasAccess =
             },
         }
     }
+
+    
+
+    const afterChangeHook: CollectionAfterChangeHook = async ({
+        doc, // full document data
+        req, // full express request
+        previousDoc, // document data before updating the collection
+        operation, // name of the operation ie. 'create', 'update'
+      }) => {
+        return doc
+      }
+
+
+// if (price && data?.reducedPrice > price) {
+//     throw new Error(
+//         'The reduced price cannot be higher than the original price.'
+//     )
+// }
 
 export const Products: CollectionConfig = {
     slug: 'products',
@@ -165,9 +185,33 @@ export const Products: CollectionConfig = {
             name: 'price',
             label: 'Prix en EUR',
             min: 0,
-            max: 10000,
+            max: 25000,
             type: 'number',
             required: true,
+        },
+        {
+            name: 'reducedPrice',
+            label: 'Prix Réduit en EUR',
+            min: 0,
+            // max: price.value,
+            type: 'number',
+            required: false,
+            // validate: validateReducedPrice,
+            admin: {
+                description:
+                    'Pour booster votre vente, vous pouvez éventuellement réduire le prix de votre article',
+            },
+        },
+        {
+            name: 'priceAfterCommission',
+            label: `(Prix aprés comission) en EUR `,
+            type: 'text',
+            admin: {
+                readOnly: true,
+                components: {
+                    Field: Prices,
+                },
+            },
         },
         {
             name: 'images',
@@ -177,7 +221,8 @@ export const Products: CollectionConfig = {
             maxRows: 5,
             required: true,
             admin: {
-                description: 'Chers vendeurs, afin que votre boutique soit agéable à regarder, nous vous invitons à présenter vos articles en gros plan avec un fond neutre ou une déco sympas.',
+                description:
+                    'Chers vendeurs, afin que votre boutique soit agéable à regarder, nous vous invitons à présenter vos articles en gros plan avec un fond neutre ou une déco sympas.',
             },
             labels: {
                 singular: 'Image',
@@ -204,15 +249,16 @@ export const Products: CollectionConfig = {
         //     required: false,
         // },
         {
-          name: 'category',
-          type: "text",
-          required: true,
-          admin: {
-            components : {
-              Field: CustomSelectComponent,
+            name: 'category',
+            type: 'text',
+            required: true,
+            admin: {
+                components: {
+                    Field: CustomSelectComponent,
+                },
+                description:
+                    'Choisissez une categorie qui correspond à votre article',
             },
-            description: "Choisissez une categorie qui correspond à votre article"
-          }
         },
         // {
         //     name: 'product_files',
@@ -263,9 +309,9 @@ export const Products: CollectionConfig = {
                     value: 'notSent',
                 },
                 {
-                    label: "Envoyé",
+                    label: 'Envoyé',
                     value: 'pending',
-                },                
+                },
                 {
                     label: 'Produit reçu',
                     value: 'received',

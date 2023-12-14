@@ -5,6 +5,7 @@ import ProductReel from '@/components/ProductReel'
 import { PRODUCT_CATEGORIES } from '@/config'
 import { getPayloadClient } from '@/get-payload'
 import { formatPrice } from '@/lib/utils'
+import { log } from 'console'
 import { Check, Shield } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -40,14 +41,7 @@ const Page = async ({ params }: PageProps) => {
 
     const [product] = products
 
-    const productOwner =
-        product.user && 
-        (await payload.findByID({
-            collection: 'users',
-            id: product.user.id,
-        }))
-
-    console.log('productOwner:::', productOwner)
+    // console.log('productOwner:::', product.user?.id)
 
     const label = PRODUCT_CATEGORIES.find(
         ({ value }) => value === product.category

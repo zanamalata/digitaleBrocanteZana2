@@ -20,13 +20,12 @@ export interface Config {
 }
 export interface User {
   id: string;
-  products?: (string | Product)[] | null;
   name?: string | null;
   description?: string | null;
   role?: ('admin' | 'user') | null;
+  products?: (string | Product)[] | null;
   Photo?:
     | {
-        image?: string | Photo | null;
         photo?: string | Photo | null;
         id?: string | null;
       }[]
@@ -50,12 +49,15 @@ export interface Product {
   name: string;
   description?: string | null;
   price: number;
+  reducedPrice?: number | null;
+  priceAfterCommission?: string | null;
   images: {
     image: string | Media;
     id?: string | null;
   }[];
   category: string;
   approvedForSale?: ('pending' | 'approved' | 'denied') | null;
+  ShipmentStatus?: ('notSent' | 'pending' | 'received' | 'denied' | 'accepted') | null;
   priceId?: string | null;
   stripeId?: string | null;
   updatedAt: string;

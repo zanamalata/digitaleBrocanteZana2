@@ -60,6 +60,7 @@ export const Photo: CollectionConfig = {
       type: "relationship",
       relationTo: "users",
       required: true,
+      unique: true,
       hasMany: false,
       admin: {
         condition: () => false,

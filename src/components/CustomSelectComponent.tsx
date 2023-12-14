@@ -17,7 +17,7 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
     options,
 }) => {
     const { value, setValue } = useField<string>({ path })
-    const { user } = useAuth()
+    
 
     const adjustedOptions = 
     PRODUCT_CATEGORIES.map((category) => {
