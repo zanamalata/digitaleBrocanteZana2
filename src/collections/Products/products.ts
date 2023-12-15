@@ -6,9 +6,28 @@ import { Access, CollectionConfig, Field, FieldHook } from 'payload/types'
 import { Product, User } from '../../payload-types'
 import { stripe } from '../../lib/stripe'
 import { CustomSelectComponent } from '../../components/CustomSelectComponent'
-import { useField, useFormFields, FormSubmit } from 'payload/components/forms'
-import Prices from '../../components/PriceAfterCommision'
-import { CollectionAfterChangeHook} from 'payload/types'
+import PriceAfterCommission from '../../components/PriceAfterCommision'
+import { useFormFields } from 'payload/components/forms'
+import { CollectionBeforeValidateHook } from 'payload/types'
+import e from 'express'
+
+interface CustomSelectProps {
+    path: string
+    options: {
+        label: string 
+        value: string 
+    }[]
+}
+
+const ValidatReducedPrice = ({ path, options }: CustomSelectProps) => {
+    const { price } = useFormFields(([fields, dispatch]) => fields)
+    const reducedPrice = useFormFields(([fields, dispatch]) => fields)
+    console.log(reducedPrice.value, price.value)
+
+    if ( Number(reducedPrice.value) > Number(price.value) ) throw new Error('Le prix réduit doit être inférieur au prix normal')
+
+    return Number(price.value)
+}
 
 const addUser: BeforeChangeHook<Product> = async ({ req, data }) => {
     const user = req.user
@@ -74,24 +93,6 @@ const isAdminOrHasAccess =
             },
         }
     }
-
-    
-
-    const afterChangeHook: CollectionAfterChangeHook = async ({
-        doc, // full document data
-        req, // full express request
-        previousDoc, // document data before updating the collection
-        operation, // name of the operation ie. 'create', 'update'
-      }) => {
-        return doc
-      }
-
-
-// if (price && data?.reducedPrice > price) {
-//     throw new Error(
-//         'The reduced price cannot be higher than the original price.'
-//     )
-// }
 
 export const Products: CollectionConfig = {
     slug: 'products',
@@ -186,21 +187,33 @@ export const Products: CollectionConfig = {
             label: 'Prix en EUR',
             min: 0,
             max: 25000,
-            type: 'number',
+            type: "number",
             required: true,
         },
         {
             name: 'reducedPrice',
-            label: 'Prix Réduit en EUR',
+            label: 'Prix aprés réduction en EUR',
             min: 0,
-            // max: price.value,
             type: 'number',
             required: false,
-            // validate: validateReducedPrice,
             admin: {
                 description:
                     'Pour booster votre vente, vous pouvez éventuellement réduire le prix de votre article',
             },
+            hooks: {
+                beforeValidate: [
+                    async ({data}) => {
+                        const price = await data?.price
+                        const reducedPrice = await data?.reducedPrice
+                        console.log('datab4V:::',reducedPrice, price)
+
+                        if ( reducedPrice > Number(price) ) {
+                            throw new Error('Reduced price must be lower than the normal price')
+                        }
+                     return reducedPrice
+                    }
+                ],
+            }
         },
         {
             name: 'priceAfterCommission',
@@ -209,7 +222,7 @@ export const Products: CollectionConfig = {
             admin: {
                 readOnly: true,
                 components: {
-                    Field: Prices,
+                    Field: PriceAfterCommission,
                 },
             },
         },
