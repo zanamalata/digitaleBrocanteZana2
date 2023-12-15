@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { SelectInput, useField } from 'payload/components/forms'
-import { useAuth } from 'payload/components/utilities'
 import { PRODUCT_CATEGORIES } from '../config'
 
 interface CustomSelectProps {

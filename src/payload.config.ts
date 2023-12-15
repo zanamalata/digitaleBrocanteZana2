@@ -34,6 +34,21 @@ export default buildConfig({
                 Dashboard: Dashboard,
             },
         },
+        css: path.resolve(__dirname, './css/style.scss'),
+    },
+    i18n: {
+        fallbackLng: 'fr',
+        debug: false,
+        resources: {
+            en: {
+                errors: {
+                    validation: {
+                        reducedPrice:
+                            'reduced price should be inferior to the original price',
+                    },
+                },
+            },
+        },
     },
     rateLimit: {
         max: 2000,

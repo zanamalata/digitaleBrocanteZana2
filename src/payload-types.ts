@@ -50,6 +50,7 @@ export interface Product {
   description?: string | null;
   price: number;
   reducedPrice?: number | null;
+  productPricesFields?: string | null;
   priceAfterCommission?: string | null;
   images: {
     image: string | Media;

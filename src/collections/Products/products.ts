@@ -8,14 +8,21 @@ import { stripe } from '../../lib/stripe'
 import { CustomSelectComponent } from '../../components/CustomSelectComponent'
 import PriceAfterCommission from '../../components/PriceAfterCommision'
 import { useFormFields } from 'payload/components/forms'
-import { CollectionBeforeValidateHook } from 'payload/types'
-import e from 'express'
+import { APIError } from 'payload/errors'
+import { toast } from 'sonner'
+import ProductPricesFields from '../../components/ProductPricesFields'
+
+class ReducedPriceError extends APIError {
+    constructor(message: string) {
+        super(message, 400, undefined, true)
+    }
+}
 
 interface CustomSelectProps {
     path: string
     options: {
-        label: string 
-        value: string 
+        label: string
+        value: string
     }[]
 }
 
@@ -24,7 +31,8 @@ const ValidatReducedPrice = ({ path, options }: CustomSelectProps) => {
     const reducedPrice = useFormFields(([fields, dispatch]) => fields)
     console.log(reducedPrice.value, price.value)
 
-    if ( Number(reducedPrice.value) > Number(price.value) ) throw new Error('Le prix réduit doit être inférieur au prix normal')
+    if (Number(reducedPrice.value) > Number(price.value))
+        throw new Error('Le prix réduit doit être inférieur au prix normal')
 
     return Number(price.value)
 }
@@ -187,7 +195,7 @@ export const Products: CollectionConfig = {
             label: 'Prix en EUR',
             min: 0,
             max: 25000,
-            type: "number",
+            type: 'number',
             required: true,
         },
         {
@@ -196,24 +204,51 @@ export const Products: CollectionConfig = {
             min: 0,
             type: 'number',
             required: false,
+            validate: async ({ data }) => {
+                const price = await data?.price
+                const reducedPrice = await data?.reducedPrice
+
+                if (reducedPrice > Number(price)) {
+                    return toast.error(
+                        'le prix aprés réduction ne peut pas être supérieur au prix'
+                    )
+                }
+
+                return reducedPrice
+            },
+
             admin: {
                 description:
                     'Pour booster votre vente, vous pouvez éventuellement réduire le prix de votre article',
             },
             hooks: {
                 beforeValidate: [
-                    async ({data}) => {
+                    async ({ data }) => {
                         const price = await data?.price
                         const reducedPrice = await data?.reducedPrice
-                        console.log('datab4V:::',reducedPrice, price)
+                        console.log('datab4V:::', reducedPrice, price)
 
-                        if ( reducedPrice > Number(price) ) {
-                            throw new Error('Reduced price must be lower than the normal price')
+                        if (reducedPrice > Number(price)) {
+                            throw new Error(
+                                'Le prix aprés réduction ne peut pas être supérieur au prix'
+                            )
                         }
-                     return reducedPrice
-                    }
+
+                        return reducedPrice
+                    },
                 ],
-            }
+            },
+        },
+        {
+            name: 'productPricesFields',
+            label: "Prix de l'article",
+            type: 'text',
+            admin: {
+                readOnly: true,
+                components: {
+                    Field: ProductPricesFields,
+                },
+            },
         },
         {
             name: 'priceAfterCommission',
