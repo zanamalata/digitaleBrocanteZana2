@@ -34,7 +34,7 @@ export default buildConfig({
                 Dashboard: Dashboard,
             },
         },
-        css: path.resolve(__dirname, './css/style.scss'),
+        // css: path.resolve(__dirname, './css/style.scss'),
     },
     i18n: {
         fallbackLng: 'fr',
