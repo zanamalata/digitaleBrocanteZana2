@@ -151,12 +151,12 @@ const ProductPricesFields: React.FC<Props> = (props) => {
             <div className={baseClass}>
                 <Label htmlFor={path} label={label} required={required} />
                 
-                <input
+                {/* <input
                     type="number"
                     name="priceField"
                     onChange={(e) => setValue(e.target.value)}
                     value={value?.path}
-                />
+                /> */}
             </div>
         )
     }
@@ -164,10 +164,10 @@ const ProductPricesFields: React.FC<Props> = (props) => {
     const ReducedPriceField: React.FC<Props> = (props) => {
         const { path, label, required } = props
 
-        const { value = '', setValue } = useFieldType<number>({
-            path,
-            // validate: validateHexColor,
-        })
+        // const { value = '', setValue } = useFieldType<number>({
+        //     path,
+        //     // validate: validateHexColor,
+        // })
 
         return (
             <div className={baseClass}>
@@ -180,7 +180,7 @@ const ProductPricesFields: React.FC<Props> = (props) => {
 
     return (
         <>
-            <PriceField
+            {/* <PriceField
                 label="Prix"
                 path="priceField"
                 required
@@ -198,7 +198,7 @@ const ProductPricesFields: React.FC<Props> = (props) => {
                     setValue(e.target.value)
                 }
                 value={value?.path}
-            />
+            /> */}
         </>
     )
 }
