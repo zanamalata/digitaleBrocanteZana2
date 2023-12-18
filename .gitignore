@@ -37,11 +37,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# medias
-/src/media/*
-/src/media/**/*
-
-# photos
-/src/photo/*
-/src/photo/**/*

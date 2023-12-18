@@ -37,6 +37,7 @@ export default buildConfig({
         // },
         // css: path.resolve(__dirname, './css/style.scss'),
     },
+    cors: "*",
     // plugins: [
     //     FormBuilder({
     //         fields: {

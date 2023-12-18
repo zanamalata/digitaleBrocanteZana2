@@ -1,11 +1,11 @@
 export const PRODUCT_CATEGORIES = [
     {
-        label: 'Librairie',
-        value: 'librarie' as const,
+        label: 'Art',
+        value: 'art' as const,
         featured: [
             {
-                name: 'Cartes postales',
-                value: 'cartespostales',
+                name: 'Tableaux anciens et dessins',
+                value: 'tableaux-anciens-dessins',
                 href: '/products?category=cartespostales',
                 imageSrc: '/nav/arts/cartespostales.jpg',
             },

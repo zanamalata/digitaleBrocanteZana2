@@ -43,19 +43,20 @@ export default function Home() {
       <MaxWidthWrapper>
         <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Votre brocante <br />
-            <span className="text-blue-600">en ligne</span>
+            WOW ! <br />
+            <span className="text-blue-600"></span>
           </h1>
-          <p className="mt-6 text-xl font-semibold max-w-prose text-muted-foreground">
+          <h2 className="text-3xl font-bold">Art, design, vintage</h2>
+          {/* <p className="mt-6 text-xl font-semibold max-w-prose text-muted-foreground">
             <span className="whitespace-nowrap">
-              Bienvenue sur Digital Brocante! 😍
+              Bienvenue sur Wow! 😍
             </span>
             <br />
             Tous les produits sur cette plateforme sont vérifiés par nos equipes
             pour vous assurer la meilleure qualité possible
-          </p>
+          </p> */}
           <SearchBar />
-          <div className="flex flex-col sm:flex-row gap-4 mt-6">
+          <div className="flex flex-col sm:flex-row gap-4 mt-12">
             <Link href={"/products"} className={buttonVariants()}>
               Parcourir les tendances
             </Link>
