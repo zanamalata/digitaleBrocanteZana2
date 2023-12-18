@@ -10,7 +10,7 @@ import PriceAfterCommission from '../../components/PriceAfterCommision'
 import { useFormFields } from 'payload/components/forms'
 import { APIError } from 'payload/errors'
 import { toast } from 'sonner'
-import ProductPricesFields from '../../components/ProductPricesFields'
+// import ProductPricesFields from '../../components/ProductPricesFields'
 
 // class ReducedPriceError extends APIError {
 //     constructor(message: string) {
