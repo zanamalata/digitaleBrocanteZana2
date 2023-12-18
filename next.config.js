@@ -12,6 +12,7 @@ const nextConfig = {
     hostname: "digitalebrocantezana2-production.up.railway.app",
     pathname: "**",
     protocol: "https",
+    port: "*",
   }],
   },
 }

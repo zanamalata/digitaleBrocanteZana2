@@ -40,6 +40,8 @@ export default buildConfig({
     cors: [
         "http://localhost:3000/**/*",
         "https://digitalebrocantezana2-production.up.railway.app/**/*",
+        "*"
+
     ],
     // plugins: [
     //     FormBuilder({
