@@ -6,7 +6,7 @@ export const PRODUCT_CATEGORIES = [
             {
                 name: 'Tableaux anciens et dessins',
                 value: 'tableaux-anciens-dessins',
-                href: '/products?category=cartespostales',
+                href: '/products?category=tableaux-anciens-dessins',
                 imageSrc: '/nav/arts/cartespostales.jpg',
             },
             {
