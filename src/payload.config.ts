@@ -9,7 +9,7 @@ import { Products } from './collections/Products/products'
 import { Media } from './collections/Media'
 import { Orders } from './collections/Orders'
 import { Photo } from './collections/Photo'
-import Dashboard from './components/dashboard/Dashboard'
+// import Dashboard from './components/dashboard/Dashboard'
 import FormBuilder from '@payloadcms/plugin-form-builder'
 
 dotenv.config({
@@ -30,11 +30,11 @@ export default buildConfig({
             favicon: '/favicon.ico',
             ogImage: '/thumbnail.jpg',
         },
-        components: {
-            views: {
-                Dashboard: Dashboard,
-            },
-        },
+        // components: {
+        //     views: {
+        //         Dashboard: Dashboard,
+        //     },
+        // },
         // css: path.resolve(__dirname, './css/style.scss'),
     },
     plugins: [
