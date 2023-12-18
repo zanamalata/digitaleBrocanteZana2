@@ -37,7 +37,10 @@ export default buildConfig({
         // },
         // css: path.resolve(__dirname, './css/style.scss'),
     },
-    cors: "*",
+    cors: [
+        "http://localhost:3000",
+        "https://digitalebrocantezana2-production.up.railway.app"
+    ],
     // plugins: [
     //     FormBuilder({
     //         fields: {
