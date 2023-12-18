@@ -38,8 +38,8 @@ export default buildConfig({
         // css: path.resolve(__dirname, './css/style.scss'),
     },
     cors: [
-        "http://localhost:3000/*",
-        "https://digitalebrocantezana2-production.up.railway.app/*"
+        "http://localhost:3000/**/*",
+        "https://digitalebrocantezana2-production.up.railway.app/**/*",
     ],
     // plugins: [
     //     FormBuilder({
