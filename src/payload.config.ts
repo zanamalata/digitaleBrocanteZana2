@@ -10,7 +10,7 @@ import { Media } from './collections/Media'
 import { Orders } from './collections/Orders'
 import { Photo } from './collections/Photo'
 // import Dashboard from './components/dashboard/Dashboard'
-import FormBuilder from '@payloadcms/plugin-form-builder'
+// import FormBuilder from '@payloadcms/plugin-form-builder'
 
 dotenv.config({
     path: path.resolve(__dirname, '../.env'),
@@ -37,22 +37,22 @@ export default buildConfig({
         // },
         // css: path.resolve(__dirname, './css/style.scss'),
     },
-    plugins: [
-        FormBuilder({
-            fields: {
-                text: true,
-                textarea: true,
-                select: true,
-                email: true,
-                state: true,
-                country: true,
-                checkbox: true,
-                number: true,
-                message: true,
-                payment: false,
-            },
-        }),
-    ],
+    // plugins: [
+    //     FormBuilder({
+    //         fields: {
+    //             text: true,
+    //             textarea: true,
+    //             select: true,
+    //             email: true,
+    //             state: true,
+    //             country: true,
+    //             checkbox: true,
+    //             number: true,
+    //             message: true,
+    //             payment: false,
+    //         },
+    //     }),
+    // ],
     i18n: {
         fallbackLng: 'fr',
         debug: false,

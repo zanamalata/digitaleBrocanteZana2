@@ -12,11 +12,11 @@ import { APIError } from 'payload/errors'
 import { toast } from 'sonner'
 import ProductPricesFields from '../../components/ProductPricesFields'
 
-class ReducedPriceError extends APIError {
-    constructor(message: string) {
-        super(message, 400, undefined, true)
-    }
-}
+// class ReducedPriceError extends APIError {
+//     constructor(message: string) {
+//         super(message, 400, undefined, true)
+//     }
+// }
 
 interface CustomSelectProps {
     path: string
@@ -204,25 +204,25 @@ export const Products: CollectionConfig = {
             min: 0,
             type: 'number',
             required: false,
-            validate: async ({ data }) => {
-                const price = await data?.price
-                const reducedPrice = await data?.reducedPrice
+            // validate: async ({ data }) => {
+            //     const price = await data?.price
+            //     const reducedPrice = await data?.reducedPrice
 
-                if (reducedPrice > Number(price)) {
-                    return toast.error(
-                        'le prix aprés réduction ne peut pas être supérieur au prix'
-                    )
-                }
+            //     if (reducedPrice > Number(price)) {
+            //         return toast.error(
+            //             'le prix aprés réduction ne peut pas être supérieur au prix'
+            //         )
+            //     }
 
-                return reducedPrice
-            },
+            //     return reducedPrice
+            // },
 
             admin: {
                 description:
                     'Pour booster votre vente, vous pouvez éventuellement réduire le prix de votre article',
             },
             hooks: {
-                beforeValidate: [
+                afterChange: [
                     async ({ data }) => {
                         const price = await data?.price
                         const reducedPrice = await data?.reducedPrice
@@ -239,17 +239,18 @@ export const Products: CollectionConfig = {
                 ],
             },
         },
-        {
-            name: 'productPricesFields',
-            label: "Prix de l'article",
-            type: 'text',
-            admin: {
-                readOnly: true,
-                components: {
-                    Field: ProductPricesFields,
-                },
-            },
-        },
+        // {
+        //     name: 'productPricesFields',
+        //     label: "Prix de l'article",
+        //     type: 'text',
+        //     admin: {
+        //         readOnly: true,
+        //         components: {
+        //             Field: ProductPricesFields,
+        //         },
+        //     },
+        // },
+        
         {
             name: 'priceAfterCommission',
             label: `(Prix aprés comission) en EUR `,
