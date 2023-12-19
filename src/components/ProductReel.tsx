@@ -28,11 +28,11 @@ const ProductReel = (props: ProductReelProps) => {
         getNextPageParam: (lastPage) => lastPage.nextPage,
       }
     )
-console.log(queryResults)
+console.log('queryResult:::',queryResults)
   const products = queryResults?.pages.flatMap(
     (page) => page.items
   )
-
+console.log('products:::', products)
   let map: (Product | null)[] = []
   if (products && products.length) {
     map = products
@@ -41,6 +41,7 @@ console.log(queryResults)
       query.limit ?? FALLBACK_LIMIT
     ).fill(null)
   }
+console.log('map:::', map)
 
   return (
     <section className='py-12'>

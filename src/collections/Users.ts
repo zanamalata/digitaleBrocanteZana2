@@ -84,7 +84,7 @@ export const Users: CollectionConfig = {
             name: 'products',
             label: 'Products',
             admin: {
-                condition: () => true,
+                condition: () => false,
             },
             type: 'relationship',
             relationTo: 'products',

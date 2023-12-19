@@ -37,7 +37,12 @@ export default buildConfig({
         // },
         // css: path.resolve(__dirname, './css/style.scss'),
     },
-    cors: '*',
+    cors: [
+        'https://digitalebrocantezana2-production.up.railway.app/**/*',
+        'https://digitalebrocantezana2-production.up.railway.app/api/trpc/*',
+        'http://localhost:3000',
+        'https://digitalebrocantezana2-production.up.railway.app/_next/image?url=https://digitalebrocantezana2-production.up.railway.app/media/gravure-1.webp&w=1920&q=75ad'
+    ],
     // plugins: [
     //     FormBuilder({
     //         fields: {
