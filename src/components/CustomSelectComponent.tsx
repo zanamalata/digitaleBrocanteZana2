@@ -27,7 +27,7 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
             options: category.featured.map((featuredItem) => {
                 return {
                     label: featuredItem.name,
-                    value: featuredItem.value,
+                    value: featuredItem.name,
                 }
             })
         }
