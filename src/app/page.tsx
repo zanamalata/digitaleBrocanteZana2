@@ -5,6 +5,7 @@ import { Share2, Leaf, Store, SearchCheck } from "lucide-react";
 import ProductReel from "@/components/ProductReel";
 import SearchBar from "@/components/SearchBar";
 import { PRODUCT_CATEGORIES } from "@/config";
+import SellerCarousel from "@/components/SellerCarousel";
 
 const perks = [
   {
@@ -74,8 +75,8 @@ export default function Home() {
 
       <MaxWidthWrapper>
         <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
-          <h3>Nos Boutiques</h3>
-          {/* TODO add seller carousel */}
+          
+          <SellerCarousel />
         </div>
       </MaxWidthWrapper>
 

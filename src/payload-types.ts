@@ -13,8 +13,7 @@ export interface Config {
     media: Media;
     orders: Order;
     photo: Photo;
-    forms: Form;
-    'form-submissions': FormSubmission;
+    banner: Banner;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -22,9 +21,11 @@ export interface Config {
 }
 export interface User {
   id: string;
-  name?: string | null;
-  description?: string | null;
-  role?: ('admin' | 'user') | null;
+  username?: string | null;
+  seller_name?: string | null;
+  seller_activity?: string | null;
+  seller_description?: string | null;
+  role?: ('admin' | 'user' | 'seller') | null;
   products?: (string | Product)[] | null;
   Photo?:
     | {
@@ -32,6 +33,19 @@ export interface User {
         id?: string | null;
       }[]
     | null;
+  Banner?:
+    | {
+        banner?: string | Banner | null;
+        id?: string | null;
+      }[]
+    | null;
+  firstname?: string | null;
+  lastname?: string | null;
+  adress1?: string | null;
+  adress2?: string | null;
+  city?: string | null;
+  postcode?: number | null;
+  country?: ('france' | 'germany' | 'spain') | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -52,7 +66,6 @@ export interface Product {
   description?: string | null;
   price: number;
   reducedPrice?: number | null;
-  productPricesFields?: string | null;
   priceAfterCommission?: string | null;
   images: {
     image: string | Media;
@@ -126,154 +139,33 @@ export interface Photo {
     };
   };
 }
+export interface Banner {
+  id: string;
+  user?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  sizes?: {
+    fullHd?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
 export interface Order {
   id: string;
   _isPaid: boolean;
   user: string | User;
   products: (string | Product)[];
-  updatedAt: string;
-  createdAt: string;
-}
-export interface Form {
-  id: string;
-  title: string;
-  fields?:
-    | (
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: string | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'text';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: string | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textarea';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: string | null;
-            options?:
-              | {
-                  label: string;
-                  value: string;
-                  id?: string | null;
-                }[]
-              | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'select';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'email';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'state';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'country';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            defaultValue?: number | null;
-            required?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'number';
-          }
-        | {
-            name: string;
-            label?: string | null;
-            width?: number | null;
-            required?: boolean | null;
-            defaultValue?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'checkbox';
-          }
-        | {
-            message?:
-              | {
-                  [k: string]: unknown;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'message';
-          }
-      )[]
-    | null;
-  submitButtonLabel?: string | null;
-  confirmationType?: ('message' | 'redirect') | null;
-  confirmationMessage?:
-    | {
-        [k: string]: unknown;
-      }[]
-    | null;
-  redirect?: {
-    url: string;
-  };
-  emails?:
-    | {
-        emailTo?: string | null;
-        cc?: string | null;
-        bcc?: string | null;
-        replyTo?: string | null;
-        emailFrom?: string | null;
-        subject: string;
-        message?:
-          | {
-              [k: string]: unknown;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-export interface FormSubmission {
-  id: string;
-  form: string | Form;
-  submissionData?:
-    | {
-        field: string;
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
 }
