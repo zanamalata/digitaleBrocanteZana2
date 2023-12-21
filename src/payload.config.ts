@@ -9,6 +9,7 @@ import { Products } from './collections/Products/products'
 import { Media } from './collections/Media'
 import { Orders } from './collections/Orders'
 import { Photo } from './collections/Photo'
+import { Banner } from './collections/Banner'
 // import Dashboard from './components/dashboard/Dashboard'
 // import FormBuilder from '@payloadcms/plugin-form-builder'
 
@@ -18,7 +19,7 @@ dotenv.config({
 
 export default buildConfig({
     serverURL: process.env.NEXT_PUBLIC_SERVER_URL || '',
-    collections: [Users, Products, Media, Orders, Photo],
+    collections: [Users, Products, Media, Orders, Photo, Banner],
     routes: {
         admin: '/sell',
     },
@@ -35,30 +36,8 @@ export default buildConfig({
         //         Dashboard: Dashboard,
         //     },
         // },
-        // css: path.resolve(__dirname, './css/style.scss'),
+         css: path.resolve(__dirname, './css/style.scss'),
     },
-    // cors: [
-    //     'https://digitalebrocantezana2-production.up.railway.app/**/*',
-    //     'https://digitalebrocantezana2-production.up.railway.app/api/trpc/*',
-    //     'http://localhost:3000',
-    //     'https://digitalebrocantezana2-production.up.railway.app/_next/image?url=https://digitalebrocantezana2-production.up.railway.app/media/gravure-1.webp&w=1920&q=75ad'
-    // ],
-    // plugins: [
-    //     FormBuilder({
-    //         fields: {
-    //             text: true,
-    //             textarea: true,
-    //             select: true,
-    //             email: true,
-    //             state: true,
-    //             country: true,
-    //             checkbox: true,
-    //             number: true,
-    //             message: true,
-    //             payment: false,
-    //         },
-    //     }),
-    // ],
     i18n: {
         fallbackLng: 'fr',
         debug: false,

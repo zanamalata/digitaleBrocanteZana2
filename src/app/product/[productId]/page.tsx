@@ -5,10 +5,8 @@ import ProductReel from '@/components/ProductReel'
 import { PRODUCT_CATEGORIES } from '@/config'
 import { getPayloadClient } from '@/get-payload'
 import { formatPrice } from '@/lib/utils'
-import { log } from 'console'
 import { Check, Shield } from 'lucide-react'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
 
 interface PageProps {
     params: {
@@ -41,7 +39,7 @@ const Page = async ({ params }: PageProps) => {
 
     const [product] = products
 
-    // console.log('productOwner:::', product.user?.id)
+    
 
     const label = PRODUCT_CATEGORIES.find(
         ({ value }) => value === product.category
@@ -105,7 +103,7 @@ const Page = async ({ params }: PageProps) => {
                                 </p>
                             </div>
 
-                            <div className="mt-6 flex items-center">
+                            {/* <div className="mt-6 flex items-center">
                                 <Check
                                     aria-hidden="true"
                                     className="h-5 w-5 flex-shrink-0 text-green-500"
@@ -113,7 +111,7 @@ const Page = async ({ params }: PageProps) => {
                                 <p className="ml-2 text-sm text-muted-foreground">
                                     Eligible for instant delivery
                                 </p>
-                            </div>
+                            </div> */}
                         </section>
                     </div>
 

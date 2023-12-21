@@ -5,6 +5,7 @@ const nextConfig = {
     remotePatterns: [{
       hostname: "localhost",
       protocol: "http",
+      port: "3000"
     },
   {
     hostname: "digitalebrocantezana2-production.up.railway.app",

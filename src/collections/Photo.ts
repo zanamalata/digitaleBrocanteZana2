@@ -42,8 +42,8 @@ export const Photo: CollectionConfig = {
     hidden: ({user}) => user.role !== "admin"
   },
   upload: {
-    staticURL: "/photo",
-    staticDir: "photo",
+    staticURL: "/media/photo",
+    staticDir: "media/photo",
     imageSizes: [
       {
         name: 'thumbnail',
@@ -60,7 +60,6 @@ export const Photo: CollectionConfig = {
       type: "relationship",
       relationTo: "users",
       required: true,
-      unique: true,
       hasMany: false,
       admin: {
         condition: () => false,

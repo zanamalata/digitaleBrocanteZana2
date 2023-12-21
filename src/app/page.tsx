@@ -46,7 +46,7 @@ export default function Home() {
             WOW ! <br />
             <span className="text-blue-600"></span>
           </h1>
-          <h2 className="text-3xl font-bold">Art, design, vintage</h2>
+          <h2 className="text-3xl font-bold my-4">Art, design, vintage</h2>
           {/* <p className="mt-6 text-xl font-semibold max-w-prose text-muted-foreground">
             <span className="whitespace-nowrap">
               Bienvenue sur Wow! 😍
@@ -70,6 +70,13 @@ export default function Home() {
           title="Nouveauté"
           query={{ sort: "desc", limit: 4 }}
         />
+      </MaxWidthWrapper>
+
+      <MaxWidthWrapper>
+        <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
+          <h3>Nos Boutiques</h3>
+          {/* TODO add seller carousel */}
+        </div>
       </MaxWidthWrapper>
 
       <section className="border-t border-gray-200 bg-gray-50">

@@ -2,6 +2,8 @@ import * as React from 'react'
 import { SelectInput, useField } from 'payload/components/forms'
 import { PRODUCT_CATEGORIES } from '../config'
 
+// TODO style component
+
 interface CustomSelectProps {
     path: string
     options: {
@@ -22,8 +24,7 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
     PRODUCT_CATEGORIES.map((category) => {
         return {
             label: category.label,
-            value: category.value,
-            type:'select',
+            value: category.value,           
             options: category.featured.map((featuredItem) => {
                 return {
                     label: featuredItem.name,
@@ -42,6 +43,7 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
                 options={adjustedOptions}
                 value={value}
                 onChange={(e) => setValue(e.value)}
+                
             />
         </div>
     )
