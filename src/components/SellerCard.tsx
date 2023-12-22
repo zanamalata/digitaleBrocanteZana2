@@ -25,7 +25,7 @@ interface SellerCardProps {
                 </p>
                 <Image
                     src={
-                        typeof seller.Photo === 'string' ? seller.Photo : '/checkout.thank-you.jpg'
+                        typeof seller.Photo === 'string' ? seller.Photo : '/checkout-thank-you.jpg'
                     }
                     alt={'seller picture'}
                     placeholder="blur"

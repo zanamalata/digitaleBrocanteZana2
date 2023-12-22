@@ -28,7 +28,9 @@ export const Photo: CollectionConfig = {
   },
   access: {
     read: async ({req}) => {
+      
       const referer = req.headers.referer
+      console.log('referre:::::', referer)
 
       if(!req.user || !referer?.includes("sell")) {
         return true
