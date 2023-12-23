@@ -1,18 +1,7 @@
+import { isAdminOrSelf } from '../access/IsAdminOrSelf'
 import { PrimaryActionEmailHtml } from '../components/emails/PrimaryActionEmail'
-import { Access, CollectionConfig, FieldAccess } from 'payload/types'
-
-const adminsAndUser: Access = ({ req: { user } }) => {
-    return {
-        id: {
-            equals: user.id,
-        },
-    }
-}
-
-const admins: FieldAccess = ({ req: {user}}) => {
-    if (user.role === 'admin') return true
-    else return false
-}
+import { CollectionConfig, FieldAccess } from 'payload/types'
+import { isAdmin, isAdminFieldLevel } from '../access/IsAdmin'
 
 const adminsAndSeller: FieldAccess = ({ req: { user } }) => {
     if (user.role === 'admin') return true
@@ -35,11 +24,12 @@ export const Users: CollectionConfig = {
         },
     },
     access: {
-        read: adminsAndUser,
-        create: adminsAndUser,
-        update: adminsAndUser,
-        delete: ({ req }) => req.user.role === 'admin',
+        read: isAdminOrSelf,
+        create: isAdminOrSelf,
+        update: isAdminOrSelf,
+        delete: isAdmin,
     },
+    upload: true,
     admin: {
         hidden: ({ user }) => user.role !== 'admin',
         defaultColumns: ['id'],
@@ -77,6 +67,7 @@ export const Users: CollectionConfig = {
             name: 'seller_activity',
             label: 'activité du vendeur',
             type: 'text',
+            required: false,
             access: {
                 create: adminsAndSeller,
                 read: adminsAndSeller,
@@ -87,12 +78,12 @@ export const Users: CollectionConfig = {
                 description: 'activité du vendeur ou de la boutique',
                 placeholder: 'brocanteur, artisant, designer, artiste, etc...',
             },
-            required: false,
         },
         {
             name: 'seller_description',
             label: 'Description du vendeur ou de la boutique',
             type: 'textarea',
+            required: false,
             access: {
                 create: adminsAndSeller,
                 read: adminsAndSeller,
@@ -105,7 +96,6 @@ export const Users: CollectionConfig = {
                 placeholder:
                     'description de votre boutique ou de vos articles, par exemple : je suis brocanteur spécialisé dans le style brutaliste, mes articles sont sélectionnés et trier.....',
             },
-            required: false,
         },
         // {
         //   name: "product_files",
@@ -126,8 +116,8 @@ export const Users: CollectionConfig = {
             },
             access: {
                 read: () => true,
-                create: admins,
-                update: admins,
+                create: isAdminFieldLevel,
+                update: isAdminFieldLevel,
             },
             type: 'select',
             options: [
@@ -147,12 +137,12 @@ export const Users: CollectionConfig = {
             hasMany: true,
         },
         {
-            name: 'Photo',
-            type: 'array',
-            label: 'Photo du profil',
-            minRows: 1,
-            maxRows: 1,
+            name: 'photo',
+            type: 'upload',
+            label: 'Ajouter une photo',
+            relationTo: 'photo',
             required: false,
+            
             access: {
                 create: adminsAndSeller,
                 read: adminsAndSeller,
@@ -160,53 +150,25 @@ export const Users: CollectionConfig = {
             },
             admin: {
                 description:
-                    'Chers vendeurs, afin que votre boutique soit agéable à regarder, nous vous invitons à uploader un logo ou une photo pour votre boutique',
+                'vendeurs vous pouvez rajouté une photo pour illustrer votre boutique',
             },
-            fields: [
-                {
-                    name: 'photo',
-                    type: 'upload',
-                    label: 'Ajouter une photo',
-                    relationTo: 'photo',
-                    required: false,
-                    admin: {
-                        description:
-                            'vendeurs vous pouvez rajouté une photo pour illustrer votre boutique',
-                    },
-                },
-            ],
         },
-        {
-            name: 'Banner',
-            type: 'array',
-            label: 'Banniere de la boutique',
-            minRows: 1,
-            maxRows: 1,
-            required: false,
-            access: {
-                create: adminsAndSeller,
-                read: adminsAndSeller,
-                update: adminsAndSeller,
-            },
-            admin: {
-                description:
-                    'Chers vendeurs, afin que votre boutique soit agéable à regarder, nous vous invitons à uploader une bannière pour votre boutique',
-            },
-
-            fields: [
-                {
-                    name: 'banner',
-                    type: 'upload',
-                    label: 'Ajouter une bannière',
-                    relationTo: 'banner',
-                    required: false,
-                    admin: {
-                        description:
-                            'vendeurs vous pouvez rajouté une bannière pour illustrer votre boutique',
-                    },
-                },
-            ],
-        },
+        // {
+        //     name: 'banner',
+        //     type: 'upload',
+        //     label: 'Ajouter une bannière',
+        //     relationTo: 'banner',
+        //     required: false,
+        //     access: {
+        //         create: adminsAndSeller,
+        //         read: adminsAndSeller,
+        //         update: adminsAndSeller,
+        //     },
+        //     admin: {
+        //         description:
+        //             'vendeurs vous pouvez rajouté une bannière pour illustrer votre boutique',
+        //     },
+        // },
         {
             name: 'firstname',
             label: "Votre prénom",

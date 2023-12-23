@@ -27,18 +27,7 @@ export interface User {
   seller_description?: string | null;
   role?: ('admin' | 'user' | 'seller') | null;
   products?: (string | Product)[] | null;
-  Photo?:
-    | {
-        photo?: string | Photo | null;
-        id?: string | null;
-      }[]
-    | null;
-  Banner?:
-    | {
-        banner?: string | Banner | null;
-        id?: string | null;
-      }[]
-    | null;
+  photo?: string | Photo | null;
   firstname?: string | null;
   lastname?: string | null;
   adress1?: string | null;
@@ -48,6 +37,12 @@ export interface User {
   country?: ('france' | 'germany' | 'spain') | null;
   updatedAt: string;
   createdAt: string;
+  url?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
@@ -119,7 +114,16 @@ export interface Media {
 }
 export interface Photo {
   id: string;
-  user?: (string | null) | User;
+  user?:
+    | ({
+        relationTo: 'users';
+        value: string | User;
+      } | null)
+    | ({
+        relationTo: 'photo';
+        value: string | Photo;
+      } | null);
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -138,6 +142,14 @@ export interface Photo {
       filename?: string | null;
     };
   };
+}
+export interface Order {
+  id: string;
+  _isPaid: boolean;
+  user: string | User;
+  products: (string | Product)[];
+  updatedAt: string;
+  createdAt: string;
 }
 export interface Banner {
   id: string;
@@ -160,14 +172,6 @@ export interface Banner {
       filename?: string | null;
     };
   };
-}
-export interface Order {
-  id: string;
-  _isPaid: boolean;
-  user: string | User;
-  products: (string | Product)[];
-  updatedAt: string;
-  createdAt: string;
 }
 export interface PayloadPreference {
   id: string;

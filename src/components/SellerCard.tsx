@@ -4,13 +4,19 @@ import { User } from '@/payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
 
-
-interface SellerCardProps {
-    seller: User
+interface Seller {
+    id: string;
+    seller_name: string;
+    photo: {
+      url: string;
+    } | null;
+    seller_activity: string;
   }
+
   
   // TODO find proper array of avatars
-  const SellerCard = ({ seller }: SellerCardProps) => {
+const SellerCard = ({ seller }: { seller: Seller }) => {
+    console.log('seller::::', seller.photo)
     return (
         <Link
             href={`/seller/${seller.id}`}
@@ -19,13 +25,15 @@ interface SellerCardProps {
             <li
                 key={seller.id}
                 className="flex aspect-square h-[22vh] flex-col items-center rounded border border-green-7 p-2 hover:border-green-8 lg:h-[24vh] lg:w-52"
-                >
+            >
                 <p className="m-auto h-8 whitespace-break-spaces text-center font-medium">
                     {seller.seller_name}
                 </p>
                 <Image
                     src={
-                        typeof seller.Photo === 'string' ? seller.Photo : '/checkout-thank-you.jpg'
+                        typeof seller.photo?.url === 'string'
+                            ? seller.photo.url
+                            : '/checkout-thank-you.jpg'
                     }
                     alt={'seller picture'}
                     placeholder="blur"

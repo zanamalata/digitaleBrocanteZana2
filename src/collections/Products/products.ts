@@ -287,16 +287,6 @@ export const Products: CollectionConfig = {
                 },
             ],
         },
-        // {
-        //     name: 'categoryBis',
-        //     label: 'Categorie',
-        //     type: 'select',
-        //     options: PRODUCT_CATEGORIES.map(({ label, value, featured }) => ({
-        //       label,
-        //       value,
-        //     })),
-        //     required: false,
-        // },
         {
             name: 'category',
             type: 'text',
