@@ -8,6 +8,7 @@ export const Banner: CollectionConfig = {
   hooks: {
     beforeChange: [
       ({ req }) => {
+        
         return { user: req.user.id };
       },
     ],
@@ -24,15 +25,33 @@ export const Banner: CollectionConfig = {
   upload: {
     staticURL: "/banner",
     staticDir: "",
+    
     imageSizes: [
       {
-        name: 'banner',
-        width: 1920,
-        height: 700,
+        name: 'thumbnail',
+        width: 400,
+        height: undefined,
         position: "centre",
         withoutEnlargement: false,
       },
-      
+      {
+        name: 'card',
+        width: 768,
+        position: "centre",
+        withoutEnlargement: false,
+      },
+      {
+        name: 'tablet',
+        width: 1024,
+        position: "centre",
+        withoutEnlargement: false,
+      },
+      {
+        name: 'fullHD',
+        width: 1920,
+        position: "centre",
+        withoutEnlargement: false,
+      },
     ],
     mimeTypes: ['image/*'],
     

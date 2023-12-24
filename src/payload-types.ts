@@ -27,7 +27,8 @@ export interface User {
   seller_description?: string | null;
   role?: ('admin' | 'user' | 'seller') | null;
   products?: (string | Product)[] | null;
-  photo?: string | Photo | null;
+  photo?: string | Media | null;
+  banner?: string | Media | null;
   firstname?: string | null;
   lastname?: string | null;
   adress1?: string | null;
@@ -112,6 +113,14 @@ export interface Media {
     };
   };
 }
+export interface Order {
+  id: string;
+  _isPaid: boolean;
+  user: string | User;
+  products: (string | Product)[];
+  updatedAt: string;
+  createdAt: string;
+}
 export interface Photo {
   id: string;
   user?:
@@ -120,10 +129,39 @@ export interface Photo {
         value: string | User;
       } | null)
     | ({
-        relationTo: 'photo';
-        value: string | Photo;
+        relationTo: 'media';
+        value: string | Media;
       } | null);
-  alt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  sizes?: {
+    photo?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+export interface Banner {
+  id: string;
+  user?:
+    | ({
+        relationTo: 'users';
+        value: string | User;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: string | Media;
+      } | null);
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -141,29 +179,23 @@ export interface Photo {
       filesize?: number | null;
       filename?: string | null;
     };
-  };
-}
-export interface Order {
-  id: string;
-  _isPaid: boolean;
-  user: string | User;
-  products: (string | Product)[];
-  updatedAt: string;
-  createdAt: string;
-}
-export interface Banner {
-  id: string;
-  user?: (string | null) | User;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  sizes?: {
-    fullHd?: {
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    tablet?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    fullHD?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;

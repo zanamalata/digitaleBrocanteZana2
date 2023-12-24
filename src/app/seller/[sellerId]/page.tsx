@@ -1,5 +1,6 @@
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import { getPayloadClient } from '@/get-payload'
+import { Media } from '../../../payload-types'
 import Image from 'next/image'
 
 interface SellerPageProps {
@@ -33,19 +34,60 @@ const SellerPage = async ({ params }: SellerPageProps) => {
 
     const [seller] = sellers
 
-    // TODO finish validUrls
+    // let imageSrc = '' as string
+    // if (
+    //     typeof seller.banner === 'object' &&
+    //     seller.banner?.hasOwnProperty('url') &&
+    //     seller.banner.url !== undefined
+    // ) {
+    //     imageSrc = seller.banner.url as string
+    // }
 
     return (
         <MaxWidthWrapper>
-            <div className="h-72 bg-slate-200">
-                <Image
-                    src={
-                        typeof seller.Photo === 'string'
-                            ? seller.Photo
-                            : ''
-                    }
-                    alt='shop banner'
-                />
+            <div className="relative top-10">
+                <div className="relative h-72 mt-20 bg-slate-200 rounded-t-md border border-slate-300">
+                    {seller.banner && typeof seller.banner === 'object' ? (
+                        <Image
+                            src={(seller.banner as { url: string }).url}
+                            alt="shop banner"
+                            className="rounded-t-md"
+                            fill
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="
+                        />
+                    ) : (
+                        <Image
+                            src={'/banner.jpg'}
+                            alt="shop banner"
+                            className="rounded-t-md"
+                            fill
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="
+                        />
+                    )}
+                </div>
+                <div className="relative rounded-full border border-slate-300 h-40 w-40 -top-6 ml-6 ">
+                    {seller.photo && typeof seller.photo === 'object' ? (
+                        <Image
+                            src={(seller.photo as { url: string }).url}
+                            alt="shop banner"
+                            className="rounded-full"
+                            fill
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="
+                        />
+                    ) : (
+                        <Image
+                            src={'/blank-avatar-photo.webp'}
+                            alt="shop banner"
+                            className="rounded-full"
+                            fill
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="
+                        />
+                    )}
+                </div>
             </div>
         </MaxWidthWrapper>
     )

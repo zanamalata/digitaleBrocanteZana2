@@ -8,7 +8,7 @@ export const Photo: CollectionConfig = {
   hooks: {
     beforeChange: [
       ({ req }) => {
-        console.log('ReqUser:::::', req.user)
+        
         return { user: req.user.id };
       },
     ],
