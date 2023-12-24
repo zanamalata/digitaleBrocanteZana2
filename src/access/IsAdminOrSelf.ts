@@ -7,7 +7,6 @@ export const isAdminOrSelf: Access = ({ req: { user } }) => {
     if (user.role?.includes('admin')) {
       return true;
     }
-
     // If any other type of user, only provide access to themselves
     return {
       id: {

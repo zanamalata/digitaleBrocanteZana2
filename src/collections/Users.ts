@@ -140,7 +140,7 @@ export const Users: CollectionConfig = {
             name: 'photo',
             type: 'upload',
             label: 'Ajouter une photo',
-            relationTo: 'photo',
+            relationTo: 'media',
             required: false,
             
             access: {
@@ -153,22 +153,22 @@ export const Users: CollectionConfig = {
                 'vendeurs vous pouvez rajouté une photo pour illustrer votre boutique',
             },
         },
-        // {
-        //     name: 'banner',
-        //     type: 'upload',
-        //     label: 'Ajouter une bannière',
-        //     relationTo: 'banner',
-        //     required: false,
-        //     access: {
-        //         create: adminsAndSeller,
-        //         read: adminsAndSeller,
-        //         update: adminsAndSeller,
-        //     },
-        //     admin: {
-        //         description:
-        //             'vendeurs vous pouvez rajouté une bannière pour illustrer votre boutique',
-        //     },
-        // },
+        {
+            name: 'banner',
+            type: 'upload',
+            label: 'Ajouter une bannière',
+            relationTo: 'media',
+            required: false,
+            access: {
+                create: adminsAndSeller,
+                read: adminsAndSeller,
+                update: adminsAndSeller,
+            },
+            admin: {
+                description:
+                    'vendeurs vous pouvez rajouté une bannière pour illustrer votre boutique',
+            },
+        },
         {
             name: 'firstname',
             label: "Votre prénom",
