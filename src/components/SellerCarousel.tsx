@@ -3,10 +3,20 @@ import { Suspense } from 'react'
 import SellerCard from './SellerCard'
 import MaxWidthWrapper from './MaxWidthWrapper'
 
+
+interface Seller {
+    id: string
+    photo: {
+        url: string
+    }
+    seller_name: string
+    seller_activity: string
+}
+
 export default async function SellerCarousel() {
     const payload = await getPayloadClient()
 
-    const { docs: sellers } = await payload.find({
+    const { docs: sellers } = (await payload.find({
         collection: 'users',
         limit: 15,
         where: {
@@ -14,7 +24,7 @@ export default async function SellerCarousel() {
                 equals: 'seller',
             },
         },
-    })
+    })) as { docs: Seller[] }
 
     return (
         <MaxWidthWrapper>
