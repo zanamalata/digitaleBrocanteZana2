@@ -13,6 +13,7 @@ const nextConfig = {
     protocol: "https",
   }],
   },
+  exportPathMap: null,
 }
 
 module.exports = nextConfig
