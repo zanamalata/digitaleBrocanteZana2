@@ -2,7 +2,7 @@ import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import { getPayloadClient } from '@/get-payload'
 import Image from 'next/image'
 
-interface SellerPageProps {
+interface PageProps {
     params: {
         sellerId: string
     }
@@ -13,7 +13,7 @@ const BREADCRUMBS = [
     { id: 2, name: 'Seller', href: '/sellers' },
 ]
 
-const SellerPage = async ({ params }: SellerPageProps) => {
+const Page = async ({ params }: PageProps) => {
     const { sellerId } = params
 
     const payload = await getPayloadClient()
@@ -92,4 +92,4 @@ const SellerPage = async ({ params }: SellerPageProps) => {
     )
 }
 
-export default SellerPage
+export default Page
