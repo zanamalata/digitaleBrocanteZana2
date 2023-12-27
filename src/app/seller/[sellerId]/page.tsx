@@ -1,6 +1,5 @@
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import { getPayloadClient } from '@/get-payload'
-import { Media } from '../../../payload-types'
 import Image from 'next/image'
 
 interface SellerPageProps {
