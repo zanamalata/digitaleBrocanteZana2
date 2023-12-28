@@ -1,5 +1,5 @@
 {
-  "name": "digitalhippo",
+  "name": "digitalbrocante",
   "version": "0.1.0",
   "private": true,
   "main": "dist/server.js",
@@ -28,7 +28,6 @@
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
-    "@radix-ui/react-tooltip": "^1.0.7",
     "@react-email/components": "^0.0.11",
     "@tanstack/react-query": "4.36.1",
     "@trpc/client": "^10.43.1",
