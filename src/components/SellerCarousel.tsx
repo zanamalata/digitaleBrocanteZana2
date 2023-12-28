@@ -4,14 +4,14 @@ import SellerCard from './SellerCard'
 import MaxWidthWrapper from './MaxWidthWrapper'
 
 
-interface Seller {
-    id: string
-    photo: {
-        url: string
-    }
-    seller_name: string
-    seller_activity: string
-}
+// interface Seller {
+//     id: string
+//     photo: {
+//         url: string
+//     }
+//     seller_name: string
+//     seller_activity: string
+// }
 
 export default async function SellerCarousel() {
     const payload = await getPayloadClient()
@@ -24,7 +24,7 @@ export default async function SellerCarousel() {
                 equals: 'seller',
             },
         },
-    })) as { docs: Seller[] }
+    }))
 
     return (
         <MaxWidthWrapper>

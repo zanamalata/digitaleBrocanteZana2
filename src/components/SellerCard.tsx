@@ -4,18 +4,18 @@ import { User } from '@/payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
 
-interface Seller {
-    id: string;
-    seller_name: string;
-    photo: {
-      url: string;
-    } | null;
-    seller_activity: string;
-  }
+// interface Seller {
+//     id: string;
+//     seller_name: string;
+//     photo: {
+//       url: string;
+//     } | null;
+//     seller_activity: string;
+//   }
 
   
   // TODO find proper array of avatars
-const SellerCard = ({ seller }: { seller: Seller }) => {
+const SellerCard = ({ seller }: { seller: User }) => {
     console.log('seller::::', seller.photo)
     return (
         <Link
@@ -29,7 +29,7 @@ const SellerCard = ({ seller }: { seller: Seller }) => {
                 <p className="m-auto h-8 whitespace-break-spaces text-center font-medium">
                     {seller.seller_name}
                 </p>
-                <Image
+                {/* <Image
                     src={
                         typeof seller.photo?.url === 'string'
                             ? seller.photo.url
@@ -41,7 +41,7 @@ const SellerCard = ({ seller }: { seller: Seller }) => {
                     className="h-[12vh] w-48 rounded object-cover grayscale-[50%] group-hover:grayscale-0 lg:h-[15vh] lg:w-52 "
                     width={100}
                     height={50}
-                />
+                /> */}
                 <p className="m-auto h-8 whitespace-break-spaces text-center font-medium">
                     {seller.seller_activity}
                 </p>
