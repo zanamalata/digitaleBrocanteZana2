@@ -10,6 +10,7 @@ export const authRouter = router({
     .input(AuthCredentialsValidator)
     .mutation(async ({ input }) => {
       const { email, password } = input
+     
       const payload = await getPayloadClient()
 
       // check if user already exists
