@@ -1,7 +1,26 @@
+import { User } from "../payload-types";
+import { Access, CollectionConfig } from "payload/types";
 
-import { isAdmin } from "../access/IsAdmin";
-import { isAdminOrSelf } from "../access/IsAdminOrSelf";
-import { CollectionConfig } from "payload/types";
+export const isAdminOrSelf: Access = ({ req: { user } }) => {
+  // Need to be logged in
+  if (user) {
+    // If user has role of 'admin'
+    if (user.roles?.includes('admin')) {
+      return true;
+    }
+
+    // If any other type of user, only provide access to themselves
+    return {
+      id: {
+        equals: user.id,
+      }
+    }
+  }
+
+  // Reject everyone else
+  return false;
+}
+
 
 export const Photo: CollectionConfig = {
   slug: "photo",
@@ -16,7 +35,7 @@ export const Photo: CollectionConfig = {
   access: {
     read: isAdminOrSelf,
     update: isAdminOrSelf,
-    delete: isAdmin,
+    delete: ({req}) => req.user.role === 'admin',
   },
 
   admin: {

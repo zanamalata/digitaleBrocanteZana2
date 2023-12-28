@@ -1,7 +1,7 @@
-import { isAdminOrSelf } from '../access/IsAdminOrSelf'
+
 import { PrimaryActionEmailHtml } from '../components/emails/PrimaryActionEmail'
 import { CollectionConfig, FieldAccess } from 'payload/types'
-import { isAdmin, isAdminFieldLevel } from '../access/IsAdmin'
+
 
 const adminsAndSeller: FieldAccess = ({ req: { user } }) => {
     if (user.role === 'admin') return true
@@ -24,10 +24,10 @@ export const Users: CollectionConfig = {
         },
     },
     access: {
-        read: isAdminOrSelf,
-        create: isAdminOrSelf,
-        update: isAdminOrSelf,
-        delete: isAdmin,
+        read: adminsAndSeller,
+        create: () => true,
+        update: ({ req}) => req.user.role === 'admin',
+        delete: ({ req}) => req.user.role === 'admin',
     },
     upload: true,
     admin: {
@@ -116,8 +116,8 @@ export const Users: CollectionConfig = {
             },
             access: {
                 read: () => true,
-                create: isAdminFieldLevel,
-                update: isAdminFieldLevel,
+                create: ({ req}) => req.user.role === 'admin',
+                update: ({ req}) => req.user.role === 'admin',
             },
             type: 'select',
             options: [
