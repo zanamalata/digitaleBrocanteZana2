@@ -347,11 +347,13 @@ export const Users: CollectionConfig = {
               },
               {
                 name: 'address',
+                label: 'Adresse',
                 type: 'group',
-                interfaceName: 'Adresse',
+                interfaceName: 'address',
                 fields: [
                   {
                     name: 'firstname',
+                    label: 'Prénom',
                     type: 'text',
                     maxLength: 65,
                     admin: {
@@ -359,7 +361,8 @@ export const Users: CollectionConfig = {
                     },
                   },
                   {
-                    name: 'lastanme',
+                    name: 'lastname',
+                    label: 'Nom',
                     type: 'text',
                     maxLength: 85,
                     admin: {
@@ -368,6 +371,7 @@ export const Users: CollectionConfig = {
                   },
                   {
                     name: 'address1',
+                    label: 'Adresse',
                     type: 'text',
                     maxLength: 120, 
                     admin: {
@@ -376,6 +380,7 @@ export const Users: CollectionConfig = {
                   },
                   {
                     name: 'address2',
+                    label: "Complément d'addresse",
                     type: 'text',
                     maxLength: 120, 
                     admin: {
@@ -385,6 +390,7 @@ export const Users: CollectionConfig = {
                   // TODO automatic city with postcode
                   {
                     name: 'postcode',
+                    label: 'Code postal',
                     type: 'number',
                     min: 4,
                     max: 8,
@@ -394,6 +400,7 @@ export const Users: CollectionConfig = {
                   },
                   {
                     name: 'city',
+                    label: 'Ville',
                     type: 'text',
                     maxLength: 30,
                     admin: {
