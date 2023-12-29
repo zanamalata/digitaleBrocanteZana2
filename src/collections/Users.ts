@@ -35,68 +35,6 @@
 //         defaultColumns: ['id'],
 //     },
 //     fields: [
-//         {
-//             name: 'username',
-//             label: "Nom d'utilisateur",
-//             type: 'text',
-//             access: {
-//                 create: () => true,
-//                 read: () => true,
-//                 update: () => true,
-//             },
-//             admin: {
-//                 description: "Nom d'utilisateur: le nom que verrons les autres utilisateurs de la plateforme",
-//             }
-//         },
-//         {
-//             name: 'seller_name',
-//             label: 'Nom du vendeur ou de la boutique',
-//             type: 'text',
-//             access: {
-//                 create: adminsAndSeller,
-//                 read: adminsAndSeller,
-//                 update: adminsAndSeller,
-//             },
-//             admin: {
-//                 condition: () => true,
-//                 description: 'Le nom du vendeur ou de la boutique',
-//             },
-//             required: false,
-//         },
-//         {
-//             name: 'seller_activity',
-//             label: 'activité du vendeur',
-//             type: 'text',
-//             required: false,
-//             access: {
-//                 create: adminsAndSeller,
-//                 read: adminsAndSeller,
-//                 update: adminsAndSeller,
-//             },
-//             admin: {
-//                 condition: () => true,
-//                 description: 'activité du vendeur ou de la boutique',
-//                 placeholder: 'brocanteur, artisant, designer, artiste, etc...',
-//             },
-//         },
-//         {
-//             name: 'seller_description',
-//             label: 'Description du vendeur ou de la boutique',
-//             type: 'textarea',
-//             required: false,
-//             access: {
-//                 create: adminsAndSeller,
-//                 read: adminsAndSeller,
-//                 update: adminsAndSeller,
-//             },
-//             admin: {
-//                 condition: () => true,
-//                 description:
-//                     'Pour embellir votre boutique donner une description de votre boutique',
-//                 placeholder:
-//                     'description de votre boutique ou de vos articles, par exemple : je suis brocanteur spécialisé dans le style brutaliste, mes articles sont sélectionnés et trier.....',
-//             },
-//         },
 //         // {
 //         //   name: "product_files",
 //         //   label: "Product files",
@@ -268,6 +206,7 @@
 //     ],
 // }
 
+import { number } from 'zod'
 import { PrimaryActionEmailHtml } from '../components/emails/PrimaryActionEmail'
 import { Access, CollectionConfig, FieldAccess } from 'payload/types'
 
@@ -405,6 +344,63 @@ export const Users: CollectionConfig = {
                       placeholder:
                           'description de votre boutique ou de vos articles, par exemple : je suis brocanteur spécialisé dans le style brutaliste, mes articles sont sélectionnés et trier.....',
                   },
+              },
+              {
+                name: 'address',
+                type: 'group',
+                interfaceName: 'Adresse',
+                fields: [
+                  {
+                    name: 'firstname',
+                    type: 'text',
+                    maxLength: 65,
+                    admin: {
+                      placeholder: 'Prénom'
+                    },
+                  },
+                  {
+                    name: 'lastanme',
+                    type: 'text',
+                    maxLength: 85,
+                    admin: {
+                      placeholder: 'Nom'
+                    },
+                  },
+                  {
+                    name: 'address1',
+                    type: 'text',
+                    maxLength: 120, 
+                    admin: {
+                      placeholder: 'Votre adresse',
+                    },
+                  },
+                  {
+                    name: 'address2',
+                    type: 'text',
+                    maxLength: 120, 
+                    admin: {
+                      placeholder: "Complément d'adresse",
+                    },
+                  },
+                  // TODO automatic city with postcode
+                  {
+                    name: 'postcode',
+                    type: 'number',
+                    min: 4,
+                    max: 8,
+                    admin: {
+                      placeholder: 'Code postal'
+                    },
+                  },
+                  {
+                    name: 'city',
+                    type: 'text',
+                    maxLength: 30,
+                    admin: {
+                      placeholder: 'Votre ville',
+                    },
+                  },
+                ],
               },
   ],
 }
