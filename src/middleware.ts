@@ -20,6 +20,7 @@ if (
    const res = NextResponse.next()
 
    // add the CORS headers to the response
+   // TODO change cors when in production
    res.headers.append('Access-Control-Allow-Credentials', "true")
    res.headers.append('Access-Control-Allow-Origin', '*') // replace this your actual origin
    res.headers.append('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT')

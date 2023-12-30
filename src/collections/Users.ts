@@ -243,7 +243,7 @@ export const Users: CollectionConfig = {
   access: {
     read: adminsAndUser,
     create: () => false,
-    update: ({ req }) => req.user.role === 'admin',
+    update: () => true,
     delete: ({ req }) => req.user.role === 'admin',
   },
   admin: {
@@ -392,8 +392,6 @@ export const Users: CollectionConfig = {
                     name: 'postcode',
                     label: 'Code postal',
                     type: 'number',
-                    min: 4,
-                    max: 8,
                     admin: {
                       placeholder: 'Code postal'
                     },

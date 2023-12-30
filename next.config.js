@@ -16,7 +16,7 @@ const nextConfig = {
   //try to allow cors
   async headers() {   
     return [{     
-      // matching all API routes      
+      // matching all API routes   TODO change cors when in production   
       source: "/api/:path*",     
       headers: [         
         { key: "Access-Control-Allow-Credentials", value: "true" },         

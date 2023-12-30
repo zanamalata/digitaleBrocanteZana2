@@ -20,11 +20,25 @@ export const Account: CollectionConfig = {
     slug: 'account',
     access: {
         read: adminsAndUser,
-        create: () => true,
-        update: ({ req }) => req.user.role === 'admin',
+        create: adminsAndUser,
+        update: ({req }) => req.user.role === 'admin',
         delete: ({ req }) => req.user.role === 'admin',
     },
+
+    // admin: {
+    //     hidden: ({ user}) => user.role !== 'admin',
+    // },
+
     fields: [
+        {
+            name: 'users',
+            label: 'Users',
+            type: 'relationship',
+            relationTo: 'users',
+            admin: {
+                condition: () => false
+            }
+        },
         {
             name: 'username',
             label: "Nom d'utilisateur",
@@ -135,8 +149,6 @@ export const Account: CollectionConfig = {
                     name: 'postcode',
                     label: 'Code postal',
                     type: 'number',
-                    min: 4,
-                    max: 8,
                     admin: {
                         placeholder: 'Code postal',
                     },
