@@ -22,9 +22,9 @@ export const Photo: CollectionConfig = {
     ],
   },
   access: {
-    create: adminsAndUser,
-    read: adminsAndUser,
-    update: adminsAndUser,
+    create: () => true,
+    read: () => true,
+    update: () => true,
     delete: ({req}) => req.user.role === 'admin',
   },
 
