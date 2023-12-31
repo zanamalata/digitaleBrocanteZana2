@@ -21,29 +21,17 @@ export interface Config {
 }
 export interface User {
   id: string;
+  products?: (string | Product)[] | null;
+  role: 'admin' | 'user' | 'seller';
   username?: string | null;
   seller_name?: string | null;
   seller_activity?: string | null;
   seller_description?: string | null;
-  role?: ('admin' | 'user' | 'seller') | null;
-  products?: (string | Product)[] | null;
   photo?: string | Media | null;
   banner?: string | Media | null;
-  firstname?: string | null;
-  lastname?: string | null;
-  adress1?: string | null;
-  adress2?: string | null;
-  city?: string | null;
-  postcode?: number | null;
-  country?: ('france' | 'germany' | 'spain') | null;
+  address?: Address;
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
@@ -113,6 +101,15 @@ export interface Media {
     };
   };
 }
+export interface Address {
+  firstname?: string | null;
+  lastname?: string | null;
+  address1?: string | null;
+  address2?: string | null;
+  postcode?: number | null;
+  city?: string | null;
+  country?: ('france' | 'germany' | 'spain') | null;
+}
 export interface Order {
   id: string;
   _isPaid: boolean;
@@ -171,31 +168,7 @@ export interface Banner {
   width?: number | null;
   height?: number | null;
   sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    card?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    tablet?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    fullHD?: {
+    banner?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;

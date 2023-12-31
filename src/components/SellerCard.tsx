@@ -29,19 +29,19 @@ const SellerCard = ({ seller }: { seller: User }) => {
                 <p className="m-auto h-8 whitespace-break-spaces text-center font-medium">
                     {seller.seller_name}
                 </p>
-                {/* <Image
-                    src={
-                        typeof seller.photo?.url === 'string'
-                            ? seller.photo.url
-                            : '/checkout-thank-you.jpg'
-                    }
-                    alt={'seller picture'}
-                    placeholder="blur"
-                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="
-                    className="h-[12vh] w-48 rounded object-cover grayscale-[50%] group-hover:grayscale-0 lg:h-[15vh] lg:w-52 "
-                    width={100}
-                    height={50}
-                /> */}
+                {seller.photo &&
+                    typeof seller.photo === 'object' &&
+                    seller.photo.url && (
+                        <Image
+                            src={seller.photo.url}
+                            alt="Photo du vendeur ou logo de la boutique"
+                            width={100}
+                            height={50}
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="
+                            className="h-[12vh] w-48 rounded object-cover grayscale-[50%] group-hover:grayscale-0 lg:h-[15vh] lg:w-52 "
+                        />
+                    )}
                 <p className="m-auto h-8 whitespace-break-spaces text-center font-medium">
                     {seller.seller_activity}
                 </p>
