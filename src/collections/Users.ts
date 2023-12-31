@@ -361,6 +361,23 @@ export const Users: CollectionConfig = {
             },
         },
         {
+            name: 'banner',
+            type: 'upload',
+            label: 'Ajouter une bannière',
+            relationTo: 'media',
+            required: false,
+
+            access: {
+                create: adminsAndSeller,
+                read: adminsAndSeller,
+                update: adminsAndSeller,
+            },
+            admin: {
+                description:
+                    'vendeurs vous pouvez rajouté une bannière personalisée pour illustrer votre boutique',
+            },
+        },
+        {
             name: 'address',
             label: 'Adresse',
             type: 'group',
