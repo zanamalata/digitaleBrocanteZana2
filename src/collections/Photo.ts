@@ -1,4 +1,3 @@
-import { User } from "../payload-types";
 import { Access, CollectionConfig } from "payload/types";
 
 const adminsAndUser: Access = ({ req: { user } }) => {
