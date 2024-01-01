@@ -46,10 +46,8 @@ const Page = async ({ params }: PageProps) => {
             }
         },
     })
-console.log('products:::', products)
-const [product] = products
 
-console.log('product::::', product)
+const [product] = products
 
 
     return (
