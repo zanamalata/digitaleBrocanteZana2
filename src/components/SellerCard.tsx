@@ -16,7 +16,6 @@ import Link from 'next/link'
   
   // TODO find proper array of avatars
 const SellerCard = ({ seller }: { seller: User }) => {
-    console.log('seller::::', seller.photo)
     return (
         <Link
             href={`/seller/${seller.id}`}

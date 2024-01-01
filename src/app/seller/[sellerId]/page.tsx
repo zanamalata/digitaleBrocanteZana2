@@ -1,7 +1,9 @@
 import { Products } from '@/collections/Products/products'
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
+import ProductListing from '@/components/ProductListing'
 import ProductReel from '@/components/ProductReel'
 import { getPayloadClient } from '@/get-payload'
+import { Product } from '@/payload-types'
 import Image from 'next/image'
 
 interface PageProps {
@@ -33,23 +35,51 @@ const Page = async ({ params }: PageProps) => {
         },
     })
 
-    const [seller] = sellers
+    const [seller] = await sellers
 
-    const { docs: products } = await payload.find({
-        collection: 'products',
-        where: {
-            user: {
-                equals: seller.id,
-            },
-            approvedForSale: {
-                equals: 'approved'
-            }
-        },
-    })
+    const products = seller.products || []
 
-const [product] = products
+    console.log('products::::', products)
 
+    // const [product] = products.map((value) => {
+    //     if (typeof value === 'string') {
+    //         return {
+    //             // add default product fields here
+    //         } as Product
+    //     } else {
+    //         return value
+    //     }
+    // })
 
+    // console.log('products::::', products)
+    // const productNames = products.map((product) => {
+    //     if (typeof product === 'string') {
+    //         return null
+    //     } else {
+    //         return product.name
+    //     }
+    // })
+    // console.log('productnames:::::', productNames)
+    // const { docs: products } = await payload.find({
+    //     collection: 'products',
+    //     where: {
+    //         user: {
+    //             equals: seller.id,
+    //         },
+    //         approvedForSale: {
+    //             equals: 'approved',
+    //         },
+    //     },
+    // })
+
+    // const [product] = products
+    // console.log('products:::', products)
+
+    // const validUrls = product.images
+    //     .map(({ image }) => (typeof image === 'string' ? image : image.url))
+    //     .filter(Boolean) as string[]
+
+    // console.log('URLS////', validUrls)
     return (
         <MaxWidthWrapper>
             <div className="relative top-10">
@@ -107,10 +137,22 @@ const [product] = products
                 </h1>
                 <p className="mt-12 text-xl">{seller.seller_description}</p>
             </div>
-            <ProductReel
-                title={`Produits de ${seller.seller_name}`}
-                query={{ sort: 'asc' }}
-            />
+
+            <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
+                {products.map((product, i) => {
+                    if (typeof product === 'string') {
+                        return null
+                    } else {
+                        return (
+                            <ProductListing
+                                key={`product-${product.id}`}
+                                product={product}
+                                index={i}
+                            />
+                        )
+                    }
+                })}
+            </div>
         </MaxWidthWrapper>
     )
 }
