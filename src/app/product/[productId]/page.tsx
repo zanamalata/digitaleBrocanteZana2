@@ -5,6 +5,7 @@ import ProductReel from '@/components/ProductReel'
 import { PRODUCT_CATEGORIES } from '@/config'
 import { getPayloadClient } from '@/get-payload'
 import { formatPrice } from '@/lib/utils'
+import { User } from '@/payload-types'
 import { Check, Shield } from 'lucide-react'
 import Link from 'next/link'
 
@@ -39,7 +40,9 @@ const Page = async ({ params }: PageProps) => {
 
     const [product] = products
 
-    
+    const seller = product.user
+    const sellerName = typeof seller === 'string' ? seller : seller?.seller_name
+    const sellerId = typeof seller === 'string' ? seller : seller?.id
 
     const label = PRODUCT_CATEGORIES.find(
         ({ value }) => value === product.category
@@ -102,16 +105,34 @@ const Page = async ({ params }: PageProps) => {
                                     {product.description}
                                 </p>
                             </div>
-
-                            {/* <div className="mt-6 flex items-center">
-                                <Check
+                            <div className="mt-6 flex items-center">
+                                {/* <Check
                                     aria-hidden="true"
                                     className="h-5 w-5 flex-shrink-0 text-green-500"
-                                />
+                                /> */}
                                 <p className="ml-2 text-sm text-muted-foreground">
-                                    Eligible for instant delivery
+                                    vendu par{' '}
+                                    <Link href={`/seller/${sellerId}`}>
+                                    <span className="font-bold">
+                                        {sellerName}
+                                    </span>
+                                    </Link>
                                 </p>
-                            </div> */}
+                            </div>
+                            <div className="mt-6 flex items-center">
+                                {/* <Check
+                                    aria-hidden="true"
+                                    className="h-5 w-5 flex-shrink-0 text-green-500"
+                                /> */}
+                                <p className="ml-2 text-sm text-muted-foreground">
+                                    catégorie de produit :{' '}
+                                    <Link href={`/seller/${sellerId}`}>
+                                    <span className="font-bold">
+                                        {product.category}
+                                    </span>
+                                    </Link>
+                                </p>
+                            </div>
                         </section>
                     </div>
 
@@ -129,7 +150,7 @@ const Page = async ({ params }: PageProps) => {
                                 <AddToCartButton product={product} />
                             </div>
                             <div className="mt-6 text-center">
-                                <div className="group inline-flex text-sm text-medium">
+                                {/* <div className="group inline-flex text-sm text-medium">
                                     <Shield
                                         aria-hidden="true"
                                         className="mr-2 h-5 w-5 flex-shrink-0 text-gray-400"
@@ -137,7 +158,7 @@ const Page = async ({ params }: PageProps) => {
                                     <span className="text-muted-foreground hover:text-gray-700">
                                         30 Day Return Guarantee
                                     </span>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
