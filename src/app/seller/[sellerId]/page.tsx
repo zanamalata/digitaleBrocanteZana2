@@ -83,7 +83,7 @@ const Page = async ({ params }: PageProps) => {
     return (
         <MaxWidthWrapper>
             <div className="relative top-10">
-                <div className="relative h-72 mt-20 bg-slate-200 rounded-t-md border border-slate-300">
+                <div className="relative h-96 mt-6 bg-slate-200 rounded-t-md border border-slate-300">
                     {seller.banner && typeof seller.banner === 'string' ? (
                         <Image
                             src={seller.banner}
@@ -95,7 +95,7 @@ const Page = async ({ params }: PageProps) => {
                         />
                     ) : (
                         <Image
-                            src={'/banner.jpg'}
+                            src={'/banner14.png'}
                             alt="shop banner"
                             className="rounded-t-md"
                             fill
@@ -104,8 +104,8 @@ const Page = async ({ params }: PageProps) => {
                         />
                     )}
                 </div>
-                <div className="w-fit pr-6 flex flex-col items-center">
-                    <div className="relative rounded-full border border-slate-300 h-40 w-40 -top-6 ml-6 ">
+                <div className="relative p-2 w-fit -top-20 flex flex-col items-center">
+                    <div className=" rounded-full border border-slate-300 h-40 w-48  ">
                         {seller.photo && typeof seller.photo === 'string' ? (
                             <Image
                                 src={seller.photo}
@@ -126,32 +126,35 @@ const Page = async ({ params }: PageProps) => {
                             />
                         )}
                     </div>
-                    <p className="relative w-fit ml-6 -mt-4 px-4 py-1 text-2xl font-medium rounded-md border border-slate-200 bg-slate-100">
+                    <p className="relative w-fit top-16 px-4 py-2 text-2xl font-medium rounded-md border border-slate-200 bg-slate-100">
                         {seller.seller_activity}
                     </p>
                 </div>
             </div>
-            <div className="relative flex flex-col -top-24 justify-center items-center">
+
+            <div className="relative flex flex-col -top-44 justify-center items-center">
                 <h1 className="text-6xl font-bold underline">
                     {seller.seller_name}
                 </h1>
                 <p className="mt-12 text-xl">{seller.seller_description}</p>
             </div>
 
-            <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
-                {products.map((product, i) => {
-                    if (typeof product === 'string') {
-                        return null
-                    } else {
-                        return (
-                            <ProductListing
-                                key={`product-${product.id}`}
-                                product={product}
-                                index={i}
-                            />
-                        )
-                    }
-                })}
+            <div className="border-t border-slate-200 relative -top-8 pt-8">
+                <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
+                    {products.map((product, i) => {
+                        if (typeof product === 'string') {
+                            return null
+                        } else {
+                            return (
+                                <ProductListing
+                                    key={`product-${product.id}`}
+                                    product={product}
+                                    index={i}
+                                />
+                            )
+                        }
+                    })}
+                </div>
             </div>
         </MaxWidthWrapper>
     )
