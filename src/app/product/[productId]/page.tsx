@@ -52,7 +52,7 @@ const Page = async ({ params }: PageProps) => {
         .map(({ image }) => (typeof image === 'string' ? image : image.url))
         .filter(Boolean) as string[]
 
-    return (
+        return (
         <MaxWidthWrapper className="bg-white">
             <div className="bg-white">
                 <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
@@ -166,10 +166,10 @@ const Page = async ({ params }: PageProps) => {
             </div>
 
             <ProductReel
-                href="/products"
+                href={`/products?category=${product.category}`}
                 query={{ category: product.category, limit: 4 }}
-                title={`Similar ${label}`}
-                subtitle={`Browse similar high-quality ${label} just like '${product.name}'`}
+                title={`${product.category} similaires`}
+                subtitle={`Parcourez d'autres ${product.category} qui ressemblent à '${product.name}'`}
             />
         </MaxWidthWrapper>
     )

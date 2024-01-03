@@ -10,6 +10,7 @@ import PriceAfterCommission from '../../components/PriceAfterCommision'
 import { useFormFields } from 'payload/components/forms'
 import { APIError } from 'payload/errors'
 import { toast } from 'sonner'
+import { PRODUCT_CATEGORIES } from '../../config'
 // import ProductPricesFields from '../../components/ProductPricesFields'
 
 // class ReducedPriceError extends APIError {
@@ -25,6 +26,14 @@ interface CustomSelectProps {
         value: string
     }[]
 }
+
+// const categories = PRODUCT_CATEGORIES.map((category) => category.label)
+// console.log('categories2:::', categories)
+
+// const features = PRODUCT_CATEGORIES.map((category) => category.featured.map((feature) => {
+//     return feature.name
+// }))
+// console.log('features::::', features)
 
 const ValidatReducedPrice = ({ path, options }: CustomSelectProps) => {
     const { price } = useFormFields(([fields, dispatch]) => fields)
@@ -250,7 +259,7 @@ export const Products: CollectionConfig = {
         //         },
         //     },
         // },
-        
+
         {
             name: 'priceAfterCommission',
             label: `(Prix aprés comission) en EUR `,
@@ -299,6 +308,15 @@ export const Products: CollectionConfig = {
                     'Choisissez une categorie qui correspond à votre article',
             },
         },
+
+        // {
+        //     name: 'enableCoolStuff', // required
+        //     type: 'checkbox', // required
+        //     label: 'Click me to see fanciness',
+        //     defaultValue: false,
+            
+        // },
+
         // {
         //     name: 'product_files',
         //     label: 'Product file(s)',
@@ -307,6 +325,67 @@ export const Products: CollectionConfig = {
         //     relationTo: 'product_files',
         //     hasMany: false,
         // },
+
+        {
+            type: 'tabs', // required
+            // tabs: [
+            //     {
+            //         label: categories,
+            //         fields : [features],
+            //     }
+            // ]
+            tabs: PRODUCT_CATEGORIES.map((category) => {
+                return {
+                    label: category.label,
+                    // fields: category.featured.map((features) => {
+                    //     return {
+                    //         type: 'select',
+                    //         name: 'categorie',
+                    //         label: 'Choisissez une seule categorie',
+                    //         options:
+                    //         [
+                    //             {
+                    //                 label: features.name,
+                    //                 value: features.value
+                    //             }
+                    //         ]
+                    //     }
+                    // }),
+                    // fields: [
+                    //     {
+                    //         name: 'subcategorie',
+                    //         type: 'select',
+                    //         options: category.featured.map((feature) => {
+                    //             return {
+                    //                 label: feature.name,
+                    //                 value: feature.value
+                    //             }
+                    //         })
+                    //     },
+                    // ],
+
+                    fields: [
+                        {
+                            name: 'subcategories',
+                            type: 'select',
+                            options: [
+                                {
+                                    label: 'label1',
+                                    value: 'label1',
+                                },
+                                {
+                                    label: 'label2',
+                                    value: 'label2',
+                                }
+                                
+                            ]
+                        }
+                    ]
+                }
+            }),
+            
+        },
+
         {
             name: 'approvedForSale',
             label: 'Status du produit',
