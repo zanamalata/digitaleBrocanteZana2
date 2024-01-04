@@ -11,6 +11,7 @@ import { useFormFields } from 'payload/components/forms'
 import { APIError } from 'payload/errors'
 import { toast } from 'sonner'
 import { PRODUCT_CATEGORIES } from '../../config'
+import {CustomCategory} from '../../components/CustomCategory'
 // import ProductPricesFields from '../../components/ProductPricesFields'
 
 // class ReducedPriceError extends APIError {
@@ -309,12 +310,25 @@ export const Products: CollectionConfig = {
             },
         },
 
+        {
+            name: 'category4',
+            type: 'text',
+            required: true,
+            admin: {
+                components: {
+                    Field: CustomCategory,
+                },
+                description:
+                    'Choisissez une categorie qui correspond à votre article',
+            },
+        },
+
         // {
         //     name: 'enableCoolStuff', // required
         //     type: 'checkbox', // required
         //     label: 'Click me to see fanciness',
         //     defaultValue: false,
-            
+
         // },
 
         // {
@@ -326,66 +340,104 @@ export const Products: CollectionConfig = {
         //     hasMany: false,
         // },
 
+        // {
+        //     type: 'tabs', // required
+        //     // tabs: [
+        //     //     {
+        //     //         label: categories,
+        //     //         fields : [features],
+        //     //     }
+        //     // ]
+        //     tabs: PRODUCT_CATEGORIES.map((category) => {
+        //         return {
+        //             label: category.label,
+        //             // fields: category.featured.map((features) => {
+        //             //     return {
+        //             //         type: 'select',
+        //             //         name: 'categorie',
+        //             //         label: 'Choisissez une seule categorie',
+        //             //         options:
+        //             //         [
+        //             //             {
+        //             //                 label: features.name,
+        //             //                 value: features.value
+        //             //             }
+        //             //         ]
+        //             //     }
+        //             // }),
+        //             // fields: [
+        //             //     {
+        //             //         name: 'subcategorie',
+        //             //         type: 'select',
+        //             //         options: category.featured.map((feature) => {
+        //             //             return {
+        //             //                 label: feature.name,
+        //             //                 value: feature.value
+        //             //             }
+        //             //         })
+        //             //     },
+        //             // ],
+
+        //             fields: [
+        //                 {
+        //                     name: 'subcategories',
+        //                     type: 'group',
+        //                     fields: [
+        //                         {
+        //                             name: 'subgategorie',
+        //                             type: 'select',
+        //                             options: category.featured.map((feature) => {
+        //                                 return {
+        //                                     label: feature.name,
+        //                                     value: feature.value
+        //                                 }
+        //                             })
+        //                         }
+        //                     ]
+
+        //                 }
+        //             ]
+        //         }
+        //     }),
+
+        // },
+
+        // {
+        //     name: 'subcategories2',
+        //     type: 'group',
+        //     fields: PRODUCT_CATEGORIES.map((category) => {
+        //         return {
+        //             name: category.value,
+        //             label: category.label,
+        //             type: 'select',
+        //             options: category.featured.map((feature) => {
+        //                 return {
+        //                     label: feature.name,
+        //                     value: feature.value
+        //                 }
+        //             })
+        //         }
+        //     })
+        // },
+
         {
-            type: 'tabs', // required
-            // tabs: [
-            //     {
-            //         label: categories,
-            //         fields : [features],
-            //     }
-            // ]
-            tabs: PRODUCT_CATEGORIES.map((category) => {
-                return {
-                    label: category.label,
-                    // fields: category.featured.map((features) => {
-                    //     return {
-                    //         type: 'select',
-                    //         name: 'categorie',
-                    //         label: 'Choisissez une seule categorie',
-                    //         options:
-                    //         [
-                    //             {
-                    //                 label: features.name,
-                    //                 value: features.value
-                    //             }
-                    //         ]
-                    //     }
-                    // }),
-                    // fields: [
-                    //     {
-                    //         name: 'subcategorie',
-                    //         type: 'select',
-                    //         options: category.featured.map((feature) => {
-                    //             return {
-                    //                 label: feature.name,
-                    //                 value: feature.value
-                    //             }
-                    //         })
-                    //     },
-                    // ],
-
-                    fields: [
-                        {
-                            name: 'subcategories',
-                            type: 'select',
-                            options: [
-                                {
-                                    label: 'label1',
-                                    value: 'label1',
-                                },
-                                {
-                                    label: 'label2',
-                                    value: 'label2',
-                                }
-                                
-                            ]
-                        }
-                    ]
+            name: 'enableGreeting',
+            type: 'checkbox',
+            defaultValue: false,
+          },
+          {
+            name: 'greeting',
+            type: 'text',
+            admin: {
+              condition: (data, siblingData, { user }) => {
+                if (data.enableGreeting) {
+                  return true
+                } else {
+                  return false
                 }
-            }),
-            
-        },
-
+              },
+            },
+          },
         {
             name: 'approvedForSale',
             label: 'Status du produit',

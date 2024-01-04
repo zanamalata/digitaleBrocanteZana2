@@ -25,7 +25,9 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
         return {
             label: category.label,
             value: category.value,  
-            className: 'categorie',       
+            className: 'categorie', 
+            style: 'background-color: aquamarine',
+                 
             options: category.featured.map((featuredItem) => {
                 return {
                     label: featuredItem.name,
