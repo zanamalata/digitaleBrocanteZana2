@@ -51,11 +51,17 @@ export interface Product {
   price: number;
   reducedPrice?: number | null;
   priceAfterCommission?: string | null;
+  category: string;
+  categories?: {
+    category?:
+      | ('arts' | 'culture' | 'creations' | 'deco' | 'luminaires' | 'artsdelatable' | 'textiles_et_bijoux' | 'kids')
+      | null;
+    subcategory?: ('chambre' | 'joujoux' | 'mode') | null;
+  };
   images: {
     image: string | Media;
     id?: string | null;
   }[];
-  category: string;
   approvedForSale?: ('pending' | 'approved' | 'denied') | null;
   ShipmentStatus?: ('notSent' | 'pending' | 'received' | 'denied' | 'accepted') | null;
   priceId?: string | null;

@@ -1,34 +1,34 @@
 export const PRODUCT_CATEGORIES = [
     {
-        label: 'Art',
-        value: 'art' as const,
+        label: 'Arts',
+        value: 'arts' as const,
         featured: [
             {
                 name: 'Tableaux anciens et dessins',
-                value: 'tableaux_anciens_dessins',
+                value: 'tableaux',
                 href: '/products?category=tableaux_anciens_dessins',
                 imageSrc: '/nav/icons/new.jpg',           },
             {
                 name: 'Gravures et estampes',
-                value: 'gravures_et_estampes',
+                value: 'gravures',
                 href: '/products?category=gravures_et_estampes',
                 imageSrc: '/nav/icons/new.jpg',
             },
             {
                 name: 'Affiches et pubs',
-                value: 'affiches_et_pubs',
+                value: 'affiches',
                 href: '/products?category=affiches_et_pubs',
                 imageSrc: '/nav/icons/new.jpg',
             },
             {
                 name: 'Photographies anciennes',
-                value: 'photographie_anciennes',
+                value: 'photographie',
                 href: '/products?category=photographie_anciennes',
                 imageSrc: '/nav/icons/new.jpg',
             },
             {
                 name: 'Sculptures anciennes',
-                value: 'sculptures_anciennes',
+                value: 'sculptures',
                 href: '/products?category=sculptures_anciennes',
                 imageSrc: '/nav/icons/new.jpg',
             },
@@ -40,13 +40,13 @@ export const PRODUCT_CATEGORIES = [
         featured: [
             {
                 name: 'Livres anciens et vieux papiers',
-                value: 'livres_anciens_et_vieux_papiers',
+                value: 'livres',
                 href: '/products?category=livres_anciens_et_vieux_papiers',
                 imageSrc: '/nav/arts/affiches.jpg',
             },
             {
                 name: 'Cartes postales',
-                value: 'cartes_postales',
+                value: 'cartes',
                 href: '/products?category=cartes_postales',
                 imageSrc: '/nav/arts/cartespostales.jpg',
             },
@@ -64,7 +64,7 @@ export const PRODUCT_CATEGORIES = [
             },
             {
                 name: 'Vinyles, musique',
-                value: 'vinyles_musique',
+                value: 'vinyles',
                 href: '/products?category=vinyles_musique',
                 imageSrc: '/nav/arts/vinyl.jpg',
             },
@@ -88,13 +88,13 @@ export const PRODUCT_CATEGORIES = [
             },
             {
                 name: 'Photographies',
-                value: 'photographie',
-                href: '/products?category=photographie',
+                value: 'photo',
+                href: '/products?category=photo',
                 imageSrc: '/nav/ui-kits/blue.jpg',
             },
             {
-                name: 'Bijoux',
-                value: 'bijoux',
+                name: 'Bijouterie',
+                value: 'bijouterie',
                 href: '/products?category=bijoux',
                 imageSrc: '/nav/ui-kits/blue.jpg',
             },
@@ -118,25 +118,25 @@ export const PRODUCT_CATEGORIES = [
         featured: [
             {
                 name: 'Miroirs, bougeoirs, globe de mariée',
-                value: 'miroirs_etc',
+                value: 'miroirs',
                 href: '/products?category=miroirs_etc',
                 imageSrc: '/nav/icons/picks.jpg',
             },
             {
                 name: 'Dame-Jeanne, vases et pots',
-                value: 'vases_et_pots',
+                value: 'vases',
                 href: '/products?category=vases_et_pots',
                 imageSrc: '/nav/icons/bestsellers.jpg',
             },
             {
                 name: 'Coffres, valises, paniers et boîtes',
-                value: 'coffres_etc',
+                value: 'coffres',
                 href: '/products?category=coffres_etc',
                 imageSrc: '/nav/icons/new.jpg',
             },
             {
                 name: 'Objets ethniques',
-                value: 'objets_ethniques',
+                value: 'ethniques',
                 href: '/products?category=objets_ethniques',
                 imageSrc: '/nav/icons/bestsellers.jpg',
             },
@@ -148,19 +148,19 @@ export const PRODUCT_CATEGORIES = [
             },
             {
                 name: 'Objets religieux',
-                value: 'objets_religieux',
+                value: 'religieux',
                 href: '/products?category=objets_religieux',
                 imageSrc: '/nav/icons/bestsellers.jpg',
             },
             {
                 name: 'Cabinet de curiosité',
-                value: 'cabinet_de_curiosite',
+                value: 'curiosite',
                 href: '/products?category=cabinet_de_curiosite',
                 imageSrc: '/nav/icons/bestsellers.jpg',
             },
             {
                 name: 'Côté jardin',
-                value: 'cote_jardin',
+                value: 'jardin',
                 href: '/products?category=cote_jardin',
                 imageSrc: '/nav/icons/bestsellers.jpg',
             },
@@ -208,31 +208,31 @@ export const PRODUCT_CATEGORIES = [
         featured: [
             {
                 name: 'Asiettes et plats',
-                value: 'assiettes_et_plats',
+                value: 'assiettes',
                 href: '/products?category=assiettes_et_plats',
                 imageSrc: '/nav/cuisine/assiettes.jpg',
             },
             {
                 name: 'Verres bouteilles et carafes',
-                value: 'verres_etc',
+                value: 'verres',
                 href: '/products?category=verres_etc',
                 imageSrc: '/nav/cuisine/verres.jpg',
             },
             {
                 name: 'Pour le petit déjeuner',
-                value: 'petit_dejeuner',
+                value: 'dejeuner',
                 href: '/products?category=petit_dejeuner',
                 imageSrc: '/nav/cuisine/tasses.jpg',
             },
             {
                 name: 'Petite vaisselle',
-                value: 'petite_vaisselle',
+                value: 'vaisselle',
                 href: '/products?category=petite_vaiselles',
                 imageSrc: '/nav/cuisine/vaisselle.jpg',
             },
             {
                 name: 'Ustensils et accessoires',
-                value: 'ustensils_et_accessoires',
+                value: 'ustensils',
                 href: '/products?category=ustensils_et_accessoires',
                 imageSrc: '/nav/cuisine/ustensils.jpg',
             },
@@ -244,7 +244,7 @@ export const PRODUCT_CATEGORIES = [
         featured: [
             {
                 name: 'Linge de maison',
-                value: 'linge_de_maison',
+                value: 'linge',
                 href: '/products?category=linge-de-maison',
                 imageSrc: '/nav/icons/bestsellers.jpg',
             },
@@ -256,7 +256,7 @@ export const PRODUCT_CATEGORIES = [
             },
             {
                 name: 'Mode vintage',
-                value: 'mode_vintage',
+                value: 'vintage',
                 href: '/products?category=mode_vintage',
                 imageSrc: '/nav/icons/picks.jpg',
             },
@@ -268,7 +268,7 @@ export const PRODUCT_CATEGORIES = [
             },
             {
                 name: 'Bijoux anciens',
-                value: 'bijoux_anciens',
+                value: 'bijoux',
                 href: '/products?category=bijoux_anciens',
                 imageSrc: '/nav/icons/new.jpg',
             },
@@ -280,13 +280,13 @@ export const PRODUCT_CATEGORIES = [
         featured: [
             {
                 name: 'Pour la chambre',
-                value: 'pour_la_chambre',
+                value: 'chambre',
                 href: '/products?category=pour_la_chambre',
                 imageSrc: '/nav/icons/new.jpg',
             },
             {
                 name: "Les joujoux et l'école",
-                value: 'joujoux_et_ecole',
+                value: 'joujoux',
                 href: '/products?category=joujoux_et_ecole',
                 imageSrc: '/nav/icons/picks.jpg',
             },

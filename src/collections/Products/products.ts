@@ -7,18 +7,71 @@ import { Product, User } from '../../payload-types'
 import { stripe } from '../../lib/stripe'
 import { CustomSelectComponent } from '../../components/CustomSelectComponent'
 import PriceAfterCommission from '../../components/PriceAfterCommision'
-import { useFormFields } from 'payload/components/forms'
+import { getSiblingData, useFormFields } from 'payload/components/forms'
 import { APIError } from 'payload/errors'
-import { toast } from 'sonner'
+// import { toast } from 'sonner'
+import { toast } from 'react-toastify'
 import { PRODUCT_CATEGORIES } from '../../config'
-import {CustomCategory} from '../../components/CustomCategory'
+import path from 'path'
+
 // import ProductPricesFields from '../../components/ProductPricesFields'
 
-// class ReducedPriceError extends APIError {
-//     constructor(message: string) {
-//         super(message, 400, undefined, true)
-//     }
-// }
+const artCategory = PRODUCT_CATEGORIES.find(
+    (category) => category.value === 'arts'
+)
+const artFeaturedCategories = artCategory ? artCategory.featured : []
+
+const cultureCategory = PRODUCT_CATEGORIES.find(
+    (category) => category.value === 'culture'
+)
+const cultureFeaturedCategories = cultureCategory
+    ? cultureCategory.featured
+    : []
+
+const creationCategory = PRODUCT_CATEGORIES.find(
+    (category) => category.value === 'creations'
+)
+const creationFeaturedCategories = creationCategory
+    ? creationCategory.featured
+    : []
+
+const decoCategory = PRODUCT_CATEGORIES.find(
+    (category) => category.value === 'deco'
+)
+const decoFeaturedCategories = decoCategory ? decoCategory.featured : []
+
+const luminaireCategory = PRODUCT_CATEGORIES.find(
+    (category) => category.value === 'luminaires'
+)
+const luminaireFeaturedCategories = luminaireCategory
+    ? luminaireCategory.featured
+    : []
+
+const artDeLaTableCategory = PRODUCT_CATEGORIES.find(
+    (category) => category.value === 'artsdelatable'
+)
+const artDeLaTableFeaturedCategories = artDeLaTableCategory
+    ? artDeLaTableCategory.featured
+    : []
+
+const textileCategory = PRODUCT_CATEGORIES.find(
+    (category) => category.value === 'textiles_et_bijoux'
+)
+const textileFeaturedCategories = textileCategory
+    ? textileCategory.featured
+    : []
+
+const kidsCategory = PRODUCT_CATEGORIES.find(
+    (category) => category.value === 'kids'
+)
+const kidsFeaturedCategories = kidsCategory ? kidsCategory.featured : []
+
+const categories = PRODUCT_CATEGORIES.map((category) => {
+    return {
+        label: category.label,
+        value: category.value,
+    }
+})
 
 interface CustomSelectProps {
     path: string
@@ -27,14 +80,6 @@ interface CustomSelectProps {
         value: string
     }[]
 }
-
-// const categories = PRODUCT_CATEGORIES.map((category) => category.label)
-// console.log('categories2:::', categories)
-
-// const features = PRODUCT_CATEGORIES.map((category) => category.featured.map((feature) => {
-//     return feature.name
-// }))
-// console.log('features::::', features)
 
 const ValidatReducedPrice = ({ path, options }: CustomSelectProps) => {
     const { price } = useFormFields(([fields, dispatch]) => fields)
@@ -207,6 +252,13 @@ export const Products: CollectionConfig = {
             max: 25000,
             type: 'number',
             required: true,
+            validate: (data) => {
+                const price = data
+                if ( typeof price === 'string') {
+                    return 'Veuillez entrer seulement des chiffres'
+                }
+                else return price
+            }
         },
         {
             name: 'reducedPrice',
@@ -214,40 +266,21 @@ export const Products: CollectionConfig = {
             min: 0,
             type: 'number',
             required: false,
-            // validate: async ({ data }) => {
-            //     const price = await data?.price
-            //     const reducedPrice = await data?.reducedPrice
-
-            //     if (reducedPrice > Number(price)) {
-            //         return toast.error(
-            //             'le prix aprés réduction ne peut pas être supérieur au prix'
-            //         )
-            //     }
-
-            //     return reducedPrice
-            // },
+            validate: (data, siblingData) => {
+                const price = siblingData.data.price
+                const reducedPrice = data
+                if (reducedPrice > Number(price)) {
+                    return 'Le prix réduit ne peut pas être supérieur au prix actuel'
+                } else if ( typeof reducedPrice === 'string') {
+                    return 'Veuillez entrer seulement des chiffres'
+                } else return reducedPrice
+            },
 
             admin: {
                 description:
                     'Pour booster votre vente, vous pouvez éventuellement réduire le prix de votre article',
             },
-            hooks: {
-                afterChange: [
-                    async ({ data }) => {
-                        const price = await data?.price
-                        const reducedPrice = await data?.reducedPrice
-                        console.log('datab4V:::', reducedPrice, price)
-
-                        if (reducedPrice > Number(price)) {
-                            throw new Error(
-                                'Le prix aprés réduction ne peut pas être supérieur au prix'
-                            )
-                        }
-
-                        return reducedPrice
-                    },
-                ],
-            },
+            hooks: {},
         },
         // {
         //     name: 'productPricesFields',
@@ -271,6 +304,228 @@ export const Products: CollectionConfig = {
                     Field: PriceAfterCommission,
                 },
             },
+        },
+        {
+            name: 'category',
+            type: 'text',
+            required: true,
+            admin: {
+                components: {
+                    Field: CustomSelectComponent,
+                },
+                description:
+                    'Choisissez une categorie qui correspond à votre article',
+            },
+        },
+        {
+            name: 'categories',
+            label: 'Catégories',
+            type: 'group',
+            fields: [
+                {
+                    name: 'category',
+                    label: 'Choississez une catégorie',
+                    type: 'radio',
+                    required: true,
+                    admin: {
+                        condition: () => true,
+                    },
+                    options: categories,
+                },
+                {
+                    name: 'subcategory',
+                    label: 'Choisissez une sous catégorie',
+                    type: 'radio',
+                    required: true,
+                    admin: {
+                        condition: (data) => {
+                            if (
+                                data.categories &&
+                                data.categories.category === 'arts'
+                            ) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        },
+                    },
+                    options: artFeaturedCategories.map((features) => {
+                        return {
+                            label: features.name,
+                            value: features.value,
+                        }
+                    }),
+                },
+                {
+                    name: 'subcategory',
+                    label: 'Choisissez une sous catégorie',
+                    type: 'radio',
+                    required: true,
+                    admin: {
+                        condition: (data) => {
+                            if (
+                                data.categories &&
+                                data.categories.category === 'culture'
+                            ) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        },
+                    },
+                    options: cultureFeaturedCategories.map((features) => {
+                        return {
+                            label: features.name,
+                            value: features.value,
+                        }
+                    }),
+                },
+                {
+                    name: 'subcategory',
+                    label: 'Choisissez une sous catégorie',
+                    type: 'radio',
+                    required: true,
+                    admin: {
+                        condition: (data) => {
+                            if (
+                                data.categories &&
+                                data.categories.category === 'creations'
+                            ) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        },
+                    },
+                    options: creationFeaturedCategories.map((features) => {
+                        return {
+                            label: features.name,
+                            value: features.value,
+                        }
+                    }),
+                },
+                {
+                    name: 'subcategory',
+                    label: 'Choisissez une sous catégorie',
+                    type: 'radio',
+                    required: true,
+                    admin: {
+                        condition: (data) => {
+                            if (
+                                data.categories &&
+                                data.categories.category === 'deco'
+                            ) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        },
+                    },
+                    options: decoFeaturedCategories.map((features) => {
+                        return {
+                            label: features.name,
+                            value: features.value,
+                        }
+                    }),
+                },
+                {
+                    name: 'subcategory',
+                    label: 'Choisissez une sous catégorie',
+                    type: 'radio',
+                    required: true,
+                    admin: {
+                        condition: (data) => {
+                            if (
+                                data.categories &&
+                                data.categories.category === 'luminaires'
+                            ) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        },
+                    },
+                    options: luminaireFeaturedCategories.map((features) => {
+                        return {
+                            label: features.name,
+                            value: features.value,
+                        }
+                    }),
+                },
+                {
+                    name: 'subcategory',
+                    label: 'Choisissez une sous catégorie',
+                    type: 'radio',
+                    required: true,
+                    admin: {
+                        condition: (data) => {
+                            if (
+                                data.categories &&
+                                data.categories.category === 'artsdelatable'
+                            ) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        },
+                    },
+                    options: artDeLaTableFeaturedCategories.map((features) => {
+                        return {
+                            label: features.name,
+                            value: features.value,
+                        }
+                    }),
+                },
+                {
+                    name: 'subcategory',
+                    label: 'Choisissez une sous catégorie',
+                    type: 'radio',
+                    required: true,
+                    admin: {
+                        condition: (data) => {
+                            if (
+                                data.categories &&
+                                data.categories.category ===
+                                    'textiles_et_bijoux'
+                            ) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        },
+                    },
+                    options: textileFeaturedCategories.map((features) => {
+                        return {
+                            label: features.name,
+                            value: features.value,
+                        }
+                    }),
+                },
+                {
+                    name: 'subcategory',
+                    label: 'Choisissez une sous catégorie',
+                    type: 'radio',
+                    required: true,
+                    admin: {
+                        condition: (data) => {
+                            if (
+                                data.categories &&
+                                data.categories.category === 'kids'
+                            ) {
+                                return true
+                            } else {
+                                return false
+                            }
+                        },
+                    },
+                    options: kidsFeaturedCategories.map((features) => {
+                        return {
+                            label: features.name,
+                            value: features.value,
+                        }
+                    }),
+                },
+            ],
         },
         {
             name: 'images',
@@ -297,147 +552,6 @@ export const Products: CollectionConfig = {
                 },
             ],
         },
-        {
-            name: 'category',
-            type: 'text',
-            required: true,
-            admin: {
-                components: {
-                    Field: CustomSelectComponent,
-                },
-                description:
-                    'Choisissez une categorie qui correspond à votre article',
-            },
-        },
-
-        {
-            name: 'category4',
-            type: 'text',
-            required: true,
-            admin: {
-                components: {
-                    Field: CustomCategory,
-                },
-                description:
-                    'Choisissez une categorie qui correspond à votre article',
-            },
-        },
-
-        // {
-        //     name: 'enableCoolStuff', // required
-        //     type: 'checkbox', // required
-        //     label: 'Click me to see fanciness',
-        //     defaultValue: false,
-
-        // },
-
-        // {
-        //     name: 'product_files',
-        //     label: 'Product file(s)',
-        //     type: 'relationship',
-        //     required: false,
-        //     relationTo: 'product_files',
-        //     hasMany: false,
-        // },
-
-        // {
-        //     type: 'tabs', // required
-        //     // tabs: [
-        //     //     {
-        //     //         label: categories,
-        //     //         fields : [features],
-        //     //     }
-        //     // ]
-        //     tabs: PRODUCT_CATEGORIES.map((category) => {
-        //         return {
-        //             label: category.label,
-        //             // fields: category.featured.map((features) => {
-        //             //     return {
-        //             //         type: 'select',
-        //             //         name: 'categorie',
-        //             //         label: 'Choisissez une seule categorie',
-        //             //         options:
-        //             //         [
-        //             //             {
-        //             //                 label: features.name,
-        //             //                 value: features.value
-        //             //             }
-        //             //         ]
-        //             //     }
-        //             // }),
-        //             // fields: [
-        //             //     {
-        //             //         name: 'subcategorie',
-        //             //         type: 'select',
-        //             //         options: category.featured.map((feature) => {
-        //             //             return {
-        //             //                 label: feature.name,
-        //             //                 value: feature.value
-        //             //             }
-        //             //         })
-        //             //     },
-        //             // ],
-
-        //             fields: [
-        //                 {
-        //                     name: 'subcategories',
-        //                     type: 'group',
-        //                     fields: [
-        //                         {
-        //                             name: 'subgategorie',
-        //                             type: 'select',
-        //                             options: category.featured.map((feature) => {
-        //                                 return {
-        //                                     label: feature.name,
-        //                                     value: feature.value
-        //                                 }
-        //                             })
-        //                         }
-        //                     ]
-
-        //                 }
-        //             ]
-        //         }
-        //     }),
-
-        // },
-
-        // {
-        //     name: 'subcategories2',
-        //     type: 'group',
-        //     fields: PRODUCT_CATEGORIES.map((category) => {
-        //         return {
-        //             name: category.value,
-        //             label: category.label,
-        //             type: 'select',
-        //             options: category.featured.map((feature) => {
-        //                 return {
-        //                     label: feature.name,
-        //                     value: feature.value
-        //                 }
-        //             })
-        //         }
-        //     })
-        // },
-
-        {
-            name: 'enableGreeting',
-            type: 'checkbox',
-            defaultValue: false,
-          },
-          {
-            name: 'greeting',
-            type: 'text',
-            admin: {
-              condition: (data, siblingData, { user }) => {
-                if (data.enableGreeting) {
-                  return true
-                } else {
-                  return false
-                }
-              },
-            },
-          },
         {
             name: 'approvedForSale',
             label: 'Status du produit',

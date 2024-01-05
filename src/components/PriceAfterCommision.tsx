@@ -1,5 +1,6 @@
 import { useFormFields } from 'payload/components/forms'
 import React from 'react'
+import '../css/style.scss'
 
 interface CustomSelectProps {
     path: string
@@ -22,15 +23,22 @@ const PriceAfterCommission: React.FC<CustomSelectProps> = ({
 
     return (
         <>
-            <span>
+            <div id='priceWarning'>
+                {typeof reducedPrice.value === 'number' &&
+                typeof price.value === 'number' &&
+                reducedPrice.value > price.value
+                    ? 'Le prix réduit ne peut pas être supérieur au prix actuel'
+                    : null}
+            </div>
+            <div id='commission'>
                 {commissionPercentage}% de comissions. Soit{' '}
                 {reducedPrice.value
                     ? (Number(reducedPrice.value) * commissionPercentage) / 100
-                    : price.value
+                    : price && typeof price.value === 'number'
                     ? (Number(price.value) * commissionPercentage) / 100
                     : '0'}{' '}
                 €
-            </span>
+            </div>
         </>
     )
 }

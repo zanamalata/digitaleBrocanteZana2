@@ -25,8 +25,9 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
         return {
             label: category.label,
             value: category.value,  
+            type: 'text',
             className: 'categorie', 
-            style: 'background-color: aquamarine',
+            style: 'color:red;',
                  
             options: category.featured.map((featuredItem) => {
                 return {
@@ -49,7 +50,6 @@ export const CustomSelectComponent: React.FC<CustomSelectProps> = ({
                 options={adjustedOptions}
                 value={value}
                 onChange={(e) => setValue(e.value)}
-                
             />
         </div>
     )
