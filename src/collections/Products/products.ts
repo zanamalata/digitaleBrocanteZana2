@@ -257,7 +257,8 @@ export const Products: CollectionConfig = {
                 if ( typeof price === 'string') {
                     return 'Veuillez entrer seulement des chiffres'
                 }
-                else return price
+                else 
+                return price
             }
         },
         {
@@ -349,12 +350,19 @@ export const Products: CollectionConfig = {
                             }
                         },
                     },
-                    options: artFeaturedCategories.map((features) => {
-                        return {
-                            label: features.name,
-                            value: features.value,
-                        }
-                    }),
+                    options:
+                        [
+                            {
+                                value: 'tableau',
+                                label: 'Tableaux',
+                            }
+                        ]
+                    //  artFeaturedCategories.map((features) => {
+                    //     return {
+                    //         label: features.name,
+                    //         value: features.value,
+                    //     }
+                    // }),
                 },
                 {
                     name: 'subcategory',

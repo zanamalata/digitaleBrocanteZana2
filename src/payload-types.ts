@@ -51,7 +51,6 @@ export interface Product {
   price: number;
   reducedPrice?: number | null;
   priceAfterCommission?: string | null;
-  category: string;
   categories?: {
     category?:
       | ('arts' | 'culture' | 'creations' | 'deco' | 'luminaires' | 'artsdelatable' | 'textiles_et_bijoux' | 'kids')
