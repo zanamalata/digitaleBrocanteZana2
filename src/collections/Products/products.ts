@@ -305,18 +305,18 @@ export const Products: CollectionConfig = {
                 },
             },
         },
-        {
-            name: 'category',
-            type: 'text',
-            required: true,
-            admin: {
-                components: {
-                    Field: CustomSelectComponent,
-                },
-                description:
-                    'Choisissez une categorie qui correspond à votre article',
-            },
-        },
+        // {
+        //     name: 'category',
+        //     type: 'text',
+        //     required: true,
+        //     admin: {
+        //         components: {
+        //             Field: CustomSelectComponent,
+        //         },
+        //         description:
+        //             'Choisissez une categorie qui correspond à votre article',
+        //     },
+        // },
         {
             name: 'categories',
             label: 'Catégories',
