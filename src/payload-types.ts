@@ -55,7 +55,16 @@ export interface Product {
     category?:
       | ('arts' | 'culture' | 'creations' | 'deco' | 'luminaires' | 'artsdelatable' | 'textiles_et_bijoux' | 'kids')
       | null;
-    subcategory?: ('chambre' | 'joujoux' | 'mode') | null;
+    artSubCategory?: ('tableaux' | 'gravures' | 'affiches' | 'photographie' | 'sculptures') | null;
+    cultureSubCategory?: ('livres' | 'cartes' | 'bd' | 'revues' | 'vinyles') | null;
+    creationSubCategory?: ('peintures' | 'sculptures' | 'photo' | 'bijouterie' | 'poteries' | 'autres') | null;
+    decoSubCategory?:
+      | ('miroirs' | 'vases' | 'coffres' | 'ethniques' | 'indus' | 'religieux' | 'curiosite' | 'jardin' | 'militaria')
+      | null;
+    luminaireSubCategory?: ('suspensions' | 'appliques' | 'lampadaires' | 'accessoires') | null;
+    artTableSubCategory?: ('assiettes' | 'verres' | 'dejeuner' | 'vaisselle' | 'ustensils') | null;
+    textileSubCategory?: ('linge' | 'vetements' | 'vintage' | 'accessoires' | 'bijoux') | null;
+    kidsSubCategory?: ('chambre' | 'joujoux' | 'mode') | null;
   };
   images: {
     image: string | Media;

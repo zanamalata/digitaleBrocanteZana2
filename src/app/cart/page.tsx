@@ -25,18 +25,21 @@ const Page = () => {
 
   const productIds = items.map(({ product }) => product.id);
 
+  
   const [isMounted, setIsMounted] = useState<boolean>(false);
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
+  
   const cartTotal = items.reduce(
     (total, { product }) => total + product.price,
     0
-  );
-
-  const fee = 1;
-
+    );
+    
+    const fee = 1;
+    console.log('productID', productIds, 'isloading::::', isLoading, 'ismonunted::::', isMounted)
+    const category = PRODUCT_CATEGORIES.map((category) => category.label)
+    
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -84,8 +87,10 @@ const Page = () => {
               {isMounted &&
                 items.map(({ product }) => {
                   const label = PRODUCT_CATEGORIES.find(
-                    (c) => c.value === product.category
+                    (c) => c.value === product.categories?.category
                   )?.label;
+
+                  console.log('cartLabel:::', label)
 
                   const { image } = product.images[0];
 
