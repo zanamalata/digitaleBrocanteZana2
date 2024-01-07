@@ -24,19 +24,36 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
     onSelect,
 }) => {
     return (
-        <div>
+        <ul id="field-category" className="radio-group--group">
             {items.map((item) => (
-                <div key={item.value}>
-                    <input
-                        type="radio"
-                        value={item.value}
-                        checked={selectedItem?.value === item.value}
-                        onChange={() => onSelect(item)}
-                    />
-                    <label>{item.label}</label>
-                </div>
+                <>
+                    <li>
+                        <label>
+                            <div className="radio-input">
+                                <input
+                                    type="radio"
+                                    value={item.value}
+                                    checked={selectedItem?.value === item.value}
+                                    onChange={() => onSelect(item)}
+                                    key={item.value}
+                                />
+                            <span className="radio-input__styled-radio"></span>
+                            <span className="radio-input__label">{item.label}</span>
+                            </div>
+                                {/* {item.label} */}
+                        </label>
+                        {/* <div className="radio-input">
+                            <input 
+                            value={item.value}
+                            checked={selectedItem?.value === item.value}
+                            onChange={() => onSelect(item)}
+                            key={item.value}
+                            id={`field-category-${item.value}`} type="radio" />
+                        </div> */}
+                    </li>
+                </>
             ))}
-        </div>
+        </ul>
     )
 }
 
@@ -45,27 +62,25 @@ export const CustomCategories: React.FC = () => {
         React.useState<ProductCategory | null>(null)
 
     return (
-        <div className="flex justify-center align-middle">
-            <div className="flex">
+        <div className="field-type radio-group radio-group--layout-horizontal">
+            <label className="field-label">Catégories</label>
+            <div className="radio-group__error-wrap"></div>
+            <RadioButtonGroup
+                items={PRODUCT_CATEGORIES}
+                selectedItem={selectedCategory}
+                onSelect={setSelectedCategory}
+            />
+            {selectedCategory && (
                 <RadioButtonGroup
-                    items={PRODUCT_CATEGORIES}
-                    selectedItem={selectedCategory}
-                    onSelect={setSelectedCategory}
+                    items={selectedCategory.featured.map((item) => ({
+                        label: item.name,
+                        value: item.value,
+                        featured: [],
+                    }))}
+                    selectedItem={null}
+                    onSelect={(item) => console.log(item)}
                 />
-                <div className='relative flex bg-red-200'>
-                    {selectedCategory && (
-                        <RadioButtonGroup
-                            items={selectedCategory.featured.map((item) => ({
-                                label: item.name,
-                                value: item.value,
-                                featured: [],
-                            }))}
-                            selectedItem={null}
-                            onSelect={(item) => console.log(item)}
-                        />
-                    )}
-                </div>
-            </div>
+            )}
         </div>
     )
 }

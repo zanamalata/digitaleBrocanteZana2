@@ -51,21 +51,12 @@ export interface Product {
   price: number;
   reducedPrice?: number | null;
   priceAfterCommission?: string | null;
-  categories?: {
-    category?:
-      | ('arts' | 'culture' | 'creations' | 'deco' | 'luminaires' | 'artsdelatable' | 'textiles_et_bijoux' | 'kids')
-      | null;
-    artSubCategory?: ('tableaux' | 'gravures' | 'affiches' | 'photographie' | 'sculptures') | null;
-    cultureSubCategory?: ('livres' | 'cartes' | 'bd' | 'revues' | 'vinyles') | null;
-    creationSubCategory?: ('peintures' | 'sculptures' | 'photo' | 'bijouterie' | 'poteries' | 'autres') | null;
-    decoSubCategory?:
-      | ('miroirs' | 'vases' | 'coffres' | 'ethniques' | 'indus' | 'religieux' | 'curiosite' | 'jardin' | 'militaria')
-      | null;
-    luminaireSubCategory?: ('suspensions' | 'appliques' | 'lampadaires' | 'accessoires') | null;
-    artTableSubCategory?: ('assiettes' | 'verres' | 'dejeuner' | 'vaisselle' | 'ustensils') | null;
-    textileSubCategory?: ('linge' | 'vetements' | 'vintage' | 'accessoires' | 'bijoux') | null;
-    kidsSubCategory?: ('chambre' | 'joujoux' | 'mode') | null;
-  };
+  categories?:
+    | ('arts' | 'culture' | 'creations' | 'deco' | 'luminaires' | 'artsdelatable' | 'textiles_et_bijoux' | 'kids')
+    | null;
+  subcategory?:
+    | ('arts' | 'culture' | 'creations' | 'deco' | 'luminaires' | 'artsdelatable' | 'textiles_et_bijoux' | 'kids')
+    | null;
   images: {
     image: string | Media;
     id?: string | null;

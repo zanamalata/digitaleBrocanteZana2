@@ -6,14 +6,15 @@ import { Access, CollectionConfig, Field, FieldHook } from 'payload/types'
 import { Product, User } from '../../payload-types'
 import { stripe } from '../../lib/stripe'
 import { CustomSelectComponent } from '../../components/CustomSelectComponent'
-import {CustomCategories} from '../../components/CustomCategories'
+import { CustomCategories } from '../../components/CustomCategories'
 import PriceAfterCommission from '../../components/PriceAfterCommision'
-import { getSiblingData, useFormFields } from 'payload/components/forms'
+import { getSiblingData, useField, useFormFields } from 'payload/components/forms'
 import { APIError } from 'payload/errors'
 // import { toast } from 'sonner'
 import { toast } from 'react-toastify'
 import { PRODUCT_CATEGORIES } from '../../config'
 import path from 'path'
+import { features } from 'process'
 
 // import ProductPricesFields from '../../components/ProductPricesFields'
 
@@ -280,7 +281,6 @@ export const Products: CollectionConfig = {
                 description:
                     'Pour booster votre vente, vous pouvez éventuellement réduire le prix de votre article',
             },
-            hooks: {},
         },
         // {
         //     name: 'productPricesFields',
@@ -330,15 +330,14 @@ export const Products: CollectionConfig = {
         //     },
         // },
         {
-           name: 'category',
-           type: 'radio', 
-           options: PRODUCT_CATEGORIES.map((category) => {
-            return {
-                label: category.label,
-                value: category.value,
-                
-            }
-           })
+            name: 'categories',
+            type: 'radio',
+            options: PRODUCT_CATEGORIES.map((category) => {
+                return {
+                    label: category.label,
+                    value: category.value,
+                }
+            }),
             // [
             //     {
             //         name: 'category',
@@ -544,7 +543,31 @@ export const Products: CollectionConfig = {
             //         }),
             //     },
             // ],
-        },        
+        },
+        // {
+        //     name: 'subcategory',
+        //     type: 'radio',
+        //     hooks: {
+        //         beforeChange: [
+        //             (siblingData) => console.log(siblingData.data?.category)
+                
+        //         ],
+                
+        //     },
+        //     options: 
+        //     PRODUCT_CATEGORIES.map((item) => {
+        //         return {
+        //             label: item.label,
+        //             value: item.value,
+        //         }
+        //     }) 
+        //     ,
+        //     //     {
+        //     //         value: 'test',
+        //     //         label: 'test',
+        //     //     },
+        //     // ,
+        // },
         {
             name: 'images',
             type: 'array',
