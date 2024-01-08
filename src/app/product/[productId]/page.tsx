@@ -48,11 +48,17 @@ const Page = async ({ params }: PageProps) => {
         ({ value }) => value === product.category
     )?.label
 
+    const subLabel = PRODUCT_CATEGORIES.map((category) => {
+        category.featured.find(
+            ({value}) => value === product.subcategory
+        )?.value
+    })
+
     const validUrls = product.images
         .map(({ image }) => (typeof image === 'string' ? image : image.url))
         .filter(Boolean) as string[]
 
-        return (
+    return (
         <MaxWidthWrapper className="bg-white">
             <div className="bg-white">
                 <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
@@ -111,11 +117,11 @@ const Page = async ({ params }: PageProps) => {
                                     className="h-5 w-5 flex-shrink-0 text-green-500"
                                 /> */}
                                 <p className="ml-2 text-sm text-muted-foreground">
-                                    vendu par{' '}
+                                    Vendu par{' '}
                                     <Link href={`/seller/${sellerId}`}>
-                                    <span className="font-bold">
-                                        {sellerName}
-                                    </span>
+                                        <span className="font-bold">
+                                            {sellerName}
+                                        </span>
                                     </Link>
                                 </p>
                             </div>
@@ -125,11 +131,25 @@ const Page = async ({ params }: PageProps) => {
                                     className="h-5 w-5 flex-shrink-0 text-green-500"
                                 /> */}
                                 <p className="ml-2 text-sm text-muted-foreground">
-                                    catégorie de produit :{' '}
-                                    <Link href={`/seller/${sellerId}`}>
-                                    <span className="font-bold">
-                                        {product.category}
-                                    </span>
+                                    Catégorie de produit :{' '}
+                                    <Link href={`/products?category=${product.category}`}>
+                                        <span className="font-bold">
+                                            {label}
+                                        </span>
+                                    </Link>
+                                </p>
+                            </div>
+                            <div className=" flex items-center">
+                                {/* <Check
+                                    aria-hidden="true"
+                                    className="h-5 w-5 flex-shrink-0 text-green-500"
+                                /> */}
+                                <p className="ml-2 text-sm text-muted-foreground">
+                                    Sous-catégorie:{' '}
+                                    <Link href={`/products?category=${product.subcategory}`}>
+                                        <span className="font-bold">
+                                            {product.subcategory}
+                                        </span>
                                     </Link>
                                 </p>
                             </div>
@@ -168,8 +188,8 @@ const Page = async ({ params }: PageProps) => {
             <ProductReel
                 href={`/products?category=${product.category}`}
                 query={{ category: product.category, limit: 4 }}
-                title={`${product.category} similaires`}
-                subtitle={`Parcourez d'autres ${product.category} qui ressemblent à '${product.name}'`}
+                title={`${label}: ${product.subcategory} similaires`}
+                subtitle={`Parcourez ${label}: ${product.subcategory} qui ressemblent à '${product.name}'`}
             />
         </MaxWidthWrapper>
     )

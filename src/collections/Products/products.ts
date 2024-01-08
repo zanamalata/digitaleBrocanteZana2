@@ -5,97 +5,10 @@ import {
 import { Access, CollectionConfig, Field, FieldHook } from 'payload/types'
 import { Product, User } from '../../payload-types'
 import { stripe } from '../../lib/stripe'
-import { CustomSubcategory } from '../../components/CustomCategories'
+import { CustomSubcategory } from '../../components/CustomSubcategories'
 import PriceAfterCommission from '../../components/PriceAfterCommision'
-import {
-    getSiblingData,
-    useField,
-    useFormFields,
-} from 'payload/components/forms'
-import { APIError } from 'payload/errors'
-// import { toast } from 'sonner'
 import { toast } from 'react-toastify'
 import { PRODUCT_CATEGORIES } from '../../config'
-import path from 'path'
-import { features } from 'process'
-
-// import ProductPricesFields from '../../components/ProductPricesFields'
-
-const artCategory = PRODUCT_CATEGORIES.find(
-    (category) => category.value === 'arts'
-)
-const artFeaturedCategories = artCategory ? artCategory.featured : []
-
-const cultureCategory = PRODUCT_CATEGORIES.find(
-    (category) => category.value === 'culture'
-)
-const cultureFeaturedCategories = cultureCategory
-    ? cultureCategory.featured
-    : []
-
-const creationCategory = PRODUCT_CATEGORIES.find(
-    (category) => category.value === 'creations'
-)
-const creationFeaturedCategories = creationCategory
-    ? creationCategory.featured
-    : []
-
-const decoCategory = PRODUCT_CATEGORIES.find(
-    (category) => category.value === 'deco'
-)
-const decoFeaturedCategories = decoCategory ? decoCategory.featured : []
-
-const luminaireCategory = PRODUCT_CATEGORIES.find(
-    (category) => category.value === 'luminaires'
-)
-const luminaireFeaturedCategories = luminaireCategory
-    ? luminaireCategory.featured
-    : []
-
-const artDeLaTableCategory = PRODUCT_CATEGORIES.find(
-    (category) => category.value === 'artsdelatable'
-)
-const artDeLaTableFeaturedCategories = artDeLaTableCategory
-    ? artDeLaTableCategory.featured
-    : []
-
-const textileCategory = PRODUCT_CATEGORIES.find(
-    (category) => category.value === 'textiles_et_bijoux'
-)
-const textileFeaturedCategories = textileCategory
-    ? textileCategory.featured
-    : []
-
-const kidsCategory = PRODUCT_CATEGORIES.find(
-    (category) => category.value === 'kids'
-)
-const kidsFeaturedCategories = kidsCategory ? kidsCategory.featured : []
-
-const categories = PRODUCT_CATEGORIES.map((category) => {
-    return {
-        label: category.label,
-        value: category.value,
-    }
-})
-
-interface CustomSelectProps {
-    path: string
-    options: {
-        label: string
-        value: string
-    }[]
-}
-
-const ValidatReducedPrice = ({ path, options }: CustomSelectProps) => {
-    const { price } = useFormFields(([fields, dispatch]) => fields)
-    const reducedPrice = useFormFields(([fields, dispatch]) => fields)
-    console.log(reducedPrice.value, price.value)
-
-    if (Number(reducedPrice.value) > Number(price.value))
-        throw new Error('Le prix réduit doit être inférieur au prix normal')
-
-    return Number(price.value)
-}
 
 const addUser: BeforeChangeHook<Product> = async ({ req, data }) => {
     const user = req.user
@@ -285,18 +198,6 @@ export const Products: CollectionConfig = {
                     'Pour booster votre vente, vous pouvez éventuellement réduire le prix de votre article',
             },
         },
-        // {
-        //     name: 'productPricesFields',
-        //     label: "Prix de l'article",
-        //     type: 'text',
-        //     admin: {
-        //         readOnly: true,
-        //         components: {
-        //             Field: ProductPricesFields,
-        //         },
-        //     },
-        // },
-
         {
             name: 'priceAfterCommission',
             label: `(Prix aprés comission) en EUR `,
@@ -311,6 +212,7 @@ export const Products: CollectionConfig = {
         {
             name: 'category',
             type: 'radio',
+            required: true,
             options: PRODUCT_CATEGORIES.map((category) => {
                 return {
                     label: category.label,
@@ -322,7 +224,7 @@ export const Products: CollectionConfig = {
             name: 'subcategory',
             label: 'Sous-catégories',
             type: 'text',
-            
+            required: true,
             admin: {
                 readOnly: false,
                 components: {

@@ -38,7 +38,7 @@ export const CustomSubcategory: React.FC<Props> = ({ path }) => {
                                 <label>
                                     <div
                                         className={`radio-input ${
-                                            item.value === subcategory.value
+                                            item.name === subcategory.value
                                                 ? 'radio-input--is-selected'
                                                 : ''
                                         }`}
@@ -48,7 +48,7 @@ export const CustomSubcategory: React.FC<Props> = ({ path }) => {
                                             onChange={(e) =>
                                                 setValue(e.target.value)
                                             }
-                                            value={item.value}
+                                            value={item.name}
                                         />
                                         <span className="radio-input__styled-radio"></span>
                                         <span className="radio-input__label">
