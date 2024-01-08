@@ -87,7 +87,7 @@ const Page = () => {
               {isMounted &&
                 items.map(({ product }) => {
                   const label = PRODUCT_CATEGORIES.find(
-                    (c) => c.value === product.categories?.category
+                    (c) => c.value === product.category
                   )?.label;
 
                   console.log('cartLabel:::', label)

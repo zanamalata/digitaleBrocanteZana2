@@ -5,7 +5,6 @@ import {
 import { Access, CollectionConfig, Field, FieldHook } from 'payload/types'
 import { Product, User } from '../../payload-types'
 import { stripe } from '../../lib/stripe'
-import { CustomSelectComponent } from '../../components/CustomSelectComponent'
 import { CustomSubcategory } from '../../components/CustomCategories'
 import PriceAfterCommission from '../../components/PriceAfterCommision'
 import {
@@ -309,19 +308,6 @@ export const Products: CollectionConfig = {
                 },
             },
         },
-
-        // {
-        //     name: 'category',
-        //     type: 'text',
-        //     required: true,
-        //     admin: {
-        //         components: {
-        //             Field: CustomSelectComponent,
-        //         },
-        //         description:
-        //             'Choisissez une categorie qui correspond à votre article',
-        //     },
-        // },
         {
             name: 'category',
             type: 'radio',
