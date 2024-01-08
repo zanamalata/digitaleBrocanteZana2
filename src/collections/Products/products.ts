@@ -6,9 +6,13 @@ import { Access, CollectionConfig, Field, FieldHook } from 'payload/types'
 import { Product, User } from '../../payload-types'
 import { stripe } from '../../lib/stripe'
 import { CustomSelectComponent } from '../../components/CustomSelectComponent'
-import { CustomCategories } from '../../components/CustomCategories'
+import { CustomSubcategory } from '../../components/CustomCategories'
 import PriceAfterCommission from '../../components/PriceAfterCommision'
-import { getSiblingData, useField, useFormFields } from 'payload/components/forms'
+import {
+    getSiblingData,
+    useField,
+    useFormFields,
+} from 'payload/components/forms'
 import { APIError } from 'payload/errors'
 // import { toast } from 'sonner'
 import { toast } from 'react-toastify'
@@ -305,17 +309,6 @@ export const Products: CollectionConfig = {
                 },
             },
         },
-        {
-            name: 'categories',
-            label: 'Catégories',
-            type: 'text',
-            admin: {
-                readOnly: true,
-                components: {
-                    Field: CustomCategories,
-                },
-            },
-        },
 
         // {
         //     name: 'category',
@@ -330,7 +323,7 @@ export const Products: CollectionConfig = {
         //     },
         // },
         {
-            name: 'categories',
+            name: 'category',
             type: 'radio',
             options: PRODUCT_CATEGORIES.map((category) => {
                 return {
@@ -338,236 +331,19 @@ export const Products: CollectionConfig = {
                     value: category.value,
                 }
             }),
-            // [
-            //     {
-            //         name: 'category',
-            //         label: 'Choississez une catégorie',
-            //         type: 'radio',
-            //         required: true,
-            //         admin: {
-            //             condition: () => true,
-            //         },
-            //         options: categories,
-            //     },
-            //     {
-            //         name: 'artSubCategory',
-            //         label: 'Choisissez une sous catégorie',
-            //         type: 'radio',
-            //         required: true,
-            //         admin: {
-            //             condition: (data) => {
-            //                 if (
-            //                     data.categories &&
-            //                     data.categories.category === 'arts'
-            //                 ) {
-            //                     return true
-            //                 } else {
-            //                     return false
-            //                 }
-            //             },
-            //         },
-            //         options: artFeaturedCategories.map((features) => {
-            //             return {
-            //                 label: features.name,
-            //                 value: features.value,
-            //             }
-            //         }),
-            //     },
-            //     {
-            //         name: 'cultureSubCategory',
-            //         label: 'Choisissez une sous catégorie',
-            //         type: 'radio',
-            //         required: true,
-            //         admin: {
-            //             condition: (data) => {
-            //                 if (
-            //                     data.categories &&
-            //                     data.categories.category === 'culture'
-            //                 ) {
-            //                     return true
-            //                 } else {
-            //                     return false
-            //                 }
-            //             },
-            //         },
-            //         options: cultureFeaturedCategories.map((features) => {
-            //             return {
-            //                 label: features.name,
-            //                 value: features.value,
-            //             }
-            //         }),
-            //     },
-            //     {
-            //         name: 'creationSubCategory',
-            //         label: 'Choisissez une sous catégorie',
-            //         type: 'radio',
-            //         required: true,
-            //         admin: {
-            //             condition: (data) => {
-            //                 if (
-            //                     data.categories &&
-            //                     data.categories.category === 'creations'
-            //                 ) {
-            //                     return true
-            //                 } else {
-            //                     return false
-            //                 }
-            //             },
-            //         },
-            //         options: creationFeaturedCategories.map((features) => {
-            //             return {
-            //                 label: features.name,
-            //                 value: features.value,
-            //             }
-            //         }),
-            //     },
-            //     {
-            //         name: 'decoSubCategory',
-            //         label: 'Choisissez une sous catégorie',
-            //         type: 'radio',
-            //         required: true,
-            //         admin: {
-            //             condition: (data) => {
-            //                 if (
-            //                     data.categories &&
-            //                     data.categories.category === 'deco'
-            //                 ) {
-            //                     return true
-            //                 } else {
-            //                     return false
-            //                 }
-            //             },
-            //         },
-            //         options: decoFeaturedCategories.map((features) => {
-            //             return {
-            //                 label: features.name,
-            //                 value: features.value,
-            //             }
-            //         }),
-            //     },
-            //     {
-            //         name: 'luminaireSubCategory',
-            //         label: 'Choisissez une sous catégorie',
-            //         type: 'radio',
-            //         required: true,
-            //         admin: {
-            //             condition: (data) => {
-            //                 if (
-            //                     data.categories &&
-            //                     data.categories.category === 'luminaires'
-            //                 ) {
-            //                     return true
-            //                 } else {
-            //                     return false
-            //                 }
-            //             },
-            //         },
-            //         options: luminaireFeaturedCategories.map((features) => {
-            //             return {
-            //                 label: features.name,
-            //                 value: features.value,
-            //             }
-            //         }),
-            //     },
-            //     {
-            //         name: 'artTableSubCategory',
-            //         label: 'Choisissez une sous catégorie',
-            //         type: 'radio',
-            //         required: true,
-            //         admin: {
-            //             condition: (data) => {
-            //                 if (
-            //                     data.categories &&
-            //                     data.categories.category === 'artsdelatable'
-            //                 ) {
-            //                     return true
-            //                 } else {
-            //                     return false
-            //                 }
-            //             },
-            //         },
-            //         options: artDeLaTableFeaturedCategories.map((features) => {
-            //             return {
-            //                 label: features.name,
-            //                 value: features.value,
-            //             }
-            //         }),
-            //     },
-            //     {
-            //         name: 'textileSubCategory',
-            //         label: 'Choisissez une sous catégorie',
-            //         type: 'radio',
-            //         required: true,
-            //         admin: {
-            //             condition: (data) => {
-            //                 if (
-            //                     data.categories &&
-            //                     data.categories.category ===
-            //                         'textiles_et_bijoux'
-            //                 ) {
-            //                     return true
-            //                 } else {
-            //                     return false
-            //                 }
-            //             },
-            //         },
-            //         options: textileFeaturedCategories.map((features) => {
-            //             return {
-            //                 label: features.name,
-            //                 value: features.value,
-            //             }
-            //         }),
-            //     },
-            //     {
-            //         name: 'kidsSubCategory',
-            //         label: 'Choisissez une sous catégorie',
-            //         type: 'radio',
-            //         required: true,
-            //         admin: {
-            //             condition: (data) => {
-            //                 if (
-            //                     data.categories &&
-            //                     data.categories.category === 'kids'
-            //                 ) {
-            //                     return true
-            //                 } else {
-            //                     return false
-            //                 }
-            //             },
-            //         },
-            //         options: kidsFeaturedCategories.map((features) => {
-            //             return {
-            //                 label: features.name,
-            //                 value: features.value,
-            //             }
-            //         }),
-            //     },
-            // ],
         },
-        // {
-        //     name: 'subcategory',
-        //     type: 'radio',
-        //     hooks: {
-        //         beforeChange: [
-        //             (siblingData) => console.log(siblingData.data?.category)
-                
-        //         ],
-                
-        //     },
-        //     options: 
-        //     PRODUCT_CATEGORIES.map((item) => {
-        //         return {
-        //             label: item.label,
-        //             value: item.value,
-        //         }
-        //     }) 
-        //     ,
-        //     //     {
-        //     //         value: 'test',
-        //     //         label: 'test',
-        //     //     },
-        //     // ,
-        // },
+        {
+            name: 'subcategory',
+            label: 'Sous-catégories',
+            type: 'text',
+            
+            admin: {
+                readOnly: false,
+                components: {
+                    Field: CustomSubcategory,
+                },
+            },
+        },
         {
             name: 'images',
             type: 'array',

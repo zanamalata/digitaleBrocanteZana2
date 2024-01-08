@@ -51,12 +51,10 @@ export interface Product {
   price: number;
   reducedPrice?: number | null;
   priceAfterCommission?: string | null;
-  categories?:
+  category?:
     | ('arts' | 'culture' | 'creations' | 'deco' | 'luminaires' | 'artsdelatable' | 'textiles_et_bijoux' | 'kids')
     | null;
-  subcategory?:
-    | ('arts' | 'culture' | 'creations' | 'deco' | 'luminaires' | 'artsdelatable' | 'textiles_et_bijoux' | 'kids')
-    | null;
+  subcategory?: string | null;
   images: {
     image: string | Media;
     id?: string | null;

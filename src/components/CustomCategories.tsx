@@ -1,86 +1,124 @@
-import { PRODUCT_CATEGORIES } from '../config'
 import React from 'react'
+import { PRODUCT_CATEGORIES } from '../config'
+import { useField, useFormFields } from 'payload/components/forms'
+import { unknown } from 'zod'
 
-type ProductCategory = {
-    label: string
+type Props = {
+    path: string
+    item: {
+        name: string;
+        value: string;
+        href: string;
+        imageSrc: string;
+    }
     value: string
-    featured: {
-        name: string
-        value: string
-        href: string
-        imageSrc: string
-    }[]
 }
 
-type RadioButtonGroupProps = {
-    items: ProductCategory[]
-    selectedItem: ProductCategory | null
-    onSelect: (item: ProductCategory) => void
-}
+export const CustomSubcategory: React.FC<Props> = ({ path }) => {
+    const { category } = useFormFields(([fields, dispatch]) => fields)
+    const { value, setValue } = useField<Props>({ path })
 
-const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
-    items,
-    selectedItem,
-    onSelect,
-}) => {
+    const [feature] = PRODUCT_CATEGORIES.filter(
+        (featured) => featured.value === category.value
+    )
+
+    // const [selected, setSelected] = React.useState(null)
+
+    // const handleChange = (e) => {
+        
+    //         // setSelected(e.target.value)
+        
+    //     setValue(e.target.value)
+    // }
+
     return (
-        <ul id="field-category" className="radio-group--group">
-            {items.map((item) => (
-                <>
-                    <li>
-                        <label>
-                            <div className="radio-input">
-                                <input
-                                    type="radio"
-                                    value={item.value}
-                                    checked={selectedItem?.value === item.value}
-                                    onChange={() => onSelect(item)}
-                                    key={item.value}
-                                />
-                            <span className="radio-input__styled-radio"></span>
-                            <span className="radio-input__label">{item.label}</span>
-                            </div>
-                                {/* {item.label} */}
-                        </label>
-                        {/* <div className="radio-input">
-                            <input 
-                            value={item.value}
-                            checked={selectedItem?.value === item.value}
-                            onChange={() => onSelect(item)}
-                            key={item.value}
-                            id={`field-category-${item.value}`} type="radio" />
-                        </div> */}
-                    </li>
-                </>
-            ))}
-        </ul>
+        <>
+            <div className="field-type radio-group radio-group--layout-horizontal">
+                <div className="radio-group__error-wrap"></div>
+                <label htmlFor="field-subcategory" className="field-label">
+                    Sous-catégories
+                </label>
+                {feature && (
+                    <ul id="field-category" className="radio-group--group">
+                        {feature.featured.map((item, i) => {
+                            console.log('item:::', item.value , 'path:::', path,'value:::', value)
+                            return (
+                                <li key={i}>
+                                    <label
+                                    htmlFor={`field-subcategory-${item.value}`}
+                                    >
+                                        <div className={`radio-input ${ item.value === value ? 'radio-input--is-selected' : '' }`} style={{opacity: value ? 1 : 0}}>
+                                            <input
+                                                id={`field-subcategory-${item.value}`}
+                                                type="radio"
+                                                onChange={(e) => setValue(e.target.value)}
+                                                value={item.value} 
+                                                checked            
+                                            />
+                                            <span className="radio-input__styled-radio"></span>
+                                            <span className="radio-input__label">
+                                                {item.name}
+                                            </span>
+                                        </div>
+                                    </label>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                )}
+            </div>
+        </>
     )
 }
 
-export const CustomCategories: React.FC = () => {
-    const [selectedCategory, setSelectedCategory] =
-        React.useState<ProductCategory | null>(null)
+// import React from 'react';
+// import { PRODUCT_CATEGORIES } from '../config';
+// import { useForm, useField } from 'payload/components/forms';
 
-    return (
-        <div className="field-type radio-group radio-group--layout-horizontal">
-            <label className="field-label">Catégories</label>
-            <div className="radio-group__error-wrap"></div>
-            <RadioButtonGroup
-                items={PRODUCT_CATEGORIES}
-                selectedItem={selectedCategory}
-                onSelect={setSelectedCategory}
-            />
-            {selectedCategory && (
-                <RadioButtonGroup
-                    items={selectedCategory.featured.map((item) => ({
-                        label: item.name,
-                        value: item.value,
-                        featured: [],
-                    }))}
-                    selectedItem={null}
-                    onSelect={(item) => console.log(item)}
-                />
-            )}
-        </div>
-    )
-}
+// type Props = {
+//    path: string;
+// };
+
+// export const CustomSubcategory: React.FC<Props> = ({ path }) => {
+//    const { register, setValue } = useForm();
+//    const { ref, ...inputProps } = useField('category');
+
+//    const [feature] = PRODUCT_CATEGORIES.filter(
+//        (featured) => featured.value === inputProps.value
+//    );
+
+//    return (
+//        <div className="field-type radio-group radio-group--layout-horizontal">
+//            <div className="radio-group__error-wrap"></div>
+//            <label htmlFor="field-subcategory" className="field-label">
+//                Sous-catégories
+//            </label>
+//            {feature && (
+//                <ul id="field-category" className="radio-group--group">
+//                   {feature.featured.map((item, i) => {
+//                       return (
+//                           <li key={i}>
+//                               <label>
+//                                  <div className="radio-input">
+//                                      <input
+//                                          type="radio"
+//                                          onChange={(e) => setValue('category', e.target.value)}
+//                                          value={item.value}
+//                                          ref={register}
+//                                      />
+//                                      <span className="radio-input__styled-radio" style={{opacity: inputProps.value === item.value ? 1 : 0}}></span>
+//                                      <span className="radio-input__label">
+//                                          {item.name}
+//                                      </span>
+//                                  </div>
+//                               </label>
+//                           </li>
+//                       )
+//                   })}
+//                </ul>
+//            )}
+//        </div>
+//    )
+// }
+
+
