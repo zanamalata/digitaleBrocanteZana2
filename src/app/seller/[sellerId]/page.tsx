@@ -1,5 +1,6 @@
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import ProductListing from '@/components/ProductListing'
+import ProductReel from '@/components/ProductReel'
 import { getPayloadClient } from '@/get-payload'
 import Image from 'next/image'
 
@@ -135,7 +136,8 @@ const Page = async ({ params }: PageProps) => {
             </div>
 
             <div className="border-t border-slate-200 relative -top-8 pt-8">
-                <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
+                <div
+                    className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8" >
                     {products.map((product, i) => {
                         if (typeof product === 'string') {
                             return null
@@ -146,6 +148,17 @@ const Page = async ({ params }: PageProps) => {
                                     product={product}
                                     index={i}
                                 />
+                                // <div key={product.id} className='border-4 content-center justify-center '>
+                                //     <ProductReel
+                                //         title={product.name}
+                                //         subtitle={product.subcategory}
+                                //         query={{
+                                //             limit: 1,
+                                //             subcategory: product.subcategory,
+                                //             category: product.category,
+                                //         }}
+                                //     />
+                                // </div>
                             )
                         }
                     })}
