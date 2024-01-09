@@ -49,6 +49,7 @@ export const CustomSubcategory: React.FC<Props> = ({ path }) => {
                                                 setValue(e.target.value)
                                             }
                                             value={item.name}
+                                            checked={item.name === subcategory.value}
                                         />
                                         <span className="radio-input__styled-radio"></span>
                                         <span className="radio-input__label">
