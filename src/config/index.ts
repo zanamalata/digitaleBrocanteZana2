@@ -6,12 +6,12 @@ export const PRODUCT_CATEGORIES = [
             {
                 name: 'Tableaux anciens et dessins',
                 value: 'tableaux',
-                href: '/products?category=tableaux_anciens_dessins',
+                href: '/products?category=arts&subcategory=tableaux',
                 imageSrc: '/nav/icons/new.jpg',           },
             {
                 name: 'Gravures et estampes',
                 value: 'gravures',
-                href: '/products?category=gravures_et_estampes',
+                href: '/products?category=arts&subcategory=gravures',
                 imageSrc: '/nav/icons/new.jpg',
             },
             {

@@ -1,9 +1,6 @@
-import { Products } from '@/collections/Products/products'
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import ProductListing from '@/components/ProductListing'
-import ProductReel from '@/components/ProductReel'
 import { getPayloadClient } from '@/get-payload'
-import { Product } from '@/payload-types'
 import Image from 'next/image'
 
 interface PageProps {
@@ -37,9 +34,7 @@ const Page = async ({ params }: PageProps) => {
 
     const [seller] = await sellers
 
-    const products = seller.products || []
-
-    console.log('products::::', products)
+    const products = seller?.products || []
 
     // const [product] = products.map((value) => {
     //     if (typeof value === 'string') {

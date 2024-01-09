@@ -1,11 +1,11 @@
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import { Button, buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
-import { Share2, Leaf, Store, SearchCheck } from 'lucide-react'
+import { Share2, Store, SearchCheck } from 'lucide-react'
 import ProductReel from '@/components/ProductReel'
 import SearchBar from '@/components/SearchBar'
-import { PRODUCT_CATEGORIES } from '@/config'
 import SellerCarousel from '@/components/SellerCarousel'
+import { cn } from '@/lib/utils'
 
 const perks = [
     {
@@ -28,16 +28,10 @@ const perks = [
     },
 ]
 
-const featuredNamesByCategory = PRODUCT_CATEGORIES.map((category) => {
-    return {
-        label: category.label,
-        featuredNames: category.featured.map(
-            (featuredItem) => featuredItem.name
-        ),
-    }
-})
 
 export default function Home() {
+    
+
     return (
         <>
             <MaxWidthWrapper>
@@ -72,7 +66,8 @@ export default function Home() {
                 <ProductReel
                     href="/products?sort=recent"
                     title="Nouveauté"
-                    query={{ sort: 'asc', limit: 8 }}
+                    query={{ limit: 4 }}
+                    button
                 />
             </MaxWidthWrapper>
 

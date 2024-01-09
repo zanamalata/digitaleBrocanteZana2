@@ -8,6 +8,7 @@ import { formatPrice } from '@/lib/utils'
 import { User } from '@/payload-types'
 import { Check, Shield } from 'lucide-react'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 interface PageProps {
     params: {
@@ -40,6 +41,8 @@ const Page = async ({ params }: PageProps) => {
 
     const [product] = products
 
+    if (!product) return notFound()
+
     const seller = product.user
     const sellerName = typeof seller === 'string' ? seller : seller?.seller_name
     const sellerId = typeof seller === 'string' ? seller : seller?.id
@@ -62,6 +65,7 @@ const Page = async ({ params }: PageProps) => {
         <MaxWidthWrapper className="bg-white">
             <div className="bg-white">
                 <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+                 
                     {/* Product Details */}
                     <div className="lg:max-w-lg lg:self-end">
                         <ol className="flex items-center space-x-2">
@@ -187,7 +191,7 @@ const Page = async ({ params }: PageProps) => {
 
             <ProductReel
                 href={`/products?category=${product.category}`}
-                query={{ category: product.category, limit: 4 }}
+                query={{ subcategory: product.subcategory, limit: 4 }}
                 title={`${label}: ${product.subcategory} similaires`}
                 subtitle={`Parcourez ${label}: ${product.subcategory} qui ressemblent à '${product.name}'`}
             />

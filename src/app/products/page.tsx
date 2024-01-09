@@ -2,8 +2,6 @@ import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import ProductReel from '@/components/ProductReel'
 import { PRODUCT_CATEGORIES } from '@/config'
 import { getPayloadClient } from '@/get-payload'
-import { equal } from 'assert'
-import payload from 'payload'
 
 type Param = string | string[] | undefined
 
@@ -15,63 +13,49 @@ const parse = (param: Param) => {
     return typeof param === 'string' ? param : undefined
 }
 
-const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
+const ProductsPage = ({ searchParams }: ProductsPageProps) => {
     const sort = parse(searchParams.sort)
     const category = parse(searchParams.category)
-
-    const payload = await getPayloadClient()
-
-
-    
-    // TODO: find the proper value
-
-    const label = PRODUCT_CATEGORIES.find(
-      ({ value }) => value === value
-    )?.value
-    console.log('label::::', label)
+    const subcategory = parse(searchParams.subcategory)
 
     return (
         <MaxWidthWrapper>
-            {/* {PRODUCT_CATEGORIES.map(async (item) => {
-                // const category = item.featured.map((item) => item.value)
-                // const category = 'deco'
-                // console.log('category::::', category)
-
-                const { docs: products } = await payload.find({
-                    collection: 'products',
-                    where: {
-                        category: {
-                            equals: item.value,
-                        },
-                    },
-                })
-                console.log('products::::', products)
-
+            {/* {PRODUCT_CATEGORIES.map( (item) => {
                 return (
-                    <ProductReel
-                        key={item.label}
-                        title={item.label}
-                        query={{
-                            category,
-                            limit: 40,
-                            sort:
-                                sort === 'desc' || sort === 'asc'
-                                    ? sort
-                                    : undefined,
-                        }}
-                    />
+                    <div className="mt-20" key={item.label}>
+                        <h1 className="text-4xl font-bold text-center">{item.label}</h1>
+                        {item.featured.map((feature) => (
+                            <ProductReel
+                            key={feature.value}
+                            title={feature.name}
+                            query={{
+                                subcategory: feature.name,
+                                limit: 4,
+                                sort:
+                                    sort === 'desc' || sort === 'asc'
+                                        ? sort
+                                        : undefined,
+                            }}
+                        />
+                        ))}
+                    </div>
                 )
             })} */}
 
-            <ProductReel
-                title={'Parcourir les produits'}
-                query={{
-                    category: category,
-                    limit: 40,
-                    sort: sort === 'desc' || sort === 'asc' ? sort : undefined,
-                }}
-                href={`/products?category=${label}`}
-            />
+            {PRODUCT_CATEGORIES.map((category) => (
+                <ProductReel
+                    key={category.value}
+                    title={category.label}
+                    query={{
+                    category: category.value,
+                        limit: 4,
+                        sort:
+                            sort === 'desc' || sort === 'asc'
+                                ? sort
+                                : undefined,
+                    }}
+                />
+            ))}
         </MaxWidthWrapper>
     )
 }
