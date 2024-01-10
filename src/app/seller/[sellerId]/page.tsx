@@ -1,6 +1,7 @@
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import ProductListing from '@/components/ProductListing'
 import ProductReel from '@/components/ProductReel'
+import { SellerProducts } from '@/components/SellerProducts'
 import { getPayloadClient } from '@/get-payload'
 import Image from 'next/image'
 
@@ -36,6 +37,8 @@ const Page = async ({ params }: PageProps) => {
     const [seller] = await sellers
 
     const products = seller?.products || []
+
+    console.log('producrs:::', products)
 
     // const [product] = products.map((value) => {
     //     if (typeof value === 'string') {
@@ -78,6 +81,7 @@ const Page = async ({ params }: PageProps) => {
     // console.log('URLS////', validUrls)
     return (
         <MaxWidthWrapper>
+            {/* seller presentation */}
             <div className="relative top-10">
                 <div className="relative h-96 mt-6 bg-slate-200 rounded-t-md border border-slate-300">
                     {seller.banner && typeof seller.banner === 'string' ? (
@@ -134,35 +138,18 @@ const Page = async ({ params }: PageProps) => {
                 </h1>
                 <p className="mt-12 text-xl">{seller.seller_description}</p>
             </div>
-
-            <div className="border-t border-slate-200 relative -top-8 pt-8">
-                <div
-                    className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8" >
-                    {products.map((product, i) => {
-                        if (typeof product === 'string') {
-                            return null
-                        } else {
-                            return (
-                                <ProductListing
-                                    key={`product-${product.id}`}
-                                    product={product}
-                                    index={i}
-                                />
-                                // <div key={product.id} className='border-4 content-center justify-center '>
-                                //     <ProductReel
-                                //         title={product.name}
-                                //         subtitle={product.subcategory}
-                                //         query={{
-                                //             limit: 1,
-                                //             subcategory: product.subcategory,
-                                //             category: product.category,
-                                //         }}
-                                //     />
-                                // </div>
-                            )
-                        }
-                    })}
-                </div>
+            {/* seller products */}
+            <div className="border-t border-slate-200 relative mb-10 ">
+                <h2 className="text-3xl font-bold m-4 text-center">
+                    Les produits de {seller.seller_name}
+                </h2>
+                <SellerProducts products={products} />
+            </div>
+            <div>
+                {/* seller notice */}
+                <h2 className="text-3xl font-bold py-4 text-center border-slate-200 border-t border-b ">
+                    Les avis de {seller.seller_name}
+                </h2>
             </div>
         </MaxWidthWrapper>
     )
