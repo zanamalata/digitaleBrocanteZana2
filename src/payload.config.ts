@@ -11,6 +11,7 @@ import { Orders } from './collections/Orders'
 import { Account } from './collections/Account'
 import { Photo } from './collections/Photo'
 import { Banner } from './collections/Banner'
+
 // import Dashboard from './components/dashboard/Dashboard'
 // import FormBuilder from '@payloadcms/plugin-form-builder'
 
