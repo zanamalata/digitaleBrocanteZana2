@@ -182,18 +182,26 @@ export const PRODUCT_CATEGORIES = [
                 href: '/products?category=suspensions',
                 imageSrc: '/nav/icons/bestsellers.jpg',
             },
-            {
-                name: 'Appliques',
-                value: 'appliques',
-                href: '/products?category=appliques',
-                imageSrc: '/nav/icons/picks.jpg',
-            },
+            
             {
                 name: 'Lampadaires',
                 value: 'lampadaires',
                 href: '/products?category=lampadaires',
                 imageSrc: '/nav/icons/new.jpg',
             },
+            {
+                name: 'Lampes',
+                value: 'lampes',
+                href: '/products?category=luminaire&subcategory=lampes',
+                imageSrc: '/nav/icons/picks.jpg',
+            },
+            {
+                name: 'Appliques',
+                value: 'appliques',
+                href: '/products?category=appliques',
+                imageSrc: '/nav/icons/picks.jpg',
+            },
+
             {
                 name: 'Accessoires',
                 value: 'accessoires',

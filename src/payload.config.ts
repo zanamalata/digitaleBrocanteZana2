@@ -11,6 +11,7 @@ import { Orders } from './collections/Orders'
 import { Account } from './collections/Account'
 import { Photo } from './collections/Photo'
 import { Banner } from './collections/Banner'
+import comments from 'payload-plugin-comments'
 
 // import Dashboard from './components/dashboard/Dashboard'
 // import FormBuilder from '@payloadcms/plugin-form-builder'
@@ -38,7 +39,7 @@ export default buildConfig({
         //         Dashboard: Dashboard,
         //     },
         // },
-         css: path.resolve(__dirname, './css/style.scss'),
+        css: path.resolve(__dirname, './css/style.scss'),
     },
     i18n: {
         fallbackLng: 'fr',
@@ -54,6 +55,8 @@ export default buildConfig({
             },
         },
     },
+    // plugins: [
+    // ],
     rateLimit: {
         max: 2000,
     },
