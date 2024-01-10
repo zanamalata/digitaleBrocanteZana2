@@ -192,7 +192,7 @@ export const PRODUCT_CATEGORIES = [
             {
                 name: 'Lampes',
                 value: 'lampes',
-                href: '/products?category=luminaire&subcategory=lampes',
+                href: '/products?category=luminaires&subcategory=lampes',
                 imageSrc: '/nav/icons/picks.jpg',
             },
             {

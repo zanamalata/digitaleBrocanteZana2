@@ -55,8 +55,6 @@ export default buildConfig({
             },
         },
     },
-    // plugins: [
-    // ],
     rateLimit: {
         max: 2000,
     },
