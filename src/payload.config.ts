@@ -8,10 +8,11 @@ import dotenv from 'dotenv'
 import { Products } from './collections/Products/products'
 import { Media } from './collections/Media'
 import { Orders } from './collections/Orders'
-import { Account } from './collections/Account'
 import { Photo } from './collections/Photo'
 import { Banner } from './collections/Banner'
-import comments from 'payload-plugin-comments'
+import { Reviews } from './collections/Reviews'
+import { Ratings } from './collections/Ratings'
+import { ReviewsReply } from './collections/ReviewsReply'
 
 // import Dashboard from './components/dashboard/Dashboard'
 // import FormBuilder from '@payloadcms/plugin-form-builder'
@@ -22,7 +23,7 @@ dotenv.config({
 
 export default buildConfig({
     serverURL: process.env.NEXT_PUBLIC_SERVER_URL || '',
-    collections: [Users, Products, Media, Orders, Photo, Banner],
+    collections: [Users, Products, Media, Orders, Photo, Banner, Reviews, ReviewsReply, Ratings],
     routes: {
         admin: '/sell',
     },

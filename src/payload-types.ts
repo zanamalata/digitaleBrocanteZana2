@@ -14,6 +14,9 @@ export interface Config {
     orders: Order;
     photo: Photo;
     banner: Banner;
+    reviews: Review;
+    reviewsreply: Reviewsreply;
+    ratings: Rating;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -178,6 +181,40 @@ export interface Banner {
       filename?: string | null;
     };
   };
+}
+export interface Review {
+  id: string;
+  author?: string | null;
+  review?: string | null;
+  relatedProduct?: (string | null) | Product;
+  relatedSeller?: (string | null) | User;
+  isApproved?: boolean | null;
+  reviewReply?: (string | null) | Reviewsreply;
+  rating?: (string | null) | Rating;
+  updatedAt: string;
+  createdAt: string;
+}
+export interface Reviewsreply {
+  id: string;
+  author?: string | null;
+  reviewReply?: string | null;
+  relatedReview?: (string | null) | Review;
+  relatedSeller?: (string | null) | User;
+  relatedProduct?: (string | null) | Product;
+  updatedAt: string;
+  createdAt: string;
+}
+export interface Rating {
+  id: string;
+  author?: string | null;
+  ratings?: ('1' | '2' | '3' | '4' | '5') | null;
+  username?: (string | null) | User;
+  relatedSeller?: (string | null) | User;
+  relatedOrder?: (string | null) | Order;
+  relatedProduct?: (string | null) | Product;
+  relatedComment?: (string | null) | Review;
+  updatedAt: string;
+  createdAt: string;
 }
 export interface PayloadPreference {
   id: string;
