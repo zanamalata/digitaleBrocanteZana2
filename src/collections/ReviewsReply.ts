@@ -46,7 +46,7 @@ export const ReviewsReply: CollectionConfig = {
         },
         {
             name: 'relatedReview',
-            label: 'réponse à ce commentaire',
+            label: 'En réponse à ce commentaire',
             type: 'relationship',
             relationTo: 'reviews',
         },

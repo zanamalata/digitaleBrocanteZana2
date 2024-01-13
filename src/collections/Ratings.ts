@@ -71,7 +71,7 @@ export const Ratings: CollectionConfig = {
             relationTo: 'products',
         },
         {
-            name: 'relatedComment',
+            name: 'relatedReview',
             label: 'Commentaire rattaché au vote',
             type: 'relationship',
             relationTo: 'reviews',

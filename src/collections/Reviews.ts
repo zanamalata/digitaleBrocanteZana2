@@ -1,6 +1,7 @@
 import payload from 'payload'
-import { User } from '../payload-types'
+import { Product, User } from '../payload-types'
 import { CollectionConfig, Access } from 'payload/types'
+import { equal } from 'assert'
 
 const yourOwn: Access = ({ req: { user } }) => {
     if (user.role === 'admin') return true
@@ -14,40 +15,38 @@ const yourOwn: Access = ({ req: { user } }) => {
 
 const isAdminOrHasAccessToReviews =
     (): Access =>
-    async ({ req }) => {
-        const user = req.user as User | undefined
-
+    async ({ req: { user } }) => {
+        console.log('accesUser:::', user)
         if (!user) return false
-        if (user.role === 'admin') return true
+        if (user?.role === 'admin') return true
 
         return {
-            relatedUser: {
-                equals: user.id,
-            },
+            user: { equals: user?.id },
         }
     }
-    
-    const hasPurchased = (): Access => async ({req}) => {
+
+const hasPurchased =
+    (): Access =>
+    async ({ req }) => {
         // const [orders] = req.payload.collections.orders.config.fields
         // // console.log('orders:::', orders)
 
         // console.log('collectionsfields::::',req.payload.collections.orders.config.fields.find((user) => user))
         // if (orders.type.includes('checkbox') === false) return false
 
-        
         const user = req.user as User | undefined
         if (!user) return false
-        
+
         const orders = await payload.find({
             collection: 'orders',
             where: {
                 user: {
-                    equals: user.id
-                }
-            }
+                    equals: user.id,
+                },
+            },
         })
         console.log('UserOrders:::', orders)
-
+        if (orders.totalDocs === 0) return false
 
         if (user.role === 'admin') return true
 
@@ -69,41 +68,43 @@ export const Reviews: CollectionConfig = {
         useAsTitle: 'id',
     },
     access: {
-        read: isAdminOrHasAccessToReviews(),
+        read: () => true,
         // async ({ req }) => {
 
         //     const referer = req.headers.referer
+        // console.log('referrerRead::::', referer)
 
         //       if (!req.user || !referer?.includes('sell')) {
         //           return true
         //       }
         //       return await isAdminOrHasAccessToReviews()({ req })
-        //   }
-        create: hasPurchased(),
-        update: ({ req }) => req.user.role === 'admin',
-        delete: () => true,
+        //   },
+        create: () => true,
+        update: () => true,
+        delete: ({ req }) => req.user.role === 'admin',
     },
     hooks: {
-        beforeChange: [
-            ({ req, data }) => {
-                console.log('dataBeforeChange::', data)
-                return { ...data, user: req.user.id }
-            },
-        ],
+        // beforeChange: [
+        //     ({ req, data }) => {
+        //         console.log('dataBeforeChange::', data)
+        //         return { ...data, user: req.user.id }
+        //     },
+        // ],
         beforeRead: [
             ({ req }) => {
                 const user = req.user.id
                 console.log('userBeforeRead::', user)
-                return { user: req.user.id }
+                return { user: { equals: user } }
             },
-            hasPurchased(),
+            // hasPurchased(),
         ],
     },
     fields: [
         {
-            name: 'author',
+            name: 'reviewer',
             type: 'text',
-            defaultValue: ({ user }: { user: User }) => user.username,
+            defaultValue: ({ user }: { user: User }) =>
+                user.username ? user.username : user.id,
             admin: {
                 readOnly: true,
             },
@@ -114,16 +115,50 @@ export const Reviews: CollectionConfig = {
             type: 'textarea',
         },
         {
-            name: 'relatedUser',
-            label: 'Utilisateur qui a commenté',
-            type: 'relationship',
-            relationTo: 'users',
-        },
-        {
             name: 'relatedOrder',
             label: 'Commande commenté',
             type: 'relationship',
             relationTo: 'orders',
+        },
+        {
+            name: 'productReviewed',
+            label: 'produit commenté',
+            type: 'select',
+            hooks: {
+                afterRead : [
+                    async ({ req }) => {
+                        const user = req.user.id
+                        console.log('productsUser:::', user)
+
+                        const purchasedProducts = await payload.find({
+                            collection: 'orders',
+                            where: {
+                                user: {equals: user }
+                            }          
+                        })
+                        console.log('PurchasedProducts:::', purchasedProducts)
+                        
+                        purchasedProducts.docs.map((item) => (
+                            item.products.map((product) => (
+                              console.log('product:::', product)
+                              
+                            ))
+                            
+                        ))
+                    }
+                    
+                ],
+            },
+            options: [
+                {
+                    value: '1',
+                    label: '1',
+                },
+                {
+                    value: '2',
+                    label: '2',
+                },
+             ],
         },
         {
             name: 'relatedProduct',
@@ -142,12 +177,24 @@ export const Reviews: CollectionConfig = {
             label: 'Réponse au commentaire',
             type: 'relationship',
             relationTo: 'reviewsreply',
+            // filterOptions: (id) => {
+            //     console.log('reviewID:::', id)
+            //     return {
+            //         relatedReview: { equals: id },
+            //     }
+            // },
         },
         {
             name: 'rating',
             label: 'note associé au commentaire',
             type: 'relationship',
             relationTo: 'ratings',
+            filterOptions: (id) => {
+                console.log('reviewID:::', id)
+                return {
+                    relatedReview: { equals: id },
+                }
+            },
         },
         {
             name: 'isApproved',
