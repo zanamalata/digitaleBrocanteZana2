@@ -57,6 +57,23 @@ const hasPurchased =
         }
     }
 
+const purchasedProducts = async ({ req }: any) => {
+    const user = req.user.id
+    console.log('productsUser:::', user)
+
+    const purchasedProducts = await payload.find({
+        collection: 'orders',
+        sort: '_createdAt',
+        where: {
+            user: { equals: user },
+        },
+    })
+    console.log('PurchasedProducts:::', purchasedProducts)
+
+    return { purchasedProducts }
+}
+const productIDs = purchasedProducts
+console.log('ProductIDS', productIDs)
 export const Reviews: CollectionConfig = {
     slug: 'reviews',
     labels: {
@@ -64,7 +81,15 @@ export const Reviews: CollectionConfig = {
         plural: 'Commentaires',
     },
     admin: {
-        defaultColumns: ['id', 'author', 'isApproved', 'content'],
+        defaultColumns: [
+            'id',
+            'reviewer',
+            'review',
+            'relatedOrder',
+            'relatedProduct',
+            'relatedSeller',
+            'isApproved',
+        ],
         useAsTitle: 'id',
     },
     access: {
@@ -96,6 +121,7 @@ export const Reviews: CollectionConfig = {
                 console.log('userBeforeRead::', user)
                 return { user: { equals: user } }
             },
+            purchasedProducts,
             // hasPurchased(),
         ],
     },
@@ -114,57 +140,27 @@ export const Reviews: CollectionConfig = {
             label: 'Commentaire',
             type: 'textarea',
         },
+
         {
             name: 'relatedOrder',
-            label: 'Commande commenté',
+            label: 'choisissez la commande relative au commentaire',
             type: 'relationship',
             relationTo: 'orders',
         },
-        {
-            name: 'productReviewed',
-            label: 'produit commenté',
-            type: 'select',
-            hooks: {
-                afterRead : [
-                    async ({ req }) => {
-                        const user = req.user.id
-                        console.log('productsUser:::', user)
 
-                        const purchasedProducts = await payload.find({
-                            collection: 'orders',
-                            where: {
-                                user: {equals: user }
-                            }          
-                        })
-                        console.log('PurchasedProducts:::', purchasedProducts)
-                        
-                        purchasedProducts.docs.map((item) => (
-                            item.products.map((product) => (
-                              console.log('product:::', product)
-                              
-                            ))
-                            
-                        ))
-                    }
-                    
-                ],
-            },
-            options: [
-                {
-                    value: '1',
-                    label: '1',
-                },
-                {
-                    value: '2',
-                    label: '2',
-                },
-             ],
-        },
         {
             name: 'relatedProduct',
-            label: 'Produit commenté',
+            label: 'Produit relatif au commentaire',
             type: 'relationship',
-            relationTo: 'products',
+            relationTo: ['products', 'orders'],
+            // filterOptions: 
+            // ({relationTo, siblingData}) => {
+            //     if (relationTo === 'products') {
+            //         return {
+            //             id: { equals : siblingData}
+            //         }
+            //     }
+            // }
         },
         {
             name: 'relatedSeller',
