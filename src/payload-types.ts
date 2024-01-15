@@ -25,8 +25,9 @@ export interface Config {
 export interface User {
   id: string;
   products?: (string | Product)[] | null;
-  role: 'admin' | 'user' | 'seller';
-  username?: string | null;
+  orders?: (string | Order)[] | null;
+  role: ('admin' | 'user' | 'seller')[];
+  username: string;
   seller_name?: string | null;
   seller_activity?: string | null;
   seller_description?: string | null;
@@ -105,6 +106,14 @@ export interface Media {
     };
   };
 }
+export interface Order {
+  id: string;
+  _isPaid: boolean;
+  user: string | User;
+  products: (string | Product)[];
+  updatedAt: string;
+  createdAt: string;
+}
 export interface Address {
   firstname?: string | null;
   lastname?: string | null;
@@ -113,14 +122,6 @@ export interface Address {
   postcode?: number | null;
   city?: string | null;
   country?: ('france' | 'germany' | 'spain') | null;
-}
-export interface Order {
-  id: string;
-  _isPaid: boolean;
-  user: string | User;
-  products: (string | Product)[];
-  updatedAt: string;
-  createdAt: string;
 }
 export interface Photo {
   id: string;
@@ -184,13 +185,22 @@ export interface Banner {
 }
 export interface Review {
   id: string;
-  author?: string | null;
+  reviewer?: string | null;
   review?: string | null;
-  relatedProduct?: (string | null) | Product;
+  relatedOrder?: (string | null) | Order;
+  relatedProduct?:
+    | ({
+        relationTo: 'products';
+        value: string | Product;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: string | Order;
+      } | null);
   relatedSeller?: (string | null) | User;
-  isApproved?: boolean | null;
   reviewReply?: (string | null) | Reviewsreply;
   rating?: (string | null) | Rating;
+  isApproved?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -212,7 +222,7 @@ export interface Rating {
   relatedSeller?: (string | null) | User;
   relatedOrder?: (string | null) | Order;
   relatedProduct?: (string | null) | Product;
-  relatedComment?: (string | null) | Review;
+  relatedReview?: (string | null) | Review;
   updatedAt: string;
   createdAt: string;
 }

@@ -8,7 +8,7 @@ const isAdminOrHasAccessToImages =
         const user = req.user as User | undefined
 
         if (!user) return false
-        if (user.role === 'admin') return true
+        if (user.role.includes('admin')) return true
 
         return {
             user: {

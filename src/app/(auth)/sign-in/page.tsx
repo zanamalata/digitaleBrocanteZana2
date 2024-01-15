@@ -68,8 +68,8 @@ const Page = () => {
         },
     })
 
-    const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-        signIn({ email, password })
+    const onSubmit = ({ email, username,  password }: TAuthCredentialsValidator) => {
+        signIn({ email, username, password })
     }
 
     return (
@@ -93,7 +93,7 @@ const Page = () => {
                                 })}
                                 href="/sign-up"
                             >
-                                Vous n&apos;avez pas de compte ?
+                                Vous n&apos;avez pas de compte ? créer un compte
                                 <ArrowRight className="h-4 w-4" />
                             </Link>
                         </div>
@@ -109,11 +109,28 @@ const Page = () => {
                                                 'focus-visible:ring-red-500':
                                                     errors.email,
                                             })}
-                                            placeholder="vous@exemple.com"
+                                            placeholder="Votre email"
                                         />
                                         {errors?.email && (
                                             <p className="text-sm text-red-500">
                                                 {errors.email.message}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div className="grid gap-1 py-2">
+                                        <Label htmlFor="username">Nom d&apos;utilisateur</Label>
+                                        <Input
+                                            {...register('username')}
+                                            className={cn({
+                                                'focus-visible:ring-red-500':
+                                                    errors.username,
+                                            })}
+                                            placeholder="Votre nom sur la plateforme"
+                                        />
+                                        {errors?.username && (
+                                            <p className="text-sm text-red-500">
+                                                {errors.username.message}
                                             </p>
                                         )}
                                     </div>
@@ -129,7 +146,7 @@ const Page = () => {
                                                 'focus-visible:ring-red-500':
                                                     errors.password,
                                             })}
-                                            placeholder="Mot de passe"
+                                            placeholder="Votre mot de passe"
                                         />
                                         {errors?.password && (
                                             <p className="text-sm text-red-500">

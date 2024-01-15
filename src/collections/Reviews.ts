@@ -1,10 +1,10 @@
 import payload from 'payload'
-import { Product, User } from '../payload-types'
+import { User } from '../payload-types'
 import { CollectionConfig, Access } from 'payload/types'
-import { equal } from 'assert'
+import { checkRole } from './Hooks/checkRole'
 
 const yourOwn: Access = ({ req: { user } }) => {
-    if (user.role === 'admin') return true
+    if (user.role.includes('admin')) return true
 
     return {
         user: {
@@ -18,7 +18,7 @@ const isAdminOrHasAccessToReviews =
     async ({ req: { user } }) => {
         console.log('accesUser:::', user)
         if (!user) return false
-        if (user?.role === 'admin') return true
+        if (user?.role.includes('admin')) return true
 
         return {
             user: { equals: user?.id },
@@ -48,7 +48,7 @@ const hasPurchased =
         console.log('UserOrders:::', orders)
         if (orders.totalDocs === 0) return false
 
-        if (user.role === 'admin') return true
+        if (user.role.includes('admin')) return true
 
         return {
             id: {
@@ -72,8 +72,7 @@ const purchasedProducts = async ({ req }: any) => {
 
     return { purchasedProducts }
 }
-const productIDs = purchasedProducts
-console.log('ProductIDS', productIDs)
+
 export const Reviews: CollectionConfig = {
     slug: 'reviews',
     labels: {
@@ -82,7 +81,6 @@ export const Reviews: CollectionConfig = {
     },
     admin: {
         defaultColumns: [
-            'id',
             'reviewer',
             'review',
             'relatedOrder',
@@ -90,23 +88,22 @@ export const Reviews: CollectionConfig = {
             'relatedSeller',
             'isApproved',
         ],
-        useAsTitle: 'id',
+        // useAsTitle: 'id',
     },
     access: {
         read: () => true,
-        // async ({ req }) => {
-
+        //  async ({ req }) => {
         //     const referer = req.headers.referer
-        // console.log('referrerRead::::', referer)
 
-        //       if (!req.user || !referer?.includes('sell')) {
-        //           return true
-        //       }
-        //       return await isAdminOrHasAccessToReviews()({ req })
-        //   },
+        //     if (!req.user || !referer?.includes('sell')) {
+        //         return true
+        //     }
+        //     return await isAdminOrHasAccessToReviews()({ req })
+        // },
         create: () => true,
         update: () => true,
-        delete: ({ req }) => req.user.role === 'admin',
+        delete: () => true,
+        // ({ req }) => req.user.role.includes('admin') ,
     },
     hooks: {
         // beforeChange: [
@@ -153,7 +150,7 @@ export const Reviews: CollectionConfig = {
             label: 'Produit relatif au commentaire',
             type: 'relationship',
             relationTo: ['products', 'orders'],
-            // filterOptions: 
+            // filterOptions:
             // ({relationTo, siblingData}) => {
             //     if (relationTo === 'products') {
             //         return {
@@ -185,12 +182,12 @@ export const Reviews: CollectionConfig = {
             label: 'note associé au commentaire',
             type: 'relationship',
             relationTo: 'ratings',
-            filterOptions: (id) => {
-                console.log('reviewID:::', id)
-                return {
-                    relatedReview: { equals: id },
-                }
-            },
+            // filterOptions: (id) => {
+            //     console.log('reviewID:::', id)
+            //     return {
+            //         relatedReview: { equals: id },
+            //     }
+            // },
         },
         {
             name: 'isApproved',
@@ -199,20 +196,4 @@ export const Reviews: CollectionConfig = {
         },
     ],
     timestamps: true,
-    // addCommentPath: '/add-comment',
-    // addCommentMethod: 'post',
-    // hasPublishedCommentPath: '/has-published-comment',
-    // hasPublishedCommentMethod: 'post',
-    // hasPublishedCommentFields: ['email'],
-    // collectionsAllowingComments: [],
-    // sendAlert: false,
-    // alertRecipients: [],
-    // alertFrom: '',
-    // alertSubject: 'Your site received a new comment',
-    // alertIntro: '<p>Your site received the following comment.</p>',
-    // alertClosing: '<p>Please log in to review, approve, or delete this comment.</p>',
-    // alertEditUrlBase: '',
-    // autoPublish: false,
-    // autoPublishConditions: [],
-    // additionalEndpoints: [],
 }

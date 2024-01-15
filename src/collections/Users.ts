@@ -75,6 +75,7 @@ export const Users: CollectionConfig = {
             name: 'role',
             defaultValue: 'user',
             required: true,
+            hasMany: true,
 
             type: 'select',
             options: [
@@ -87,6 +88,7 @@ export const Users: CollectionConfig = {
             name: 'username',
             label: "Nom d'utilisateur",
             type: 'text',
+            required: true,
             access: {
                 create: () => true,
                 read: () => true,

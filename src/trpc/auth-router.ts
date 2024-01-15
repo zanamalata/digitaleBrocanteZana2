@@ -9,7 +9,7 @@ export const authRouter = router({
   createPayloadUser: publicProcedure
     .input(AuthCredentialsValidator)
     .mutation(async ({ input }) => {
-      const { email, password } = input
+      const { email, username, password } = input
      
       const payload = await getPayloadClient()
 
@@ -17,9 +17,18 @@ export const authRouter = router({
       const { docs: users } = await payload.find({
         collection: 'users',
         where: {
-          email: {
-            equals: email,
-          },
+          and: [
+            {
+              email: {
+                equals: email,
+              },
+            },
+            {
+              username: {
+                equals: username
+              }
+            }
+          ],
         },
       })
 
@@ -29,9 +38,11 @@ export const authRouter = router({
       await payload.create({
         collection: 'users',
         data: {
+          
           email,
+          username,
           password,
-          role: 'user',
+          role: ['user'],
         },
       })
 
@@ -59,7 +70,7 @@ export const authRouter = router({
   signIn: publicProcedure
     .input(AuthCredentialsValidator)
     .mutation(async ({ input, ctx }) => {
-      const { email, password } = input
+      const { email, username, password } = input
       const { res } = ctx
 
       const payload = await getPayloadClient()
@@ -69,6 +80,7 @@ export const authRouter = router({
           collection: 'users',
           data: {
             email,
+            username,
             password,
           },
           res,

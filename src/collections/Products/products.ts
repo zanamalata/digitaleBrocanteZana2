@@ -52,7 +52,7 @@ const isAdminOrHasAccess =
         const user = _user as User | undefined
 
         if (!user) return false
-        if (user.role === 'admin') return true
+        if (user.role.includes('admin')) return true
 
         const userProductIDs = (user.products || []).reduce<Array<string>>(
             (acc, product) => {
