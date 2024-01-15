@@ -174,9 +174,17 @@ const Page = () => {
   const { mutate, isLoading } =
     trpc.auth.createPayloadUser.useMutation({
       onError: (err) => {
+        if (err.data?.code === 'PRECONDITION_FAILED') {
+          toast.error(
+            "Ce nom d'utilisateur est déjà utilisé, choisissez un autre nom d'utilisateur"
+          )
+
+          return
+        }
+        
         if (err.data?.code === 'CONFLICT') {
           toast.error(
-            'This email is already in use. Sign in instead?'
+            'Cet e-mail est déjà utilisée. Vous connecter à la place ?'
           )
 
           return
