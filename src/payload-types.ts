@@ -27,7 +27,7 @@ export interface User {
   products?: (string | Product)[] | null;
   orders?: (string | Order)[] | null;
   role: ('admin' | 'user' | 'seller')[];
-  username: string;
+  username?: string | null;
   seller_name?: string | null;
   seller_activity?: string | null;
   seller_description?: string | null;

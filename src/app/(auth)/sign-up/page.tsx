@@ -210,10 +210,9 @@ const Page = () => {
 
   const onSubmit = ({
     email,
-    username,
     password,
   }: TAuthCredentialsValidator) => {
-    mutate({ email, username, password })
+    mutate({ email, password })
   }
 
   return (
@@ -256,24 +255,6 @@ const Page = () => {
                     </p>
                   )}
                 </div>
-
-                <div className='grid gap-1 py-2'>
-                  <Label htmlFor='username'>Nom d&apos;utilisateur</Label>
-                  <Input
-                    {...register('username')}
-                    className={cn({
-                      'focus-visible:ring-red-500':
-                        errors.username,
-                    })}
-                    placeholder="Votre nom sur la plateforme"
-                  />
-                  {errors?.username && (
-                    <p className='text-sm text-red-500'>
-                      {errors.username.message}
-                    </p>
-                  )}
-                </div>
-
                 <div className='grid gap-1 py-2'>
                   <Label htmlFor='password'>Mot de passe</Label>
                   <Input

@@ -8,12 +8,12 @@ export const authRouter = router({
     createPayloadUser: publicProcedure
         .input(AuthCredentialsValidator)
         .mutation(async ({ input }) => {
-            const { email, username, password } = input
+            const { email, password } = input
 
             const payload = await getPayloadClient()
 
             // check if user already exists
-            const { docs: usersByEmail } = await payload.find({
+            const { docs: users } = await payload.find({
                 collection: 'users',
                 where: {
                     email: {
@@ -22,27 +22,13 @@ export const authRouter = router({
                 },
             })
 
-            if (usersByEmail.length !== 0)
+            if (users.length !== 0)
                 throw new TRPCError({ code: 'CONFLICT' })
-
-            // check if username already exist
-            const { docs: usersByUsername } = await payload.find({
-                collection: 'users',
-                where: {
-                    username: {
-                        equals: username,
-                    },
-                },
-            })
-
-            if (usersByUsername.length !== 0)
-                throw new TRPCError({ code: 'PRECONDITION_FAILED' })
 
             await payload.create({
                 collection: 'users',
                 data: {
                     email,
-                    username,
                     password,
                     role: ['user'],
                 },
@@ -71,7 +57,7 @@ export const authRouter = router({
     signIn: publicProcedure
         .input(AuthCredentialsValidator)
         .mutation(async ({ input, ctx }) => {
-            const { email, username, password } = input
+            const { email, password } = input
             const { res } = ctx
 
             const payload = await getPayloadClient()
@@ -81,7 +67,6 @@ export const authRouter = router({
                     collection: 'users',
                     data: {
                         email,
-                        username,
                         password,
                     },
                     res,
