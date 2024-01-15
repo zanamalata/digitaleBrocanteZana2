@@ -90,13 +90,14 @@ export const Users: CollectionConfig = {
             type: 'text',
             required: true,
             access: {
-                create: () => true,
+                create: () => false,
                 read: () => true,
-                update: () => true,
+                update: () => false,
             },
             admin: {
                 description:
                     "Nom d'utilisateur: le nom que verrons les autres utilisateurs de la plateforme",
+                readOnly: true,
             },
         },
         {
