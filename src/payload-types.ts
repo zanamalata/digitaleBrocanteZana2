@@ -187,8 +187,6 @@ export interface Review {
   id: string;
   reviewer?: string | null;
   review?: string | null;
-  relatedOrder?: (string | null) | Order;
-  productReviewed?: ('1' | '2') | null;
   relatedProduct?: (string | null) | Product;
   relatedSeller?: (string | null) | User;
   reviewReply?: (string | null) | Reviewsreply;

@@ -23,7 +23,17 @@ dotenv.config({
 
 export default buildConfig({
     serverURL: process.env.NEXT_PUBLIC_SERVER_URL || '',
-    collections: [Users, Products, Media, Orders, Photo, Banner, Reviews, ReviewsReply, Ratings],
+    collections: [
+        Users,
+        Products,
+        Media,
+        Orders,
+        Photo,
+        Banner,
+        Reviews,
+        ReviewsReply,
+        Ratings,
+    ],
     routes: {
         admin: '/sell',
     },

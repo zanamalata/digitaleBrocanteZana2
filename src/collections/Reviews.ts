@@ -1,10 +1,10 @@
 import payload from 'payload'
-import { Product, User } from '../payload-types'
+import { User } from '../payload-types'
 import { CollectionConfig, Access } from 'payload/types'
-import { equal } from 'assert'
+import { checkRole } from './Hooks/checkRole'
 
 const yourOwn: Access = ({ req: { user } }) => {
-    if (user.role === 'admin') return true
+    if (user.role.includes('admin')) return true
 
     return {
         user: {
@@ -18,7 +18,7 @@ const isAdminOrHasAccessToReviews =
     async ({ req: { user } }) => {
         console.log('accesUser:::', user)
         if (!user) return false
-        if (user?.role === 'admin') return true
+        if (user?.role.includes('admin')) return true
 
         return {
             user: { equals: user?.id },
@@ -48,7 +48,7 @@ const hasPurchased =
         console.log('UserOrders:::', orders)
         if (orders.totalDocs === 0) return false
 
-        if (user.role === 'admin') return true
+        if (user.role.includes('admin')) return true
 
         return {
             id: {
@@ -57,6 +57,22 @@ const hasPurchased =
         }
     }
 
+const purchasedProducts = async ({ req }: any) => {
+    const user = req.user.id
+    console.log('productsUser:::', user)
+
+    const purchasedProducts = await payload.find({
+        collection: 'orders',
+        sort: '_createdAt',
+        where: {
+            user: { equals: user },
+        },
+    })
+    console.log('PurchasedProducts:::', purchasedProducts)
+
+    return { purchasedProducts }
+}
+
 export const Reviews: CollectionConfig = {
     slug: 'reviews',
     labels: {
@@ -64,24 +80,30 @@ export const Reviews: CollectionConfig = {
         plural: 'Commentaires',
     },
     admin: {
-        defaultColumns: ['id', 'author', 'isApproved', 'content'],
-        useAsTitle: 'id',
+        defaultColumns: [
+            'reviewer',
+            'review',
+            'relatedOrder',
+            'relatedProduct',
+            'relatedSeller',
+            'isApproved',
+        ],
+        // useAsTitle: 'id',
     },
     access: {
         read: () => true,
-        // async ({ req }) => {
-
+        //  async ({ req }) => {
         //     const referer = req.headers.referer
-        // console.log('referrerRead::::', referer)
 
-        //       if (!req.user || !referer?.includes('sell')) {
-        //           return true
-        //       }
-        //       return await isAdminOrHasAccessToReviews()({ req })
-        //   },
+        //     if (!req.user || !referer?.includes('sell')) {
+        //         return true
+        //     }
+        //     return await isAdminOrHasAccessToReviews()({ req })
+        // },
         create: () => true,
         update: () => true,
-        delete: ({ req }) => req.user.role === 'admin',
+        delete: () => true,
+        // ({ req }) => req.user.role.includes('admin') ,
     },
     hooks: {
         // beforeChange: [
@@ -96,6 +118,7 @@ export const Reviews: CollectionConfig = {
                 console.log('userBeforeRead::', user)
                 return { user: { equals: user } }
             },
+            purchasedProducts,
             // hasPurchased(),
         ],
     },
@@ -114,57 +137,27 @@ export const Reviews: CollectionConfig = {
             label: 'Commentaire',
             type: 'textarea',
         },
+
         {
             name: 'relatedOrder',
-            label: 'Commande commenté',
+            label: 'choisissez la commande relative au commentaire',
             type: 'relationship',
             relationTo: 'orders',
         },
-        {
-            name: 'productReviewed',
-            label: 'produit commenté',
-            type: 'select',
-            hooks: {
-                afterRead : [
-                    async ({ req }) => {
-                        const user = req.user.id
-                        console.log('productsUser:::', user)
 
-                        const purchasedProducts = await payload.find({
-                            collection: 'orders',
-                            where: {
-                                user: {equals: user }
-                            }          
-                        })
-                        console.log('PurchasedProducts:::', purchasedProducts)
-                        
-                        purchasedProducts.docs.map((item) => (
-                            item.products.map((product) => (
-                              console.log('product:::', product)
-                              
-                            ))
-                            
-                        ))
-                    }
-                    
-                ],
-            },
-            options: [
-                {
-                    value: '1',
-                    label: '1',
-                },
-                {
-                    value: '2',
-                    label: '2',
-                },
-             ],
-        },
         {
             name: 'relatedProduct',
-            label: 'Produit commenté',
+            label: 'Produit relatif au commentaire',
             type: 'relationship',
-            relationTo: 'products',
+            relationTo: ['products', 'orders'],
+            // filterOptions:
+            // ({relationTo, siblingData}) => {
+            //     if (relationTo === 'products') {
+            //         return {
+            //             id: { equals : siblingData}
+            //         }
+            //     }
+            // }
         },
         {
             name: 'relatedSeller',
@@ -189,12 +182,12 @@ export const Reviews: CollectionConfig = {
             label: 'note associé au commentaire',
             type: 'relationship',
             relationTo: 'ratings',
-            filterOptions: (id) => {
-                console.log('reviewID:::', id)
-                return {
-                    relatedReview: { equals: id },
-                }
-            },
+            // filterOptions: (id) => {
+            //     console.log('reviewID:::', id)
+            //     return {
+            //         relatedReview: { equals: id },
+            //     }
+            // },
         },
         {
             name: 'isApproved',
@@ -203,20 +196,4 @@ export const Reviews: CollectionConfig = {
         },
     ],
     timestamps: true,
-    // addCommentPath: '/add-comment',
-    // addCommentMethod: 'post',
-    // hasPublishedCommentPath: '/has-published-comment',
-    // hasPublishedCommentMethod: 'post',
-    // hasPublishedCommentFields: ['email'],
-    // collectionsAllowingComments: [],
-    // sendAlert: false,
-    // alertRecipients: [],
-    // alertFrom: '',
-    // alertSubject: 'Your site received a new comment',
-    // alertIntro: '<p>Your site received the following comment.</p>',
-    // alertClosing: '<p>Please log in to review, approve, or delete this comment.</p>',
-    // alertEditUrlBase: '',
-    // autoPublish: false,
-    // autoPublishConditions: [],
-    // additionalEndpoints: [],
 }

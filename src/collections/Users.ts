@@ -2,7 +2,7 @@ import { PrimaryActionEmailHtml } from '../components/emails/PrimaryActionEmail'
 import { Access, CollectionConfig, FieldAccess } from 'payload/types'
 
 const adminsAndUser: Access = ({ req: { user } }) => {
-    if (user.role === 'admin') return true
+    if (user.role.includes('admin')) return true
 
     return {
         id: {
@@ -31,8 +31,9 @@ export const Users: CollectionConfig = {
         },
     },
     access: {
-        read: adminsAndUser,
-        create: () => false,
+        read: () => true,
+        // create: () => false,
+        create: () => true,
         update: () => true,
         delete: ({ req }) => req.user.role === 'admin',
     },
@@ -75,6 +76,7 @@ export const Users: CollectionConfig = {
             name: 'role',
             defaultValue: 'user',
             required: true,
+            hasMany: true,
 
             type: 'select',
             options: [
@@ -87,14 +89,16 @@ export const Users: CollectionConfig = {
             name: 'username',
             label: "Nom d'utilisateur",
             type: 'text',
+            // required: true,
             access: {
-                create: () => true,
+                create: () => false,
                 read: () => true,
-                update: () => true,
+                update: () => false,
             },
             admin: {
                 description:
                     "Nom d'utilisateur: le nom que verrons les autres utilisateurs de la plateforme",
+                // readOnly: true,
             },
         },
         {

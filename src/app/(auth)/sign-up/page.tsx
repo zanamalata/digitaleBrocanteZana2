@@ -174,9 +174,17 @@ const Page = () => {
   const { mutate, isLoading } =
     trpc.auth.createPayloadUser.useMutation({
       onError: (err) => {
+        if (err.data?.code === 'PRECONDITION_FAILED') {
+          toast.error(
+            "Ce nom d'utilisateur est déjà utilisé, choisissez un autre nom d'utilisateur"
+          )
+
+          return
+        }
+        
         if (err.data?.code === 'CONFLICT') {
           toast.error(
-            'This email is already in use. Sign in instead?'
+            'Cet e-mail est déjà utilisée. Vous connecter à la place ?'
           )
 
           return
@@ -214,7 +222,7 @@ const Page = () => {
           <div className='flex flex-col items-center space-y-2 text-center'>
             <Icons.logo className='h-20 w-20' />
             <h1 className='text-2xl font-semibold tracking-tight'>
-              Create an account
+              Créez un compte
             </h1>
 
             <Link
@@ -223,7 +231,7 @@ const Page = () => {
                 className: 'gap-1.5',
               })}
               href='/sign-in'>
-              Already have an account? Sign-in
+              Vous avez déjà un compte? vous connecter
               <ArrowRight className='h-4 w-4' />
             </Link>
           </div>
@@ -239,7 +247,7 @@ const Page = () => {
                       'focus-visible:ring-red-500':
                         errors.email,
                     })}
-                    placeholder='you@example.com'
+                    placeholder='Votre email'
                   />
                   {errors?.email && (
                     <p className='text-sm text-red-500'>
@@ -247,9 +255,8 @@ const Page = () => {
                     </p>
                   )}
                 </div>
-
                 <div className='grid gap-1 py-2'>
-                  <Label htmlFor='password'>Password</Label>
+                  <Label htmlFor='password'>Mot de passe</Label>
                   <Input
                     {...register('password')}
                     type='password'
@@ -257,7 +264,7 @@ const Page = () => {
                       'focus-visible:ring-red-500':
                         errors.password,
                     })}
-                    placeholder='Password'
+                    placeholder='Votre mot de passe'
                   />
                   {errors?.password && (
                     <p className='text-sm text-red-500'>

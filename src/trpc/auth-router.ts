@@ -1,4 +1,3 @@
-
 import { AuthCredentialsValidator } from '../lib/validators/account-credentials-validator'
 import { publicProcedure, router } from './trpc'
 import { getPayloadClient } from '../get-payload'
@@ -6,78 +5,76 @@ import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 export const authRouter = router({
-  createPayloadUser: publicProcedure
-    .input(AuthCredentialsValidator)
-    .mutation(async ({ input }) => {
-      const { email, password } = input
-     
-      const payload = await getPayloadClient()
+    createPayloadUser: publicProcedure
+        .input(AuthCredentialsValidator)
+        .mutation(async ({ input }) => {
+            const { email, password } = input
 
-      // check if user already exists
-      const { docs: users } = await payload.find({
-        collection: 'users',
-        where: {
-          email: {
-            equals: email,
-          },
-        },
-      })
+            const payload = await getPayloadClient()
 
-      if (users.length !== 0)
-        throw new TRPCError({ code: 'CONFLICT' })
+            // check if user already exists
+            const { docs: users } = await payload.find({
+                collection: 'users',
+                where: {
+                    email: {
+                        equals: email,
+                    },
+                },
+            })
 
-      await payload.create({
-        collection: 'users',
-        data: {
-          email,
-          password,
-          role: 'user',
-        },
-      })
+            if (users.length !== 0)
+                throw new TRPCError({ code: 'CONFLICT' })
 
-      return { success: true, sentToEmail: email }
-    }),
+            await payload.create({
+                collection: 'users',
+                data: {
+                    email,
+                    password,
+                    role: ['user'],
+                },
+            })
 
-  verifyEmail: publicProcedure
-    .input(z.object({ token: z.string() }))
-    .query(async ({ input }) => {
-      const { token } = input
+            return { success: true, sentToEmail: email }
+        }),
 
-      const payload = await getPayloadClient()
+    verifyEmail: publicProcedure
+        .input(z.object({ token: z.string() }))
+        .query(async ({ input }) => {
+            const { token } = input
 
-      const isVerified = await payload.verifyEmail({
-        collection: 'users',
-        token,
-      })
+            const payload = await getPayloadClient()
 
-      if (!isVerified)
-        throw new TRPCError({ code: 'UNAUTHORIZED' })
+            const isVerified = await payload.verifyEmail({
+                collection: 'users',
+                token,
+            })
 
-      return { success: true }
-    }),
+            if (!isVerified) throw new TRPCError({ code: 'UNAUTHORIZED' })
 
-  signIn: publicProcedure
-    .input(AuthCredentialsValidator)
-    .mutation(async ({ input, ctx }) => {
-      const { email, password } = input
-      const { res } = ctx
+            return { success: true }
+        }),
 
-      const payload = await getPayloadClient()
+    signIn: publicProcedure
+        .input(AuthCredentialsValidator)
+        .mutation(async ({ input, ctx }) => {
+            const { email, password } = input
+            const { res } = ctx
 
-      try {
-        await payload.login({
-          collection: 'users',
-          data: {
-            email,
-            password,
-          },
-          res,
-        })
+            const payload = await getPayloadClient()
 
-        return { success: true }
-      } catch (err) {
-        throw new TRPCError({ code: 'UNAUTHORIZED' })
-      }
-    }),
+            try {
+                await payload.login({
+                    collection: 'users',
+                    data: {
+                        email,
+                        password,
+                    },
+                    res,
+                })
+
+                return { success: true }
+            } catch (err) {
+                throw new TRPCError({ code: 'UNAUTHORIZED' })
+            }
+        }),
 })
-
