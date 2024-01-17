@@ -1,7 +1,6 @@
 import payload from 'payload'
 import { User } from '../payload-types'
 import { CollectionConfig, Access } from 'payload/types'
-import { checkRole } from './Hooks/checkRole'
 
 const yourOwn: Access = ({ req: { user } }) => {
     if (user.role.includes('admin')) return true
