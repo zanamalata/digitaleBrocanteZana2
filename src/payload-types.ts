@@ -25,6 +25,7 @@ export interface Config {
 export interface User {
   id: string;
   products?: (string | Product)[] | null;
+  orders?: (string | Order)[] | null;
   role: 'admin' | 'user' | 'seller';
   username?: string | null;
   seller_name?: string | null;
@@ -105,6 +106,14 @@ export interface Media {
     };
   };
 }
+export interface Order {
+  id: string;
+  _isPaid: boolean;
+  user: string | User;
+  products: (string | Product)[];
+  updatedAt: string;
+  createdAt: string;
+}
 export interface Address {
   firstname?: string | null;
   lastname?: string | null;
@@ -113,14 +122,6 @@ export interface Address {
   postcode?: number | null;
   city?: string | null;
   country?: ('france' | 'germany' | 'spain') | null;
-}
-export interface Order {
-  id: string;
-  _isPaid: boolean;
-  user: string | User;
-  products: (string | Product)[];
-  updatedAt: string;
-  createdAt: string;
 }
 export interface Photo {
   id: string;
@@ -184,13 +185,15 @@ export interface Banner {
 }
 export interface Review {
   id: string;
-  author?: string | null;
+  reviewer?: string | null;
   review?: string | null;
+  relatedOrder?: (string | null) | Order;
+  productReviewed?: ('1' | '2') | null;
   relatedProduct?: (string | null) | Product;
   relatedSeller?: (string | null) | User;
-  isApproved?: boolean | null;
   reviewReply?: (string | null) | Reviewsreply;
   rating?: (string | null) | Rating;
+  isApproved?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -212,7 +215,7 @@ export interface Rating {
   relatedSeller?: (string | null) | User;
   relatedOrder?: (string | null) | Order;
   relatedProduct?: (string | null) | Product;
-  relatedComment?: (string | null) | Review;
+  relatedReview?: (string | null) | Review;
   updatedAt: string;
   createdAt: string;
 }
